@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/homepage/homepage.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<main>
+    <div class="authenticator">
+        <form action="">
+            <label for="code">Accès vétérinaire :</label>
+            <div class="form-group">
+                <input type="text" name="code" id="code">
+                <button type="button">Voir la fiche</button>
+            </div>
+        </form>
+    </div>
+    <div class="main-content">
+        <div class="picture">
+            <img src="{{ asset('img/site/cat-picture.jpg')}}" alt="Photo d'un chat se léchant la patte.">
+        </div>
+        <div class="description">
+            <p> <img class="cat-picture" src="{{ asset('img/site/cat-picture.jpg')}}" alt="Photo d'un chat se léchant la patte."> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat diam non nisl efficitur, nec pellentesque massa auctor. Integer dignissim rutrum velit id facilisis. Sed dapibus justo at malesuada dignissim. Quisque pretium, risus vitae vehicula aliquet, nulla nunc sagittis velit, sit amet semper nunc felis quis augue</p>
+            <p>Donec tempor convallis tortor vel bibendum. Curabitur fermentum erat quam, sit amet accumsan arcu venenatis vitae. Sed laoreet sodales nunc. Suspendisse eget metus ante.</p>
+        </div>
+    </div>
+    <div class="functionalities">
+        <ul>
+            <li>
+                <div class="icon">
+                    <img src="{{ asset('img/site/chart.png') }}" alt="">
+                </div>
+                <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum excepturi illo asperiores ut eveniet.</p>
+            </li>
+            <li>
+                <div class="icon">
+                    <img src="{{ asset('img/site/heart.png') }}" alt="">
+                </div>
+                <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum excepturi illo asperiores ut eveniet.</p>
+            </li>
+            <li>
+                <div class="icon">
+                    <img src="{{ asset('img/site/food.png') }}" alt="">
+                </div>
+                <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum excepturi illo asperiores ut eveniet.</p>
+            </li>
+            <li>
+                <div class="icon">
+                    <img src="{{ asset('img/site/files.png') }}" alt="">
+                </div>
+                <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum excepturi illo asperiores ut eveniet.</p>
+            </li>
+            <li>
+                <div class="icon">
+                    <img src="{{ asset('img/site/notification.png') }}" alt="">
+                </div>
+                <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum excepturi illo asperiores ut eveniet.</p>
+            </li>
+            <li>
+                <div class="icon">
+                    <img src="{{ asset('img/site/share.png') }}" alt="">
+                </div>
+                <p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum excepturi illo asperiores ut eveniet.</p>
+            </li>
+        </ul>
+    </div>
+</main>
+{% endblock %}
