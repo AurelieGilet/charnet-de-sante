@@ -37,7 +37,7 @@ input {
 }
 
 input:focus {
-    outline-color: #DABFFF;
+    outline-color: #907AD6;
 }
 
 button {
@@ -101,6 +101,8 @@ button {
     align-items: center;
     background-color: #F7F9FA;
     border: 1px solid #c6ccf5;
+    border-radius: 5px;
+    box-shadow: 0px 0px 24px rgba(177, 177, 177, 0.30);
     margin: 10px;
 }
 

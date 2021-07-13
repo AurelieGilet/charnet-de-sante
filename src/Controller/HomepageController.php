@@ -9,11 +9,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomepageController extends AbstractController
 {
     /**
-     * @Route("/", name="accueil")
+     * @Route("/", name="homepage")
      */
     public function index(): Response
     {
         return $this->render('homepage/homepage.html.twig', [
+            'controller_name' => 'HomepageController',
+        ]);
+    }
+
+    /**
+     * @Route("/aide", name="help")
+     */
+    public function help(): Response
+    {
+        return $this->render('homepage/help.html.twig', [
             'controller_name' => 'HomepageController',
         ]);
     }
