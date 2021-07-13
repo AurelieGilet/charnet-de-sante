@@ -8,9 +8,14 @@
     src: url('../fonts/DoHyeon-Regular.ttf') format('ttf');
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 body {
     font-family: Do Hyeon, sans-serif;
     min-width: 300px;
+    transition: all 1s;
 }
 
 h1, h2, h3 {
@@ -40,12 +45,15 @@ header {
 
 .logo {
     width: 40%;
+    background-color: #4F518C;
+    padding: 10px;
+}
+
+.logo a {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #4F518C;
-    padding: 10px;
 }
 
 .logo img {
