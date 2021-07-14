@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomepageController extends AbstractController
+class BaseController extends AbstractController
 {
     /**
      * @Route("/", name="homepage")
@@ -14,7 +14,7 @@ class HomepageController extends AbstractController
     public function index(): Response
     {
         return $this->render('homepage/homepage.html.twig', [
-            'controller_name' => 'HomepageController',
+            'controller_name' => 'BaseController',
         ]);
     }
 
@@ -24,7 +24,7 @@ class HomepageController extends AbstractController
     public function help(): Response
     {
         return $this->render('homepage/help.html.twig', [
-            'controller_name' => 'HomepageController',
+            'controller_name' => 'BaseController',
         ]);
     }
 
@@ -34,7 +34,7 @@ class HomepageController extends AbstractController
     public function legalNotice(): Response
     {
         return $this->render('homepage/legal-notice.html.twig', [
-            'controller_name' => 'HomepageController',
+            'controller_name' => 'BaseController',
         ]);
     }
 }
