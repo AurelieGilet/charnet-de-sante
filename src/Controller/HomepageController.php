@@ -27,4 +27,14 @@ class HomepageController extends AbstractController
             'controller_name' => 'HomepageController',
         ]);
     }
+
+    /**
+     * @Route("/conditions-d-utilisation", name="legal-notice")
+     */
+    public function legalNotice(): Response
+    {
+        return $this->render('homepage/legal-notice.html.twig', [
+            'controller_name' => 'HomepageController',
+        ]);
+    }
 }
