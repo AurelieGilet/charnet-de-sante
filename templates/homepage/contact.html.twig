@@ -3,30 +3,31 @@
 {% block title %}Contact{% endblock %}
 
 {% block stylesheets %}
-    <link href="{{ asset('css/homepage/contact.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/homepage/contact.css') }}" >
 {% endblock %}
 
 {% block body %}
 
     <div class="container">
 
+        {% include 'partials/message-modal.html.twig' %}
+        
         <section>
             <h2>CONTACT</h2>
-            <p>Si vous avez des questions sur le fonctionnement du site, une suggestion pour son amélioration ou un bug à me signaler, vous poucez me contacter directement par mail :</p>
+            <p>Si vous avez des questions sur le fonctionnement du site, une suggestion pour son amélioration ou un bug à me signaler, vous pouvez me contacter directement par mail :</p>
             <a href="mailto:charnetdesante@gmail.com">charnetdesante@gmail.com</a>
             <p>Ou bien utiliser le formulaire de contact ci-dessous :</p>
 
             {{ form_start(contactForm) }}
-                {{ form_row(contactForm.name) }}
-                {{ form_row(contactForm.firstname) }}
+                <div class="form-group">
+                    {{ form_row(contactForm.name) }}
+                    {{ form_row(contactForm.firstname) }}
+                </div>
                 {{ form_row(contactForm.email) }}
                 {{ form_row(contactForm.message) }}
+                {{ form_row(contactForm.send) }}
             {{ form_end(contactForm) }}
-        </section>
-        
-
-
-    
+        </section>    
     </div>
 
 {% endblock %}

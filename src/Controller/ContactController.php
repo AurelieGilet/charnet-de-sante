@@ -27,17 +27,20 @@ class ContactController extends AbstractController
                 ->from($contactFormData['email'])
                 ->to('charnetdesante@gmail.com')
                 ->subject('Le Charnet de Santé - Formulaire de contact')
-                ->text('Expéditeur : ' .$contactFormData['name']. ' ' .$contactFormData['firstname'].\PHP_EOL.
-                    $contactFormData['message'],
-                    'text/plain');
+                ->text('Expéditeur : ' .$contactFormData['email']. ' - ' . $contactFormData['firstname']. ' ' .$contactFormData['name'].\PHP_EOL.
+                $contactFormData['message'],
+                'text/plain');
 
             $mailer->send($message);
 
             $this->addFlash('success', 'Votre message a bien été envoyé');
 
             return $this->redirectToRoute('contact');
-
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', 'Votre message n\'a pas été envoyé');
         }
+
+        
 
         return $this->render('homepage/contact.html.twig', [
             'contactForm' => $form->createView(),
