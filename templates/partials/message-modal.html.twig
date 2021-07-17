@@ -1,0 +1,17 @@
+{% block messageModal %}
+
+    {% for label, messages in app.flashes(["danger", "success"]) %}
+        {% for message in messages %}
+            <div class="wrapper">
+                <div class="modal">
+                    <div class="close">X</div>
+                    <span class="content {{label}}-content">
+                        {{message}}
+                    </span>
+                    <button class="modal-button" type="button">Ok</button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+{% endblock %}
