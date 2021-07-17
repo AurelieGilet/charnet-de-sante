@@ -40,8 +40,6 @@ class ContactController extends AbstractController
             $this->addFlash('danger', 'Votre message n\'a pas été envoyé');
         }
 
-        
-
         return $this->render('homepage/contact.html.twig', [
             'contactForm' => $form->createView(),
             'controller_name' => 'ContactController',
