@@ -1,0 +1,74 @@
+.container {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5% 7%;
+    background-color: #C3CFD9;
+}
+
+section {
+    width: 95%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #DFE6ED;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+section h2 {
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 20px 0;
+}
+
+form {
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0 ;
+}
+
+input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #c6ccf5;
+    font-size: 1rem;
+    font-family: Do Hyeon, sans-serif;
+}
+
+button {
+    width: 100%;
+    background-color: #907AD6;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    white-space: nowrap;
+    font-size: 1rem;
+    font-family: Do Hyeon, sans-serif;
+}
+
+/***** RESPONSIVE *****/
+
+@media screen and (min-width: 768px) {
+    section h2 {
+        font-size: 1.4rem;
+    }
+    section p, section a, label, input, textarea, button {
+        font-size: 1.2rem;
+    }
+    form div {
+        margin: 20px 0 ;
+    }
+}
