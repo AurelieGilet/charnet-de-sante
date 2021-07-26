@@ -48,7 +48,11 @@ class ContactFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(['message' => "Merci de saisir un message"]),
-                    new Length(['min' => 10, 'max' => 2000, 'minMessage' => "Votre message doit faire au moins 10 caractères", 'maxMessage' => "Votre message ne doit pas faire plus de 2000 caractères"]),
+                    new Length([
+                        'min' => 10, 
+                        'max' => 2000, 
+                        'minMessage' => "Votre message doit faire au moins 10 caractères", 
+                        'maxMessage' => "Votre message ne doit pas faire plus de 2000 caractères"]),
                 ],
             ])
             ->add('send', SubmitType::class, [
