@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -17,9 +19,9 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+        if ($this->getUser()) {
+            return $this->redirectToRoute('homepage');
+        }
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -38,7 +40,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/inscription", name="registration")
      */
-    public function registration(Request $request)
+    public function registration(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher)
     {
         if ($this->getUser()) {
             return $this->redirectToRoute("homepage");
@@ -49,7 +51,21 @@ class SecurityController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        
+        if($form->isSubmitted() && $form->isValid()) {
+          $hash = $hasher->hashPassword($user, $user->getPassword());
+          $roles = ["ROLE_USER"];
+
+          $user->setPassword($hash);
+          $user->setRoles($roles);
+
+          $manager->persist($user);
+          $manager->flush();
+
+          $this->addFlash('success', "Votre compte a bien été créé");
+
+          return $this->redirectToRoute('login');
+        }
+
         return $this->render('security/registration.html.twig', [
             'registrationForm' => $form->createView(),
             'controller_name' => 'SecurityController',

@@ -31,11 +31,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="json")
      * 
      * @Assert\NotBlank(
      *      message="Merci de saisir une adresse email"
@@ -44,6 +39,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\Email(
      *      message="Merci de saisir un email valide"
      * )
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="json")
      */
     private $roles = [];
 
@@ -56,8 +56,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 	 * )
      * 
      * @Assert\Regex(
-     *     pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/",
-     *     message="Votre mot de passe doit faire au moins 8 caractères et contenir une majuscule, une minuscule et un chiffre"
+     *     pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}/",
+     *     message="Votre mot de passe doit faire entre 8 et 30 caractères et contenir une majuscule, une minuscule et un chiffre"
 	 * )
      */
     private $password;
