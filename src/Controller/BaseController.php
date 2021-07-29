@@ -37,4 +37,14 @@ class BaseController extends AbstractController
             'controller_name' => 'BaseController',
         ]);
     }
+
+    /**
+     * @Route("/espace-utilisateur", name="user-interface")
+     */
+    public function userInterface(): Response
+    {
+        return $this->render('user-interface/user-interface.html.twig', [
+            'controller_name' => 'BaseController',
+        ]);
+    }
 }
