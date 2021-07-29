@@ -2,13 +2,23 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(
+ *      fields="email",
+ *      message="Un compte utilise déjà cet email",
+ * )
+ * @UniqueEntity(
+ *      fields="username",
+ *      message="Ce nom d'utilisateur est déjà pris",
+ * )
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -21,6 +31,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * 
+     * @Assert\NotBlank(
+     *      message="Merci de saisir une adresse email"
+     * )
+     * 
+     * @Assert\Email(
+     *      message="Merci de saisir un email valide"
+     * )
      */
     private $email;
 
@@ -32,11 +50,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+	 * 
+	 * @Assert\NotBlank(
+	 * 		message="Merci de saisir un mot de passe"
+	 * )
+     * 
+     * @Assert\Regex(
+     *     pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}/",
+     *     message="Votre mot de passe doit faire entre 8 et 30 caractères et contenir une majuscule, une minuscule et un chiffre"
+	 * )
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(
+     *      message="Merci de saisir un nom d'utilisateur"
+     * )
+     * 
+     * @Assert\Length(
+	 * 		min="3", 
+	 * 		minMessage="Votre nom d'utilisateur doit faire au moins 3 caractères",
+     *      max="30",
+     *      maxMessage="Votre nom d'utilisateur doit faire moins de 30 caractères"
+	 * )
      */
     private $username;
 
