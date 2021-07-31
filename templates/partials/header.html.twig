@@ -47,6 +47,24 @@
                     <div class="line"></div>
                 </ul>
             </div>
+            <div id="desktop-menu" class="custom-select-wrapper">
+                <div class="custom-select">
+                    <div class="custom-select_trigger"><span>MENU</span>
+                        <div class="menu-arrow"></div>
+                    </div>
+                </div>
+                <ul class="custom-options">
+                    <div class="long-line"></div>
+                    <li {% if route_name == 'user-profil' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="">Mon Profil</a></li>
+                    <div class="long-line"></div>
+                    <li {% if route_name == 'cat-list' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="">Mes Chats</a></li>
+                    <div class="long-line"></div>
+                    <li {% if route_name == 'help' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="{{ path('help') }}">Mode d'emploi</a></li>
+                    <div class="long-line"></div>
+                    <li {% if route_name == 'logout' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="{{ path('logout') }}">Déconnexion</a></li>
+                    <div class="long-line"></div>
+                </ul>
+            </div>
             {% else %}
             <ul class="default-nav">
                 <li class="login-btn"><a href="{{ path('login') }}">Connexion</a></li>

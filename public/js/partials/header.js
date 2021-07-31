@@ -1,3 +1,4 @@
+// MOBILE-MENU
 const burgerButton = document.getElementById("burger-btn");
 const burgerNav = document.querySelector(".burger-nav");
 
@@ -33,3 +34,19 @@ function menuDisplay() {
     burgerNav.classList.add("burger-nav-show");
   }
 }
+
+// DESKTOP-MENU
+document.querySelector("#desktop-menu").addEventListener("click", function () {
+  this.classList.toggle("border-radius");
+  this.querySelector(".custom-select").classList.toggle("open");
+  this.querySelector(".custom-options").classList.toggle("open");
+});
+
+window.addEventListener("click", function (event) {
+  const select = document.querySelector(".custom-select");
+  if (!select.contains(event.target)) {
+    select.classList.remove("open");
+    document.querySelector("#desktop-menu").classList.remove("border-radius");
+    document.querySelector(".custom-options").classList.remove("open");
+  }
+});

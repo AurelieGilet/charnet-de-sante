@@ -195,6 +195,123 @@ nav ul {
     width: 60%;
 }
 
+/**** DESKTOP-MENU ****/
+
+.custom-select-wrapper {
+    display: none;
+    position: relative;
+    width: 180px;
+    user-select: none;
+    margin: 10px 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    background-color: #907AD6;
+    border-radius: 5px;
+}
+
+.border-radius {
+    border-radius: 5px 5px 0 0;
+}
+
+.custom-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custom-select_trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 120px;
+    height: 50px;
+    line-height: 50px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.custom-options {
+    width: 180px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 100%;
+    background-color: #907AD6;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px 2px 2px rgba(63, 54, 88, 0.445);
+    transition: all 0.5s;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 2;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.custom-select.open, .custom-options.open {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: all;
+}
+
+.custom-option {
+    width: 100%;
+    position: relative;
+    display: block;
+    padding: 0 15px;
+    line-height: 50px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.custom-option:hover, .custom-option.selected {
+    background-color: #4F518C;
+    border-radius: 5px;
+    width: 75% !important;
+}
+
+.menu-arrow {
+    position: relative;
+    height: 15px;
+    width: 15px;
+}
+
+.menu-arrow::before, .menu-arrow::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    width: 0.15rem;
+    height: 100%;
+    transition: all 0.5s;
+}
+
+.menu-arrow::before {
+    left: 5px;
+    transform: rotate(45deg);
+    background-color: white;
+}
+
+.menu-arrow::after {
+    left: -5px;
+    transform: rotate(-45deg);
+    background-color: white;
+}
+
+.open .menu-arrow::before {
+    left: 5px;
+    transform: rotate(-45deg);
+}
+
+.open .menu-arrow::after {
+    left: -5px;
+    transform: rotate(45deg);
+}
+
 /***** RESPONSIVE *****/
 
 @media screen and (min-width: 768px) {
@@ -213,5 +330,11 @@ nav ul {
     }
     header h1, header h2 {
         font-size: 1.2rem;
+    }
+    #desktop-menu {
+        display: block;
+    }
+    .mobile-menu {
+        display: none;
     }
 }
