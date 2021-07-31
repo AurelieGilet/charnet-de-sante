@@ -49,6 +49,10 @@ input, textarea {
     font-family: Do Hyeon, sans-serif;
 }
 
+input:focus, textarea:focus {
+    outline-color: #907AD6;
+}
+
 textarea {
     max-width: 100%;
     min-height: 150px;

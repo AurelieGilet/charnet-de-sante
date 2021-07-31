@@ -10,6 +10,7 @@
         <link rel="icon" type="image/png" href="{{asset('img/site/icon.png')}}"/>
         <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
         <link rel="stylesheet" href="{{ asset('css/base.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/partials/header.css') }}">
         {% block stylesheets %}
         {% endblock %}
 
@@ -20,6 +21,7 @@
         {% include 'partials/footer.html.twig' %}
 
         {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('js/partials/header.js') }}"></script>
         {% endblock %}
     </body>
 </html>

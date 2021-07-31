@@ -35,104 +35,6 @@ h1, h2, h3 {
     background: #907AD6;
 }
 
-/***** HEADER *****/
-
-header {
-    display: flex;
-    justify-content: space-between;
-    box-shadow: 0px 0px 22px rgba(175, 150, 243, 0.445);
-    background-color: #4F518C;
-}
-
-.logo {
-    width: 40%;
-    padding: 10px;
-}
-
-.logo a {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.logo img {
-    width: 100%;
-    max-width: 68px;
-    height: auto;
-}
-
-.logo h1 {
-    text-align: center;
-    font-weight: bold;
-    color: white;
-}
-
-nav {
-    width: 60%;
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px;
-}
-
-nav ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-}
-
-.login-btn, .logout-btn {
-    background-color: #907AD6;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 5px 15px;
-    cursor: pointer;
-}
-
-.register {
-    text-align: center;
-    margin: 5px 15px;
-}
-
-.mobile-auth, .desktop-auth {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    background-color: #240046;
-    color: white;
-}
-
-.mobile-auth a, .desktop-auth a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.user-avatar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100%;
-    background-color: #907AD6;
-    padding: 5px;
-    margin: 5px 10px;
-}
-
-.user-avatar img {
-    width: 40px;
-    height: auto;
-}
-
-.desktop-auth {
-    display: none;
-    background-color: #4F518C;
-    width: 40%;
-}
-
-
 /***** FOOTER *****/
 
 footer {
@@ -220,26 +122,6 @@ footer li:nth-child(2n)::before, footer li:nth-child(2n)::after {
 /***** RESPONSIVE *****/
 
 @media screen and (min-width: 768px) {
-    /***** HEADER *****/
-    .logo {
-        width: 30%;
-    }
-    nav {
-        width: 30%;
-    }
-    nav ul {
-        flex-direction: row-reverse;
-        align-items: center;
-    }
-    .mobile-auth {
-        display: none;
-    }
-    .desktop-auth {
-        display: flex;
-    }
-    header h1, header h2 {
-        font-size: 1.2rem;
-    }
     /***** MESSAGE-MODAL *****/
     .modal {
         font-size: 1.2rem;

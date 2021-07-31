@@ -1,3 +1,5 @@
+{% set route_name = app.request.attributes.get('_route') %}
+
 {% block nav %}
     <header>
         <div class="logo">
@@ -18,25 +20,57 @@
         {% endif %} 
         <nav>
             {% if is_granted("ROLE_USER") %}
-            <ul>
-                <li class="logout-btn"><a href="{{ path('logout') }}">Déconnexion</a></li>
-            </ul>
+            <div class="mobile-menu">
+                <div class="burger-button" id="burger-btn">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+                <ul class="burger-nav">
+                    <div class="long-line"></div>
+                    <li class="mobile-auth">
+                        <a href="{{ path('user-interface') }}">
+                            <div class="user-avatar">
+                                <img src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat">
+                            </div>
+                            <h2>Bienvenue {{ app.user.username }}</h2>
+                        </a>
+                    </li>
+                    <div class="long-line"></div>
+                    <li {% if route_name == 'user-profil' %} class="active"{% endif %}><a href="">Mon Profil</a></li>
+                    <div class="line"></div>
+                    <li {% if route_name == 'cat-list' %} class="active"{% endif %}><a href="">Mes Chats</a></li>
+                    <div class="line"></div>
+                    <li {% if route_name == 'help' %} class="active"{% endif %}><a href="{{ path('help') }}">Mode d'emploi</a></li>
+                    <div class="line"></div>
+                    <li {% if route_name == 'logout' %} class="active"{% endif %}><a href="{{ path('logout') }}">Déconnexion</a></li>
+                    <div class="line"></div>
+                </ul>
+            </div>
+            <div id="desktop-menu" class="custom-select-wrapper">
+                <div class="custom-select">
+                    <div class="custom-select_trigger"><span>MENU</span>
+                        <div class="menu-arrow"></div>
+                    </div>
+                </div>
+                <ul class="custom-options">
+                    <div class="long-line"></div>
+                    <li {% if route_name == 'user-profil' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="">Mon Profil</a></li>
+                    <div class="long-line"></div>
+                    <li {% if route_name == 'cat-list' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="">Mes Chats</a></li>
+                    <div class="long-line"></div>
+                    <li {% if route_name == 'help' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="{{ path('help') }}">Mode d'emploi</a></li>
+                    <div class="long-line"></div>
+                    <li {% if route_name == 'logout' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="{{ path('logout') }}">Déconnexion</a></li>
+                    <div class="long-line"></div>
+                </ul>
+            </div>
             {% else %}
-            <ul>
+            <ul class="default-nav">
                 <li class="login-btn"><a href="{{ path('login') }}">Connexion</a></li>
                 <li class="register"><a href="{{ path('registration') }}">Inscription</a></li>
             </ul>
             {% endif %} 
         </nav>
     </header>
-    {% if is_granted("ROLE_USER") %}
-    <div class="mobile-auth">
-        <a href="{{ path('user-interface') }}">
-            <div class="user-avatar">
-                <img src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat">
-            </div>
-            <h2>Bienvenue {{ app.user.username }}</h2>
-        </a>
-    </div>
-    {% endif %} 
 {% endblock %}
