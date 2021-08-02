@@ -3,7 +3,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #C3CFD9;
+    background-color: var(--main-background-color);
 }
 
 section {
@@ -14,7 +14,7 @@ section {
     justify-content: center;
     align-items: center;
     align-items: center;
-    background-color: #DFE6ED;
+    background-color: var(--secondary-background-color);
     border-radius: 5px;
     padding: 10px;
     margin: 10px;

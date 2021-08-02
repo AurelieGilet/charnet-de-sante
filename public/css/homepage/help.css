@@ -4,7 +4,7 @@ section {
     justify-content: center;
     align-items: center;
     padding: 5% 7%;
-    background-color: #C3CFD9;
+    background-color: var(--main-background-color);
 }
 
 section h2 {
@@ -19,7 +19,7 @@ section h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #DFE6ED;
+    background-color: var(--secondary-background-color);
     border-radius: 5px;
     padding: 10px;
 }
@@ -30,8 +30,8 @@ article {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #F7F9FA;
-    border: 1px solid #c6ccf5;
+    background-color: var(--list-background-color);
+    border: 1px solid var(--list-border-color);
     border-radius: 5px;
     box-shadow: 0px 0px 24px rgba(177, 177, 177, 0.30);
     margin: 10px;
@@ -63,8 +63,8 @@ article {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #4F518C;
-    border: 2px solid #240046;
+    background-color: var(--purple-navy);
+    border: 2px solid var(--russian-violet);
     border-radius: 50%;
     padding: 5px;
     margin: 5px;
@@ -106,13 +106,13 @@ article {
 .arrow::before {
     left: 5px;
     transform: rotate(45deg);
-    background-color: #4F518C;
+    background-color: var(--purple-navy);
 }
 
 .arrow::after {
     left: -5px;
     transform: rotate(-45deg);
-    background-color: #4F518C;
+    background-color: var(--purple-navy);
 }
 
 .open .arrow::before {

@@ -7,7 +7,7 @@ button {
 }
 
 .login-error {
-    color: #f84a7e;
+    color: var(--danger-color);
     text-align: center;
 }
 
