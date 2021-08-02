@@ -8,6 +8,18 @@
     src: url('../fonts/DoHyeon-Regular.ttf') format('ttf');
 }
 
+:root {
+    --main-background-color: #C3CFD9;
+    --secondary-background-color: #DFE6ED;
+    --purple-navy: #4F518C;
+    --medium-purple: #907AD6;
+    --russian-violet: #240046;
+    --success-color: #56ffe8;
+    --danger-color: #f84a7e;
+    --list-background-color: #F7F9FA;
+    --list-border-color: #c6ccf5;
+}
+
 html {
 	scroll-behavior: smooth;
 }
@@ -28,11 +40,11 @@ h1, h2, h3 {
 }
 
 ::-webkit-scrollbar-track {
-    background: #4F518C;
+    background: var(--purple-navy);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #907AD6;
+    background: var(--medium-purple);
 }
 
 /***** FOOTER *****/
@@ -43,7 +55,7 @@ footer {
     justify-content: center;
     align-items: center;
     padding: 15px 0;
-    background-color: #4F518C;
+    background-color: var(--purple-navy);
     color: white;
     font-size: 0.8rem;
 }
@@ -82,7 +94,7 @@ footer li:nth-child(2n)::before, footer li:nth-child(2n)::after {
     padding: 10px 5px;
     margin: 10px;
     border-radius: 5px;
-    background-color: #4F518C;
+    background-color: var(--purple-navy);
 }
 
 .content {
@@ -91,11 +103,11 @@ footer li:nth-child(2n)::before, footer li:nth-child(2n)::after {
 }
 
 .success-content {
-    color: #56ffe8;
+    color: var(--success-color);
 }
 
 .danger-content {
-    color: #f84a7e;
+    color: var(--danger-color);
 }
 
 .close {
@@ -104,14 +116,14 @@ footer li:nth-child(2n)::before, footer li:nth-child(2n)::after {
     right: 5px;
     margin: 5px;
     padding: 5px;
-    background-color: #907AD6;
+    background-color: var(--medium-purple);
     border-radius: 5px;
     color: white;
     cursor: pointer;
 }
 
 .modal-button {
-    background-color: #907AD6;
+    background-color: var(--medium-purple);
     padding: 10px;
     width: 95%;
     border-radius: 5px;

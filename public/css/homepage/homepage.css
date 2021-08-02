@@ -7,7 +7,7 @@ main {
 /***** AUTHENTICATOR *****/
 
 .authenticator {
-    background-color: #DFE6ED;
+    background-color: var(--secondary-background-color);
     padding: 10px;
 }
 
@@ -32,16 +32,16 @@ label {
 input {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #c6ccf5;
+    border: 1px solid var(--list-border-color);
     margin-right: 5px;
 }
 
 input:focus {
-    outline-color: #907AD6;
+    outline-color: var(--medium-purple);
 }
 
 button {
-    background-color: #907AD6;
+    background-color: var(--medium-purple);
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -57,7 +57,7 @@ button {
     justify-content: center;
     align-items: center;
     padding: 5%;
-    background-color: #C3CFD9;
+    background-color: var(--main-background-color);
 }
 
 .picture {
@@ -70,7 +70,7 @@ button {
     height: auto;
     float: left;
     margin-right: 10px;
-    border: 4px solid #4F518C;
+    border: 4px solid var(--purple-navy);
 }
 
 .description {
@@ -84,7 +84,7 @@ button {
 /***** FUNCTIONNALITIES *****/
 
 .functionalities {
-    background-color: #DFE6ED;
+    background-color: var(--secondary-background-color);
 }
 
 .functionalities ul {
@@ -99,8 +99,8 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F7F9FA;
-    border: 1px solid #c6ccf5;
+    background-color: var(--list-background-color);
+    border: 1px solid var(--list-border-color);
     border-radius: 5px;
     box-shadow: 0px 0px 24px rgba(177, 177, 177, 0.30);
     margin: 10px;
@@ -112,8 +112,8 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #4F518C;
-    border: 2px solid #240046;
+    background-color: var(--purple-navy);
+    border: 2px solid var(--russian-violet);
     border-radius: 50%;
     padding: 5px;
     margin: 5px;
@@ -152,7 +152,7 @@ button {
         width: 100%;
         max-width: 300px;
         height: auto;
-        border: 4px solid #4F518C;
+        border: 4px solid var(--purple-navy);
     }
     .description {
         display: flex;
