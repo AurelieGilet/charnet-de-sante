@@ -37,13 +37,13 @@
                         </a>
                     </li>
                     <div class="long-line"></div>
-                    <li {% if route_name == 'user-profil' %} class="active"{% endif %}><a href="">Mon Profil</a></li>
+                    <li {% if route_name == 'user-account' %} class="active" {% endif %}><a href="{{ path('user-account') }}">Mon Compte</a></li>
                     <div class="line"></div>
-                    <li {% if route_name == 'cat-list' %} class="active"{% endif %}><a href="">Mes Chats</a></li>
+                    <li {% if route_name == 'cat-list' %} class="active" {% endif %}><a href="">Mes Chats</a></li>
                     <div class="line"></div>
-                    <li {% if route_name == 'help' %} class="active"{% endif %}><a href="{{ path('help') }}">Mode d'emploi</a></li>
+                    <li {% if route_name == 'help' %} class="active" {% endif %}><a href="{{ path('help') }}">Mode d'emploi</a></li>
                     <div class="line"></div>
-                    <li {% if route_name == 'logout' %} class="active"{% endif %}><a href="{{ path('logout') }}">Déconnexion</a></li>
+                    <li {% if route_name == 'logout' %} class="active" {% endif %}><a href="{{ path('logout') }}">Déconnexion</a></li>
                     <div class="line"></div>
                 </ul>
             </div>
@@ -55,7 +55,7 @@
                 </div>
                 <ul class="custom-options">
                     <div class="long-line"></div>
-                    <li {% if route_name == 'user-profil' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="">Mon Profil</a></li>
+                    <li {% if route_name == 'user-account' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="{{ path('user-account') }}">Mon Compte</a></li>
                     <div class="long-line"></div>
                     <li {% if route_name == 'cat-list' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="">Mes Chats</a></li>
                     <div class="long-line"></div>
