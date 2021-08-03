@@ -23,7 +23,11 @@ section {
 section h2 {
     font-size: 1.2rem;
     font-weight: bold;
-    margin: 10px 0;
+    margin: 20px 0;
+}
+
+section p {
+    color: var(--russian-violet);
 }
 
 .update-info {
@@ -92,5 +96,34 @@ section h2 {
     color: white;
     white-space: nowrap;
     margin: 10px 0;
+}
+
+/***** RESPONSIVE *****/
+
+@media screen and (min-width: 768px) {
+    section h2 {
+        font-size: 1.4rem;
+    }
+    section h3, section p, .return-btn  {
+        font-size: 1.2rem;
+    }
+    .update-info {
+        font-size: 1rem;
+    }
+   .profil-wrapper {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       margin: 20px 0;
+   } 
+   .profil-picture {
+       width: 40%;
+   }
+   .info-wrapper {
+       width: 50%;
+   }
+   .username, .email, .password {
+    padding: 15px 5px;
+}
 }
 
