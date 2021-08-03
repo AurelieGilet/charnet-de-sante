@@ -98,6 +98,57 @@ section p {
     margin: 10px 0;
 }
 
+/* FORMS */
+
+#edit-username-form, #edit-email-form, #edit-password-form {
+    display: none;
+}
+
+.form-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background-color: #24004656;
+}
+
+.form-wrapper {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 5px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: var(--purple-navy);
+    color: white;
+}
+
+.form-wrapper h2{
+    font-size: 1.2rem;
+    margin: 20px 0;
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin: 5px;
+    padding: 5px;
+    background-color: var(--medium-purple);
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
 /***** RESPONSIVE *****/
 
 @media screen and (min-width: 768px) {
@@ -124,6 +175,9 @@ section p {
    }
    .username, .email, .password {
     padding: 15px 5px;
-}
+    }
+    .form-wrapper h2{
+        font-size: 1.4rem;
+    }
 }
 

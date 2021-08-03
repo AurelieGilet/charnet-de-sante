@@ -1,0 +1,11 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+    <h2>Modifier votre mot de passe</h2>
+    <div class="close">X</div>
+    {{ form_start(emailForm) }}
+        {{ form_row(emailForm.email) }}
+        {{ form_row(emailForm.password) }}
+        {{ form_row(emailForm.submit) }}
+    {{ form_end(emailForm) }}
+    </div>
+</div>

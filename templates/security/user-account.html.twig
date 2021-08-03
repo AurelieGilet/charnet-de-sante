@@ -1,9 +1,12 @@
+{% set route_name = app.request.attributes.get('_route') %}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Le Charnet de Santé - Votre compte{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/security/user-account.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}" >
 {% endblock %}
 
 {% block body %}
@@ -22,29 +25,46 @@
                     <div class="username">
                         <div class="top-info">
                             <h3>Nom d'utilisateur</h3>
-                            <a href="" class="update-info modify">Modifier</a>
+                            <span id="edit-username" class="update-info modify">Modifier</span>
                         </div>
                         <p>{{ app.user.username }}</p>
                     </div>
                     <div class="email">
                         <div class="top-info">
                             <h3>Adresse e-mail</h3>
-                            <a href="" class="update-info modify">Modifier</a>
+                            <span id="edit-email" class="update-info modify">Modifier</span>
                         </div>
                         <p>{{ app.user.email }}</p>
                     </div>
                     <div class="password">
                         <div class="top-info">
                             <h3>Mot de passe</h3>
-                            <a href="" class="update-info modify">Modifier</a>
+                            <span id="edit-password" class="update-info modify">Modifier</span>
                         </div>
                         <p>**********</p>
                     </div>
                 </div>
             </div>
-            <a href="" class="update-info delete">Supprimer le compte</a>
+            <span href="" class="update-info delete">Supprimer le compte</span>
             <a href="{{ path('user-interface') }}" class="return-btn">Retour</a>
         </section>
-    </main>
 
+        <div id="edit-username-form">
+            {{ render(controller(
+                'App\\Controller\\SecurityController::editUsername'
+            ))}}
+        </div>
+        <div id="edit-email-form">
+            {{ render(controller(
+                'App\\Controller\\SecurityController::editEmail'
+            ))}}
+        </div>
+        <div id="edit-password-form">
+            {{ render(controller(
+                'App\\Controller\\SecurityController::editPassword'
+            ))}}
+        </div>
+        
+    </main>
+    <script type="text/javascript" src="{{ asset('js/security/user-account.js') }}"></script>
 {% endblock %}

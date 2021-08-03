@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\EditEmailFormType;
+use App\Form\EditPasswordFormType;
+use App\Form\EditUsernameFormType;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
@@ -71,13 +74,47 @@ class SecurityController extends AbstractController
             'controller_name' => 'SecurityController',
         ]);
     }
+
     /**
      * @Route("/compte", name="user-account")
      */
-    public function userProfil()
+    public function userAccount()
     {
         return $this->render('security/user-account.html.twig', [
             'controller_name' => 'SecurityController',
+        ]);
+    }
+
+    public function editUsername(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditUsernameFormType::class, $user);
+        $form->handleRequest($request);
+
+        return $this->render('security/_edit-username-form.html.twig', [
+            'usernameForm' => $form->createView()
+        ]);
+    }
+
+    public function editEmail(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditEmailFormType::class, $user);
+        $form->handleRequest($request);
+
+        return $this->render('security/_edit-email-form.html.twig', [
+            'emailForm' => $form->createView()
+        ]);
+    }
+
+    public function editPassword(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditPasswordFormType::class, $user);
+        $form->handleRequest($request);
+
+        return $this->render('security/_edit-password-form.html.twig', [
+            'passwordForm' => $form->createView()
         ]);
     }
 }
