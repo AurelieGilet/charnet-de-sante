@@ -24,7 +24,7 @@ class UserFixtures extends Fixture
 
                 $user->setEmail('admin@mail.com')
                      ->setPassword($this->passwordHasher->hashPassword(
-                    $user,'password'))
+                    $user,'Password0'))
                      ->setRoles(['ROLE_ADMIN'])
                      ->setUsername('Chadmin'); 
                 
@@ -34,7 +34,7 @@ class UserFixtures extends Fixture
 
                 $user->setEmail('fakeuser'.$i.'@mail.com')
                      ->setPassword($this->passwordHasher->hashPassword(
-                    $user,'password'))
+                    $user,'Password'.$i))
                      ->setRoles(['ROLE_USER'])
                      ->setUsername('FakeUser'.$i);
                      

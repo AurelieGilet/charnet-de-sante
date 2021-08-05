@@ -22,12 +22,8 @@ class EditEmailFormType extends AbstractType
             'label' => "Nouvelle adresse email",
             'attr' => ['placeholder' => "Ex: michelle@mail.com"],
             'required' => true,
-            'constraints' => [
-                new NotBlank(['message' => "Merci de saisir un email"]),
-                new Email(['message' => "Merci de saisir un email valide"]),
-            ],
-        ])
-        ->add('password', PasswordType::class, [
+            ])
+        ->add('confirm_password', PasswordType::class, [
             'label' => "Confirmez par mot de passe",
             'attr' => ['placeholder' => "Entrez votre mot de passe"],
             'required' => true,

@@ -23,7 +23,6 @@ class EditPasswordFormType extends AbstractType
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => "Les mots de passe ne correspondent pas",
                 'first_options' => [
                     'label' => "Nouveau mot de passe", 
                     'attr' => ['placeholder' => "Entrez votre nouveau mot de passe"]

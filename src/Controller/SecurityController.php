@@ -43,7 +43,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/inscription", name="registration")
      */
-    public function registration(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher)
+    public function registration(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute("homepage");
@@ -55,18 +55,18 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-          $hash = $hasher->hashPassword($user, $user->getPassword());
-          $roles = ["ROLE_USER"];
+            $hash = $hasher->hashPassword($user, $user->getPassword());
+            $roles = ["ROLE_USER"];
 
-          $user->setPassword($hash);
-          $user->setRoles($roles);
+            $user->setPassword($hash);
+            $user->setRoles($roles);
 
-          $manager->persist($user);
-          $manager->flush();
+            $manager->persist($user);
+            $manager->flush();
 
-          $this->addFlash('success', "Votre compte a bien été créé");
+            $this->addFlash('success', "Votre compte a bien été créé");
 
-          return $this->redirectToRoute('login');
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('security/registration.html.twig', [
@@ -76,7 +76,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/compte", name="user-account")
+     * @Route("/espace-utilisateur/compte", name="user-account")
      */
     public function userAccount()
     {
@@ -85,36 +85,111 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    public function editUsername(Request $request)
+    /**
+     * @Route("/espace-utilisateur/compte/editer-nom-utilisateur", name="edit-username")
+     */
+    public function editUsername(Request $request, EntityManagerInterface $manager): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(EditUsernameFormType::class, $user);
+        $form = $this->createForm(EditUsernameFormType::class, $user, [
+            'action' => $this->generateUrl('edit-username'),
+        ]);
         $form->handleRequest($request);
 
-        return $this->render('security/_edit-username-form.html.twig', [
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($user);
+            $manager->flush();
+
+            $this->addFlash('success', "Votre nom d'utilisateur a été changé");
+
+            return $this->redirectToRoute('user-account');
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "Votre nom d'utilisateur doit faire entre 3 et 30 caractères");
+
+            return $this->redirectToRoute('user-account');
+        }
+
+        return $this->render('security/_edit_username_form.html.twig', [
             'usernameForm' => $form->createView()
         ]);
     }
 
-    public function editEmail(Request $request)
+    /**
+     * @Route("/espace-utilisateur/compte/editer-email", name="edit-email")
+     */
+    public function editEmail(Request $request, EntityManagerInterface $manager): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(EditEmailFormType::class, $user);
+        $actualPassword = $user->getPassword();
+        $form = $this->createForm(EditEmailFormType::class, $user, [
+            'action' => $this->generateUrl('edit-email'),
+        ]);
         $form->handleRequest($request);
 
-        return $this->render('security/_edit-email-form.html.twig', [
+        if ($form->isSubmitted() && $form->isValid()) {
+            $enteredPassword = $form['confirm_password']->getData();
+
+            if (password_verify($enteredPassword, $actualPassword)) {
+                $manager->persist($user);
+                $manager->flush();
+
+                $this->addFlash('success', "Votre e-mail a bien été changé");
+
+                return $this->redirectToRoute('user-account');
+            } else {
+                $this->addFlash('danger', "Ce n'est pas le bon mot de passe");
+
+                return $this->redirectToRoute('user-account');
+            }
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "Veuillez saisir un email valide");
+
+            return $this->redirectToRoute('user-account');
+        }
+
+        return $this->render('security/_edit_email_form.html.twig', [
             'emailForm' => $form->createView()
         ]);
     }
-
-    public function editPassword(Request $request)
+    
+    /**
+     * @Route("/espace-utilisateur/compte/editer-mot-de-passe", name="edit-password")
+     */
+    public function editPassword(Request $request, EntityManagerInterface $manager,UserPasswordHasherInterface $hasher): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(EditPasswordFormType::class, $user);
+        $actualPassword = $user->getPassword();
+        $form = $this->createForm(EditPasswordFormType::class, $user, [
+            'action' => $this->generateUrl('edit-password'),
+        ]);
         $form->handleRequest($request);
 
-        return $this->render('security/_edit-password-form.html.twig', [
+        if ($form->isSubmitted() && $form->isValid()) {
+            $oldPassword = $form['old_password']->getData();
+
+            if (password_verify($oldPassword, $actualPassword)) {
+                $hashedNewPassword = $hasher->hashPassword($user, $user->getPassword());
+                $user->setPassword($hashedNewPassword);
+
+                $manager->persist($user);
+                $manager->flush();
+
+                $this->addFlash('success', "Votre mot de passe a bien été changé");
+
+                return $this->redirectToRoute('user-account');
+            } else {
+                $this->addFlash('danger', "Votre ancien mot de passe ne correspond pas à l'actuel");
+
+                return $this->redirectToRoute('user-account');
+            }
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "Les mots de passe ne correspondent pas ou ils doivent faire entre 8 et 30 caractères et contenir une majuscule, une minuscule et un chiffre");
+
+            return $this->redirectToRoute('user-account');
+        }
+
+        return $this->render('security/_edit_password_form.html.twig', [
             'passwordForm' => $form->createView()
         ]);
     }
-}
+}        
