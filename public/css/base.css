@@ -87,6 +87,7 @@ footer li:nth-child(2n)::before, footer li:nth-child(2n)::after {
 
 .modal {
     position: relative;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     justify-content: center;
