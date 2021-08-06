@@ -5,6 +5,8 @@ const editEmailBtn = document.getElementById("edit-email");
 const editEmailForm = document.getElementById("edit-email-form");
 const editPasswordBtn = document.getElementById("edit-password");
 const editPasswordForm = document.getElementById("edit-password-form");
+const editProfilPictureBtn = document.getElementById("edit-profil-picture");
+const editProfilPictureForm = document.getElementById("edit-profil-picture-form");
 
 if (close != null) {
   for (let i = 0; i < close.length; i++) {
@@ -12,6 +14,7 @@ if (close != null) {
       editUsernameForm.style.display = "none";
       editEmailForm.style.display = "none";
       editPasswordForm.style.display = "none";
+      editProfilPictureForm.style.display = "none";
     });
   }
 }
@@ -26,4 +29,8 @@ editEmailBtn.addEventListener("click", function () {
 
 editPasswordBtn.addEventListener("click", function () {
   editPasswordForm.style.display = "block";
+});
+
+editProfilPictureBtn.addEventListener("click", function () {
+  editProfilPictureForm.style.display = "block";
 });

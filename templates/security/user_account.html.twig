@@ -20,9 +20,9 @@
             <div class="profil-wrapper">
                 <div class="profil-picture">
                     <div class="avatar">
-                        <img src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat">
+                        <img {% if app.user.picture != null %} src="{{ app.user.picture }}" alt="Photo de profil de {{ app.user.username }}" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
                     </div>
-                    <a href="" class="update-info modify">Changer mon avatar</a>
+                    <span id="edit-profil-picture" class="update-info modify">Changer mon avatar</span>
                 </div>
                 <div class="info-wrapper">
                     <div class="username">
@@ -65,6 +65,11 @@
         <div id="edit-password-form">
             {{ render(controller(
                 'App\\Controller\\SecurityController::editPassword'
+            ))}}
+        </div>
+        <div id="edit-profil-picture-form">
+            {{ render(controller(
+                'App\\Controller\\SecurityController::editProfilPicture'
             ))}}
         </div>
         

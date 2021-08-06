@@ -1,0 +1,13 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <h2>Modifier votre photo de profil</h2>
+        <div class="close">X</div>
+        {{ form_start(ProfilPictureForm) }}
+            <div class="avatar centered">
+                <img {% if app.user.picture != null %} src="{{ app.user.picture }}" alt="Photo de profil de {{ app.user.username }}" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
+            </div>
+            {{ form_row(ProfilPictureForm.picture) }}
+            {{ form_row(ProfilPictureForm.submit) }}
+        {{ form_end(ProfilPictureForm) }}
+    </div>
+</div>

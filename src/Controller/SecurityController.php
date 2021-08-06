@@ -7,6 +7,7 @@ use App\Form\EditEmailFormType;
 use App\Form\EditPasswordFormType;
 use App\Form\EditUsernameFormType;
 use App\Form\RegistrationFormType;
+use App\Form\EditProfilPictureFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,10 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername, 
+            'error' => $error
+        ]);
     }
 
     /**
@@ -80,7 +84,7 @@ class SecurityController extends AbstractController
      */
     public function userAccount()
     {
-        return $this->render('security/user-account.html.twig', [
+        return $this->render('security/user_account.html.twig', [
             'controller_name' => 'SecurityController',
         ]);
     }
@@ -190,6 +194,35 @@ class SecurityController extends AbstractController
 
         return $this->render('security/_edit_password_form.html.twig', [
             'passwordForm' => $form->createView()
+        ]);
+    }
+
+        /**
+     * @Route("/espace-utilisateur/compte/editer-photo-profil", name="edit-profil-picture")
+     */
+    public function editProfilPicture(Request $request, EntityManagerInterface $manager): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditProfilPictureFormType::class, $user, [
+            'action' => $this->generateUrl('edit-profil-picture'),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($user);
+            $manager->flush();
+
+            $this->addFlash('success', "Votre photo de profil a été ajoutée");
+
+            return $this->redirectToRoute('user-account');
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "ça marche pas !");
+
+            return $this->redirectToRoute('user-account');
+        }
+
+        return $this->render('security/_edit_profil_picture_form.html.twig', [
+            'ProfilPictureForm' => $form->createView()
         ]);
     }
 }        
