@@ -36,17 +36,21 @@ function menuDisplay() {
 }
 
 // DESKTOP-MENU
-document.querySelector("#desktop-menu").addEventListener("click", function () {
-  this.classList.toggle("border-radius");
-  this.querySelector(".custom-select").classList.toggle("open");
-  this.querySelector(".custom-options").classList.toggle("open");
-});
+if (document.querySelector("#desktop-menu")) {
+  document
+    .querySelector("#desktop-menu")
+    .addEventListener("click", function () {
+      this.classList.toggle("border-radius");
+      this.querySelector(".custom-select").classList.toggle("open");
+      this.querySelector(".custom-options").classList.toggle("open");
+    });
 
-window.addEventListener("click", function (event) {
-  const select = document.querySelector(".custom-select");
-  if (!select.contains(event.target)) {
-    select.classList.remove("open");
-    document.querySelector("#desktop-menu").classList.remove("border-radius");
-    document.querySelector(".custom-options").classList.remove("open");
-  }
-});
+  window.addEventListener("click", function (event) {
+    const select = document.querySelector(".custom-select");
+    if (!select.contains(event.target)) {
+      select.classList.remove("open");
+      document.querySelector("#desktop-menu").classList.remove("border-radius");
+      document.querySelector(".custom-options").classList.remove("open");
+    }
+  });
+}
