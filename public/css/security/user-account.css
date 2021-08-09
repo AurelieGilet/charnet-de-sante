@@ -59,6 +59,7 @@ section p {
 
 .avatar {
     width: 125px;
+    height: 125px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,6 +78,10 @@ section p {
 .avatar img {
     width: 120px;
     height: auto;
+}
+
+.user-picture {
+    clip-path: circle(50% at 50% 50%);
 }
 
 .info-wrapper {
@@ -106,7 +111,7 @@ section p {
 
 /* FORMS */
 
-#edit-username-form, #edit-email-form, #edit-password-form, #edit-profil-picture-form {
+#edit-username-form, #edit-email-form, #edit-password-form, #edit-picture-form {
     display: none;
 }
 
@@ -153,6 +158,21 @@ section p {
     border-radius: 5px;
     color: white;
     cursor: pointer;
+}
+
+#default {
+    display: flex;
+}
+
+#preview {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+}
+
+#preview img {
+    width: 100%;
+    height: auto;
 }
 
 /***** RESPONSIVE *****/

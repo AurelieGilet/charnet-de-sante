@@ -4,17 +4,21 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditEmailFormType;
+use App\Form\EditPictureFormType;
 use App\Form\EditPasswordFormType;
 use App\Form\EditUsernameFormType;
 use App\Form\RegistrationFormType;
-use App\Form\EditProfilPictureFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SecurityController extends AbstractController
 {
@@ -198,31 +202,54 @@ class SecurityController extends AbstractController
     }
 
         /**
-     * @Route("/espace-utilisateur/compte/editer-photo-profil", name="edit-profil-picture")
+     * @Route("/espace-utilisateur/compte/editer-photo", name="edit-picture", methods={"POST"}, options={"expose"=true})
      */
-    public function editProfilPicture(Request $request, EntityManagerInterface $manager): Response
+    public function editPicture(Request $request, EntityManagerInterface $manager, SluggerInterface $slugger): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(EditProfilPictureFormType::class, $user, [
-            'action' => $this->generateUrl('edit-profil-picture'),
+        $oldPicture = $user->getPicture();
+
+        $form = $this->createForm(EditPictureFormType::class, $user, [
+            'action' => $this->generateUrl('edit-picture'),
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager->persist($user);
-            $manager->flush();
+        if ($request->isXmlHttpRequest()) {
+            
+            $file = $_FILES['file'];
+            $file = new UploadedFile($file['tmp_name'], $file['name'], $file['type']);
 
-            $this->addFlash('success', "Votre photo de profil a été ajoutée");
+            if (filesize($file) <= 2000000) {
+                if ($oldPicture) {
+                    $filesystem = new Filesystem();
+                    $filesystem->remove($this->getParameter('images_directory') . '/' . $oldPicture);
+                }
 
-            return $this->redirectToRoute('user-account');
-        } else if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "ça marche pas !");
+                $filename = $slugger->slug($user->getId()) . '-' . uniqid() . '.' . $file->guessExtension();
 
-            return $this->redirectToRoute('user-account');
-        }
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $filename
+                );
 
-        return $this->render('security/_edit_profil_picture_form.html.twig', [
-            'ProfilPictureForm' => $form->createView()
+                $user->setPicture($filename);
+
+                $manager->persist($user);
+                $manager->flush();
+
+                $this->addFlash('success', "Votre photo de profil a été ajoutée");
+                
+                return new JsonResponse();
+            } else {
+                $this->addFlash('danger', "Votre photo de profil n'a pas été modifiée. L'image doit faire moins de 2 Mo.");
+
+                return new JsonResponse(415);
+            }
+                        
+        } 
+
+        return $this->render('security/_edit_picture_form.html.twig', [
+            'pictureForm' => $form->createView()
         ]);
     }
 }        

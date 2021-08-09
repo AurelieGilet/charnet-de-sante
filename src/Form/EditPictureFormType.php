@@ -9,17 +9,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class EditProfilPictureFormType extends AbstractType
+class EditPictureFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('picture', FileType::class, [
-                'label' => 'Photo de Profil',
-                'attr' => [
-                    'id' => 'profil_picture',
-                    ]
-                
+            ->add('picture', FileType::class, array('data_class' => null), [
+                'label' => 'Photo de Profil',                
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "Valider"

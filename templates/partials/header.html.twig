@@ -12,7 +12,7 @@
         <div class="desktop-auth">
             <a href="{{ path('user-interface') }}">
                 <div class="user-avatar">
-                    <img {% if app.user.picture != null %} src="{{ app.user.picture }}" alt="Photo de profil de {{ app.user.username }}" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
+                    <img {% if app.user.picture != null %} src="{{ asset('img/upload/' ~ app.user.picture) }}" alt="Photo de profil de {{ app.user.username }}" class="user-picture" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
                 </div>
                 <h2>Bienvenue {{ app.user.username }}</h2>
             </a>
@@ -31,7 +31,7 @@
                     <li class="mobile-auth">
                         <a href="{{ path('user-interface') }}">
                             <div class="user-avatar">
-                                <img {% if app.user.picture != null %} src="{{ app.user.picture }}" alt="Photo de profil de {{ app.user.username }}" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
+                                <img {% if app.user.picture != null %} src="{{ asset('img/upload/' ~ app.user.picture) }}" alt="Photo de profil de {{ app.user.username }}" class="user-picture" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
                             </div>
                             <h2>Bienvenue {{ app.user.username }}</h2>
                         </a>

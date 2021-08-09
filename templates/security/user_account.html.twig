@@ -5,8 +5,9 @@
 {% block title %}Le Charnet de Santé - Votre compte{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/security/user-account.css') }}" >
-    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}" >
+<link rel="stylesheet" href="{{ asset('css/security/user-account.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+<link rel="stylesheet" href="{{ asset('css/user-interface/cropper.min.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -20,9 +21,9 @@
             <div class="profil-wrapper">
                 <div class="profil-picture">
                     <div class="avatar">
-                        <img {% if app.user.picture != null %} src="{{ app.user.picture }}" alt="Photo de profil de {{ app.user.username }}" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
+                        <img {% if app.user.picture != null %} src="{{ asset('img/upload/' ~ app.user.picture) }}" alt="Photo de profil de {{ app.user.username }}" class="user-picture" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
                     </div>
-                    <span id="edit-profil-picture" class="update-info modify">Changer mon avatar</span>
+                    <span id="edit-picture" class="update-info modify">Changer mon avatar</span>
                 </div>
                 <div class="info-wrapper">
                     <div class="username">
@@ -67,12 +68,13 @@
                 'App\\Controller\\SecurityController::editPassword'
             ))}}
         </div>
-        <div id="edit-profil-picture-form">
+        <div id="edit-picture-form">
             {{ render(controller(
-                'App\\Controller\\SecurityController::editProfilPicture'
+                'App\\Controller\\SecurityController::editPicture'
             ))}}
         </div>
         
     </main>
     <script type="text/javascript" src="{{ asset('js/security/user-account.js') }}"></script>
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}
