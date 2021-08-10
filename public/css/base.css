@@ -72,6 +72,10 @@ footer li:nth-child(2n)::before, footer li:nth-child(2n)::after {
 
 /***** MESSAGE-MODAL *****/
 
+.modal-open {
+    overflow: hidden;
+}
+
 .wrapper {
     display: flex;
     justify-content: center;

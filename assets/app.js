@@ -45,8 +45,8 @@ form.addEventListener("submit", function (event) {
   event.preventDefault();
   cropper
     .getCroppedCanvas({
-      maxHeight: 1000,
-      maxWidth: 1000,
+      maxHeight: 500,
+      maxWidth: 500,
     })
     .toBlob(function (blob) {
       ajaxRequestEditPicture(blob);

@@ -132,6 +132,7 @@ section p {
     position: relative;
     width: 90%;
     max-width: 600px;
+    max-height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -145,7 +146,8 @@ section p {
 
 .form-wrapper h2{
     font-size: 1.2rem;
-    margin: 20px 0;
+    margin: 40px 10px 20px 10px;
+    text-align: center;
 }
 
 .close {
@@ -166,7 +168,8 @@ section p {
 
 #preview {
     display: block;
-    width: 90%;
+    max-width: 90%;
+    max-height: 40vh;
     margin: 0 auto;
 }
 
