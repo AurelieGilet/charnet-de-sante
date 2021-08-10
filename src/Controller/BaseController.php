@@ -33,7 +33,7 @@ class BaseController extends AbstractController
      */
     public function legalNotice(): Response
     {
-        return $this->render('homepage/legal-notice.html.twig', [
+        return $this->render('homepage/legal_notice.html.twig', [
             'controller_name' => 'BaseController',
         ]);
     }
@@ -43,7 +43,7 @@ class BaseController extends AbstractController
      */
     public function userInterface(): Response
     {
-        return $this->render('user-interface/user-interface.html.twig', [
+        return $this->render('user-interface/user_interface.html.twig', [
             'controller_name' => 'BaseController',
         ]);
     }

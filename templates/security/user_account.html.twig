@@ -1,0 +1,80 @@
+{% set route_name = app.request.attributes.get('_route') %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Votre compte{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/security/user-account.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+<link rel="stylesheet" href="{{ asset('css/user-interface/cropper.min.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <main>
+
+        {% include 'partials/message-modal.html.twig' %}
+        
+        <section>
+            <h2>Mon Compte</h2>
+            <div class="profil-wrapper">
+                <div class="profil-picture">
+                    <div class="avatar">
+                        <img {% if app.user.picture != null %} src="{{ asset('img/upload/' ~ app.user.picture) }}" alt="Photo de profil de {{ app.user.username }}" class="user-picture" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
+                    </div>
+                    <span id="edit-picture" class="update-info modify">Changer mon avatar</span>
+                </div>
+                <div class="info-wrapper">
+                    <div class="username">
+                        <div class="top-info">
+                            <h3>Nom d'utilisateur</h3>
+                            <span id="edit-username" class="update-info modify">Modifier</span>
+                        </div>
+                        <p>{{ app.user.username }}</p>
+                    </div>
+                    <div class="email">
+                        <div class="top-info">
+                            <h3>Adresse e-mail</h3>
+                            <span id="edit-email" class="update-info modify">Modifier</span>
+                        </div>
+                        <p>{{ app.user.email }}</p>
+                    </div>
+                    <div class="password">
+                        <div class="top-info">
+                            <h3>Mot de passe</h3>
+                            <span id="edit-password" class="update-info modify">Modifier</span>
+                        </div>
+                        <p>**********</p>
+                    </div>
+                </div>
+            </div>
+            <span href="" class="update-info delete">Supprimer le compte</span>
+            <a href="{{ path('user-interface') }}" class="return-btn">Retour</a>
+        </section>
+
+        <div id="edit-username-form">
+            {{ render(controller(
+                'App\\Controller\\SecurityController::editUsername'
+            ))}}
+        </div>
+        <div id="edit-email-form">
+            {{ render(controller(
+                'App\\Controller\\SecurityController::editEmail'
+            ))}}
+        </div>
+        <div id="edit-password-form">
+            {{ render(controller(
+                'App\\Controller\\SecurityController::editPassword'
+            ))}}
+        </div>
+        <div id="edit-picture-form">
+            {{ render(controller(
+                'App\\Controller\\SecurityController::editPicture'
+            ))}}
+        </div>
+        
+    </main>
+    <script type="text/javascript" src="{{ asset('js/security/user-account.js') }}"></script>
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
