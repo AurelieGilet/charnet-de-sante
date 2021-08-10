@@ -23,23 +23,19 @@ if (close != null) {
 editUsernameBtn.addEventListener("click", function () {
   editUsernameForm.style.display = "block";
   body[0].classList.add("modal-open");
-
 });
 
 editEmailBtn.addEventListener("click", function () {
   editEmailForm.style.display = "block";
   body[0].classList.add("modal-open");
-
 });
 
 editPasswordBtn.addEventListener("click", function () {
   editPasswordForm.style.display = "block";
   body[0].classList.add("modal-open");
-
 });
 
 editPictureBtn.addEventListener("click", function () {
   editPictureForm.style.display = "block";
   body[0].classList.add("modal-open");
-
 });
