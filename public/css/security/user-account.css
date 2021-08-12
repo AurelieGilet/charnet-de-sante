@@ -13,7 +13,6 @@ section {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    align-items: center;
     background-color: var(--secondary-background-color);
     border-radius: 5px;
     padding: 10px;
@@ -30,6 +29,10 @@ section p {
     color: var(--russian-violet);
 }
 
+.profil-wrapper {
+    width: 80%;
+}
+
 .update-info {
     font-size: 0.8rem;
     text-decoration: underline;
@@ -43,10 +46,6 @@ section p {
 .delete {
     color: #626364;
     margin: 10px 0;
-}
-
-.profil-wrapper {
-    width: 80%;
 }
 
 .profil-picture {
@@ -101,8 +100,8 @@ section p {
 .return-btn {
     background-color: var(--medium-purple);
     padding: 10px;
-    border: none;
     border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
     cursor: pointer;
     color: white;
     white-space: nowrap;
@@ -194,7 +193,7 @@ section p {
        display: flex;
        justify-content: space-between;
        align-items: center;
-       margin: 20px 0;
+       margin: 30px 0;
    } 
    .profil-picture {
        width: 40%;
@@ -207,6 +206,9 @@ section p {
     }
     .form-wrapper h2{
         font-size: 1.4rem;
+    }
+    .return-btn {
+        margin: 20px 0;
     }
 }
 

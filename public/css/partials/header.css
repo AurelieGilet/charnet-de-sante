@@ -175,13 +175,19 @@ nav ul {
 .burger-nav li {
     width: 100%;
     text-align: center;
-    padding: 10px 0;
+    line-height: 35px;
 }
 
 .burger-nav li:hover, .active{
     background-color: var(--medium-purple);
     border-radius: 5px;
     width: 60% !important;
+}
+
+.burger-nav a:not(.mobile-auth a) {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .long-line, .line {
@@ -271,6 +277,12 @@ nav ul {
     line-height: 50px;
     cursor: pointer;
     transition: all 0.5s;
+}
+
+.custom-option a {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .custom-option:hover, .custom-option.selected {

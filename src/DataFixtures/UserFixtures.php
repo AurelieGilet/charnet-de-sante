@@ -18,8 +18,8 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 5; $i++) {
-            if ($i === 0 ) {
+        for ($i = 1; $i < 6; $i++) {
+            if ($i === 1 ) {
                 $user = new User();
 
                 $user->setEmail('admin@mail.com')
@@ -27,8 +27,9 @@ class UserFixtures extends Fixture
                     $user,'Password0'))
                      ->setRoles(['ROLE_ADMIN'])
                      ->setUsername('Chadmin'); 
+
+                $manager->persist($user);   
                 
-                $manager->persist($user);
             } else {
                 $user = new User();
 
@@ -39,6 +40,8 @@ class UserFixtures extends Fixture
                      ->setUsername('FakeUser'.$i);
                      
                 $manager->persist($user);
+
+                $this->addReference('User_'.$i, $user);
             }
         }
 

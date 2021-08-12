@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block body %}
-
     <main>
         <section>
             <div class="item">
@@ -18,7 +17,7 @@
                 <p>Accéder à mon profil et modifier mes données</p>
             </div>
             <div class="item"> 
-                <a href="">
+                <a href="{{ path('cat-list') }}">
                     <img src="{{ asset('img/site/cat-head.png') }}" alt="Illustration de tête de chat indiquant un accès à la liste des chats">
                     <span>Mes Chats</span>
                 </a>
@@ -33,5 +32,4 @@
             </div>
         </section>
     </main>
-
 {% endblock %}
