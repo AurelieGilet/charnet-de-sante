@@ -37,6 +37,7 @@ section p {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .add-cat-btn {
