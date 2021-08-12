@@ -45,6 +45,7 @@ button {
     padding: 10px;
     border: none;
     border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
     cursor: pointer;
     color: white;
     white-space: nowrap;

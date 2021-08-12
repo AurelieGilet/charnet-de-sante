@@ -4,18 +4,15 @@ namespace App\DataFixtures;
 
 use App\Entity\Address;
 use App\DataFixtures\CatFixtures;
-use App\Entity\Cat;
 use App\Repository\CatRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 class AddressFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function __construct(EntityManagerInterface $em, CatRepository $catRepository)
+    public function __construct(CatRepository $catRepository)
     {
-        $this->em = $em;
         $this->catRepository = $catRepository;
     }
 
@@ -28,7 +25,7 @@ class AddressFixtures extends Fixture implements DependentFixtureInterface
         $phoneNumbers = ['0388623266', '0388116649', '0255321198', '0251657346', '0555369813', '0555659815', '0247326895', '0247132569'];
 
         for ($i = 2; $i < 6; $i++) {
-            $userCats = $this->catRepository->findby(['owner' => $i]);
+            $userCats = $this->catRepository->findBy(['owner' => $i]);
 
             for ($j = 1; $j <= count($userCats); $j++ ){
                 $ownerAddress = new Address;
