@@ -35,7 +35,7 @@ class AddressFixtures extends Fixture implements DependentFixtureInterface
                         ->setCity($cities[$i * 2 - 4])
                         ->setPostalCode($postalCodes[$i * 2 - 4])
                         ->setPhoneNumber($phoneNumbers[$i * 2 - 4])
-                        ->setCat($this->getReference('FakeUser'.$i.'-Cat'.$j));
+                        ->setOwnerAddressCat($this->getReference('FakeUser'.$i.'-Cat'.$j));
 
       
                 $manager->persist($ownerAddress);
@@ -47,7 +47,7 @@ class AddressFixtures extends Fixture implements DependentFixtureInterface
                         ->setCity($cities[$i * 2 - 3])
                         ->setPostalCode($postalCodes[$i * 2 - 3])
                         ->setPhoneNumber($phoneNumbers[$i * 2 - 3])
-                        ->setCat($this->getReference('FakeUser'.$i.'-Cat'.$j));
+                        ->setVeterinaryAddressCat($this->getReference('FakeUser'.$i.'-Cat'.$j));
                 
                 $manager->persist($vetAddress);
             }

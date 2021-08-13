@@ -61,6 +61,11 @@ class Cat
     private $dateOfBirth;
 
     /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateOfDeath;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $microchip;
@@ -76,17 +81,17 @@ class Cat
     private $ownerName;
 
     /**
-     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="cat", orphanRemoval=true)
-     */
-    private $ownerAddress;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $veterinaryName;
 
     /**
-     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="cat", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="ownerAddressCat", orphanRemoval=true)
+     */
+    private $ownerAddress;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="veterinaryAddressCat", orphanRemoval=true)
      */
     private $veterinaryAddress;
 
@@ -197,6 +202,18 @@ class Cat
         return $this;
     }
 
+    public function getDateOfDeath(): ?\DateTimeInterface
+    {
+        return $this->dateOfDeath;
+    }
+
+    public function setDateOfDeath(?\DateTimeInterface $dateOfDeath): self
+    {
+        $this->dateOfDeath = $dateOfDeath;
+
+        return $this;
+    }
+
     public function getMicrochip(): ?string
     {
         return $this->microchip;
@@ -233,6 +250,18 @@ class Cat
         return $this;
     }
 
+    public function getVeterinaryName(): ?string
+    {
+        return $this->veterinaryName;
+    }
+
+    public function setVeterinaryName(?string $veterinaryName): self
+    {
+        $this->veterinaryName = $veterinaryName;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Address[]
      */
@@ -245,7 +274,7 @@ class Cat
     {
         if (!$this->ownerAddress->contains($ownerAddress)) {
             $this->ownerAddress[] = $ownerAddress;
-            $ownerAddress->setCat($this);
+            $ownerAddress->setOwnerAddressCat($this);
         }
 
         return $this;
@@ -255,22 +284,10 @@ class Cat
     {
         if ($this->ownerAddress->removeElement($ownerAddress)) {
             // set the owning side to null (unless already changed)
-            if ($ownerAddress->getCat() === $this) {
-                $ownerAddress->setCat(null);
+            if ($ownerAddress->getOwnerAddressCat() === $this) {
+                $ownerAddress->setOwnerAddressCat(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getVeterinaryName(): ?string
-    {
-        return $this->veterinaryName;
-    }
-
-    public function setVeterinaryName(?string $veterinaryName): self
-    {
-        $this->veterinaryName = $veterinaryName;
 
         return $this;
     }
@@ -287,7 +304,7 @@ class Cat
     {
         if (!$this->veterinaryAddress->contains($veterinaryAddress)) {
             $this->veterinaryAddress[] = $veterinaryAddress;
-            $veterinaryAddress->setCat($this);
+            $veterinaryAddress->setVeterinaryAddressCat($this);
         }
 
         return $this;
@@ -297,8 +314,8 @@ class Cat
     {
         if ($this->veterinaryAddress->removeElement($veterinaryAddress)) {
             // set the owning side to null (unless already changed)
-            if ($veterinaryAddress->getCat() === $this) {
-                $veterinaryAddress->setCat(null);
+            if ($veterinaryAddress->getVeterinaryAddressCat() === $this) {
+                $veterinaryAddress->setVeterinaryAddressCat(null);
             }
         }
 
