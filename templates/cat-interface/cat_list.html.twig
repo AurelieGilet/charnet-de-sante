@@ -16,13 +16,15 @@
             <div class="cat-list-wrapper">
             {% if cats|length > 0 %}
                 {%  for cat in cats %}
-                <div class="cat">
-                    <div class="cat-avatar">
-                        <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" {% endif %} >
+                <a href="{{ path('cat-detail', {'id': cat.id}) }}">
+                    <div class="cat">
+                        <div class="cat-avatar">
+                            <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" {% endif %} >
+                        </div>
+                        <h3>{{ cat.name|upper }}</h3>
+                        <img class="look" src="{{ asset('img/site/look.png') }}" alt="Icône de loupe">
                     </div>
-                    <h3>{{ cat.name|upper }}</h3>
-                    <img class="look" src="{{ asset('img/site/look.png') }}" alt="Icône de loupe">
-                </div>
+                </a>
                 {% endfor %}
             {% else %}
             <p>Vous n'avez pas encore ajouté de chat</p></p>

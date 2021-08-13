@@ -197,6 +197,11 @@ nav ul {
     margin: 10px 0;
 }
 
+.long-line:first-child {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
 .long-line {
     width: 90%;
 }
