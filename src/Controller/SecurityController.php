@@ -201,7 +201,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * @Route("/espace-utilisateur/compte/editer-photo", name="edit-picture", methods={"POST"}, options={"expose"=true})
      */
     public function editPicture(Request $request, EntityManagerInterface $manager, SluggerInterface $slugger): Response
@@ -245,7 +245,6 @@ class SecurityController extends AbstractController
 
                 return new JsonResponse(415);
             }
-                        
         } 
 
         return $this->render('security/_edit_picture_form.html.twig', [

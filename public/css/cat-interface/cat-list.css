@@ -104,21 +104,29 @@ section p {
     }
 }
 
-.cat-avatar {
+.avatar {
     width: 80%;
-    background-color: var(--medium-purple);
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px outset var(--medium-purple);
     border-radius: 5px;
-    padding: 10px;
     margin-bottom: 10px;
 }
 
-.cat-avatar img {
-    width: 80%;
+.default-cat-picture{
+    width: 90%;
     height: auto;
+    border: 2px outset var(--medium-purple);
+    background-color: var(--medium-purple);
+    border-radius: 5px;
+    padding: 5%;
+}
+
+.cat-picture {
+    width: 100% !important;
+    height: auto;
+    border: 2px outset var(--medium-purple);
+    border-radius: 5px;
 }
 
 .cat h3 {

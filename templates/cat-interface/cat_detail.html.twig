@@ -3,9 +3,10 @@
 {% block title %}Le Charnet de Santé - Fiche de {{ cat.name }} {% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
     <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-detail.css') }}" >
     <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
-
+    <link rel="stylesheet" href="{{ asset('css/user-interface/cropper.min.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -27,9 +28,9 @@
             <h2>{{ cat.name|capitalize }}</h2>
             <div class="card-content">
                 <div class="cat-info-wrapper">
-                    <div class="cat-picture card-template">
+                    <div class="card-picture card-template">
                         <div class="avatar">
-                            <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class="user-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" {% endif %}>
+                            <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
                         </div>
                         <span id="edit-picture">Changer la photo</span>
                     </div>
@@ -68,7 +69,16 @@
             </div>
         </div>
     </section>
-    
+    <div id="edit-picture-form">
+        {{ render(controller(
+            'App\\Controller\\CatController::editCatPicture'
+        ))}}
+    </div>
 </main>
+<script>
+    const catID = {{ cat.id }};
+</script>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-detail.js') }}"></script>
+{{ encore_entry_script_tags('cat-cropper') }}
 
 {% endblock %}

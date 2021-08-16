@@ -11,69 +11,68 @@
 {% endblock %}
 
 {% block body %}
-    <main>
+<main>
 
-        {% include 'partials/message-modal.html.twig' %}
-        
-        <section>
-            <h2>Mon Compte</h2>
-            <div class="profil-wrapper">
-                <div class="profil-picture">
-                    <div class="avatar">
-                        <img {% if app.user.picture != null %} src="{{ asset('img/upload/' ~ app.user.picture) }}" alt="Photo de profil de {{ app.user.username }}" class="user-picture" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
-                    </div>
-                    <span id="edit-picture" class="update-info modify">Changer mon avatar</span>
+    {% include 'partials/message-modal.html.twig' %}
+    
+    <section>
+        <h2>Mon Compte</h2>
+        <div class="profil-wrapper">
+            <div class="profil-picture">
+                <div class="avatar">
+                    <img {% if app.user.picture != null %} src="{{ asset('img/upload/' ~ app.user.picture) }}" alt="Photo de profil de {{ app.user.username }}" class="user-picture" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
                 </div>
-                <div class="info-wrapper">
-                    <div class="username">
-                        <div class="info-label">
-                            <h3>Nom d'utilisateur</h3>
-                            <span id="edit-username" class="update-info modify">Modifier</span>
-                        </div>
-                        <p>{{ app.user.username }}</p>
+                <span id="edit-picture" class="update-info modify">Changer mon avatar</span>
+            </div>
+            <div class="info-wrapper">
+                <div class="username">
+                    <div class="info-label">
+                        <h3>Nom d'utilisateur</h3>
+                        <span id="edit-username" class="update-info modify">Modifier</span>
                     </div>
-                    <div class="email">
-                        <div class="info-label">
-                            <h3>Adresse e-mail</h3>
-                            <span id="edit-email" class="update-info modify">Modifier</span>
-                        </div>
-                        <p>{{ app.user.email }}</p>
+                    <p>{{ app.user.username }}</p>
+                </div>
+                <div class="email">
+                    <div class="info-label">
+                        <h3>Adresse e-mail</h3>
+                        <span id="edit-email" class="update-info modify">Modifier</span>
                     </div>
-                    <div class="password">
-                        <div class="info-label">
-                            <h3>Mot de passe</h3>
-                            <span id="edit-password" class="update-info modify">Modifier</span>
-                        </div>
-                        <p>**********</p>
+                    <p>{{ app.user.email }}</p>
+                </div>
+                <div class="password">
+                    <div class="info-label">
+                        <h3>Mot de passe</h3>
+                        <span id="edit-password" class="update-info modify">Modifier</span>
                     </div>
+                    <p>**********</p>
                 </div>
             </div>
-            <span class="update-info delete">Supprimer le compte</span>
-            <a href="{{ path('user-interface') }}" class="return-btn">Retour</a>
-        </section>
+        </div>
+        <span class="update-info delete">Supprimer le compte</span>
+        <a href="{{ path('user-interface') }}" class="return-btn">Retour</a>
+    </section>
 
-        <div id="edit-username-form">
-            {{ render(controller(
-                'App\\Controller\\SecurityController::editUsername'
-            ))}}
-        </div>
-        <div id="edit-email-form">
-            {{ render(controller(
-                'App\\Controller\\SecurityController::editEmail'
-            ))}}
-        </div>
-        <div id="edit-password-form">
-            {{ render(controller(
-                'App\\Controller\\SecurityController::editPassword'
-            ))}}
-        </div>
-        <div id="edit-picture-form">
-            {{ render(controller(
-                'App\\Controller\\SecurityController::editPicture'
-            ))}}
-        </div>
-        
-    </main>
-    <script type="text/javascript" src="{{ asset('js/security/user-account.js') }}"></script>
-    {{ encore_entry_script_tags('app') }}
+    <div id="edit-username-form">
+        {{ render(controller(
+            'App\\Controller\\SecurityController::editUsername'
+        ))}}
+    </div>
+    <div id="edit-email-form">
+        {{ render(controller(
+            'App\\Controller\\SecurityController::editEmail'
+        ))}}
+    </div>
+    <div id="edit-password-form">
+        {{ render(controller(
+            'App\\Controller\\SecurityController::editPassword'
+        ))}}
+    </div>
+    <div id="edit-picture-form">
+        {{ render(controller(
+            'App\\Controller\\SecurityController::editPicture'
+        ))}}
+    </div>
+</main>
+<script type="text/javascript" src="{{ asset('js/security/user-account.js') }}"></script>
+{{ encore_entry_script_tags('user-cropper') }}
 {% endblock %}
