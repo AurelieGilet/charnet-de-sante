@@ -1,5 +1,5 @@
 main {
-    min-height: 80vh;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
 }
@@ -195,7 +195,7 @@ button {
 @media screen and (min-width: 1024px) {
     /***** MAIN-CONTENT *****/
     .main-content {
-        padding: 5% 2%;
+        padding: 6vh 2%;
     }
     .picture {
         margin: 0 60px;
@@ -208,9 +208,17 @@ button {
     }
     /***** FUNCTIONNALITIES *****/
     .functionalities ul {
-        padding: 5% 2%;
+        padding: 5vh 2%;
     }
     .functionalities li {
         margin: 30px;
+    }
+}
+@media screen and (min-width: 2560px) {
+    .main-content {
+        padding: 7% 2%;
+    }
+    .functionalities ul {
+        padding: 6% 2%;
     }
 }

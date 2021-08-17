@@ -33,20 +33,26 @@ class Address
     private $city;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $postalCode;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phoneNumber;
 
     /**
      * @ORM\ManyToOne(targetEntity=Cat::class, inversedBy="ownerAddress")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $cat;
+    private $ownerAddressCat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Cat::class, inversedBy="veterinaryAddress")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $veterinaryAddressCat;
 
     public function getId(): ?int
     {
@@ -113,14 +119,26 @@ class Address
         return $this;
     }
 
-    public function getCat(): ?Cat
+    public function getOwnerAddressCat(): ?Cat
     {
-        return $this->cat;
+        return $this->ownerAddressCat;
     }
 
-    public function setCat(?Cat $cat): self
+    public function setOwnerAddressCat(?Cat $ownerAddressCat): self
     {
-        $this->cat = $cat;
+        $this->ownerAddressCat = $ownerAddressCat;
+
+        return $this;
+    }
+
+    public function getVeterinaryAddressCat(): ?Cat
+    {
+        return $this->veterinaryAddressCat;
+    }
+
+    public function setVeterinaryAddressCat(?Cat $veterinaryAddressCat): self
+    {
+        $this->veterinaryAddressCat = $veterinaryAddressCat;
 
         return $this;
     }

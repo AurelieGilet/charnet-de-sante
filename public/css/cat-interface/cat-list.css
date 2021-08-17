@@ -17,7 +17,7 @@ section {
     background-color: var(--secondary-background-color);
     border-radius: 5px;
     padding: 10px;
-    margin: 10px;
+    margin: 20px 0;
 }
 
 section h2 {
@@ -67,37 +67,7 @@ section p {
     margin: 20px 10px;
 }
 
-.cat-avatar {
-    width: 80%;
-    background-color: var(--medium-purple);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px outset var(--medium-purple);
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.cat-avatar img {
-    width: 80%;
-    height: auto;
-}
-
-.cat h3 {
-    font-weight: 1.2rem;
-    text-align: center;
-    margin: 10px 0;
-}
-
-.look {
-    width: 30px;
-    height: auto;
-    margin: 10px;
-    cursor: pointer;
-}
-
-.look:hover {
+.cat:hover {
     -webkit-animation-name: pulse;
     animation-name: pulse;
     -webkit-animation-duration: 1s;
@@ -133,6 +103,44 @@ section p {
     transform: scale3d(1, 1, 1);
     }
 }
+
+.avatar {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.default-cat-picture{
+    width: 90%;
+    height: auto;
+    border: 2px outset var(--medium-purple);
+    background-color: var(--medium-purple);
+    border-radius: 5px;
+    padding: 5%;
+}
+
+.cat-picture {
+    width: 100% !important;
+    height: auto;
+    border: 2px outset var(--medium-purple);
+    border-radius: 5px;
+}
+
+.cat h3 {
+    font-weight: 1.2rem;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.look {
+    width: 30px;
+    height: auto;
+    margin: 10px;
+}
+
 
 /***** RESPONSIVE *****/
 

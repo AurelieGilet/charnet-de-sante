@@ -91,7 +91,7 @@ section p {
     padding: 10px 5px;
 }
 
-.top-info {
+.info-label {
     display: flex;
     justify-content: space-between;
     padding: 5px 0;

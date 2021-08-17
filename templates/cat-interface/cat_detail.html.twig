@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Fiche de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-detail.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/user-interface/cropper.min.css') }}">
+{% endblock %}
+
+{% block body %}
+<main>
+
+    {% include 'partials/message-modal.html.twig' %}
+
+    <div class="authenticator">
+        <form action="">
+            <label for="code">Partager la fiche avec un vétérinaire :</label>
+            <button type="button">Générer un code</button>
+            <input type="text" name="code" id="code" placeholder="164832">
+            <span>Ce code est valable 10 min</span>
+        </form>
+    </div>  
+    {% include 'partials/cat-menu.html.twig' %} 
+    <section>
+        <div class="cat-card">
+            <h2>{{ cat.name|capitalize }}</h2>
+            <div class="card-content">
+                <div class="cat-info-wrapper">
+                    <div class="card-picture card-template">
+                        <div class="avatar">
+                            <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                        </div>
+                        <span id="edit-picture">Changer la photo</span>
+                    </div>
+                    <div class="cat-info card-template">
+                        <p>Date de naissance : {{ cat.dateOfBirth|date('d-m-Y') }}</p>
+                        <p>Sexe : {% if cat.sexe == 'F' %} Femelle {% else %} Mâle {% endif %}</p>
+                        <p>Stérilisé : {% if cat.isSterilized is null %} {% elseif cat.isSterilized == true %} Oui {% else %} Non {% endif %}</p>
+                        <p>Race : {{ cat.race|capitalize }} </p>
+                        <p>Robe : {{ cat.coat|capitalize }} </p>
+                        <p>Puce électronique : {{ microchip }}</p>
+                        <p>Tatouage : {{ cat.tattoo }}</p>
+                    </div>
+                </div>
+                <div class="human-info card-template">
+                    <h3>Propriétaire :</h3>
+                    <div class="desktop-display">
+                        <p>{{ cat.ownerName }}</p>
+                        <p class="desktop-info">{{ cat.ownerAddress[0].phoneNumber }}</p>
+                    </div>
+                    <p>{{ cat.ownerAddress[0].address1 }}</p>
+                    <p>{{ cat.ownerAddress[0].address2 }}</p>
+                    <p>{{ cat.ownerAddress[0].postalCode }} {{ cat.ownerAddress[0].city }}</p>
+                    <p class="mobile-info">{{ cat.ownerAddress[0].phoneNumber }}</p>
+                </div>
+                <div class="human-info card-template">
+                    <h3>Vétérinaire :</h3>
+                    <div class="desktop-display">
+                        <p>{{ cat.veterinaryName }}</p>
+                        <p class="desktop-info">{{ cat.veterinaryAddress[0].phoneNumber }}</p>
+                    </div>
+                    <p>{{ cat.veterinaryAddress[0].address1 }}</p>
+                    <p>{{ cat.veterinaryAddress[0].address2 }}</p>
+                    <p>{{ cat.veterinaryAddress[0].postalCode }} {{ cat.veterinaryAddress[0].city }}</p>
+                    <p class="mobile-info">{{ cat.veterinaryAddress[0].phoneNumber }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="edit-picture-form">
+        {{ render(controller(
+            'App\\Controller\\CatController::editCatPicture'
+        ))}}
+    </div>
+</main>
+<script>
+    const catID = {{ cat.id }};
+</script>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-detail.js') }}"></script>
+{{ encore_entry_script_tags('cat-cropper') }}
+
+{% endblock %}

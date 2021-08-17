@@ -1,1 +1,30 @@
-{"base_url":"","routes":{"edit-picture":{"tokens":[["text","\/espace-utilisateur\/compte\/editer-photo"]],"defaults":[],"requirements":[],"hosttokens":[],"methods":["POST"],"schemes":[]}},"prefix":"","host":"localhost","port":"","scheme":"http","locale":[]}
+{
+  "base_url": "",
+  "routes": {
+    "edit-cat-picture": {
+      "tokens": [
+        ["text", "/editer-photo"],
+        ["variable", "/", "[^/]++", "id", true],
+        ["text", "/espace-utilisateur/chat"]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": ["POST"],
+      "schemes": []
+    },
+    "edit-picture": {
+      "tokens": [["text", "/espace-utilisateur/compte/editer-photo"]],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": ["POST"],
+      "schemes": []
+    }
+  },
+  "prefix": "",
+  "host": "localhost",
+  "port": "",
+  "scheme": "http",
+  "locale": []
+}
