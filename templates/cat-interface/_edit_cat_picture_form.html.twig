@@ -2,9 +2,9 @@
     <div class="form-wrapper">
         <h2>Modifier la photo de votre chat</h2>
         <div class="close">X</div>
-            <div id="preview">
-                <img src="" alt"" id="preview-picture" >
-            </div>
+        <div id="preview">
+            <img src="" alt"" id="preview-picture" >
+        </div>
         {{ form_start(pictureForm, {'attr': {'id': 'picture-form'}}) }}
             {{ form_row(pictureForm.picture) }}
             <small>2 Mo maximum, formats png, jpg ou jpeg.</small>
