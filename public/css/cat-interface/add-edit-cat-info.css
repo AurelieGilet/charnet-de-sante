@@ -1,0 +1,25 @@
+form {
+    width: 95%;
+}
+
+#add_cat_form_dateOfBirth, #add_cat_form_dateOfDeath {
+    display: flex;
+    flex-direction: row;
+}
+
+.return {
+    display: block;
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #626364;
+    margin: 20px 0;
+}
+
+/***** RESPONSIVE *****/
+
+@media screen and (min-width: 768px) {
+    form {
+        width: 90%;
+    }
+}

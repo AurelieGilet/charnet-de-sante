@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cat;
+use App\Form\AddCatFormType;
 use App\Repository\CatRepository;
 use App\Form\EditCatPictureFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,6 +30,34 @@ class CatController extends AbstractController
         return $this->render('cat-interface/cat_list.html.twig', [
             'controller_name' => 'CatController',
             'cats' => $cats,
+        ]);
+    }
+
+     /**
+     * @Route("espace-utilisateur/ajouter-un-chat", name="add-cat")
+     */
+    public function addCat(Request $request, EntityManagerInterface $manager): Response
+    {
+        $user = $this->getUser();
+        $cat = new Cat;
+
+        $form = $this->createForm(AddCatFormType::class, $cat);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $cat->setOwner($user);
+
+            $manager->persist($cat);
+            $manager->flush($cat);
+
+            $this->addFlash('success', "Le chat ". $cat->getName() . " a bien été ajouté");
+
+            return $this->redirectToRoute('cat-list');
+        }
+
+        return $this->render('cat-interface/add_edit_cat_info.html.twig', [
+            'controller_name' => 'CatController',
+            'catForm' => $form->createView()
         ]);
     }
 
@@ -62,9 +91,7 @@ class CatController extends AbstractController
         $catID = $request->attributes->get('_route_params');
         $cat = $catRepository->findOneBy(['id' => $catID]);
 
-        $form = $this->createForm(EditCatPictureFormType::class, $cat, [
-            'action' => $this->generateUrl('edit-picture'),
-        ]);
+        $form = $this->createForm(EditCatPictureFormType::class, $cat);
         $form->handleRequest($request);
 
         if ($request->isXmlHttpRequest()) {
@@ -100,7 +127,35 @@ class CatController extends AbstractController
         } 
 
         return $this->render('cat-interface/_edit_cat_picture_form.html.twig', [
+            'controller_name' => 'CatController',
             'pictureForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("espace-utilisateur/chat/{id}/editer-infos", name="edit-cat-info")
+     */
+    public function editCatInfos(Request $request, EntityManagerInterface $manager, Cat $cat): Response
+    {
+        $form = $this->createForm(AddCatFormType::class, $cat);
+        $form->handleRequest($request);
+
+        $catName = $cat->getName();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $manager->persist($cat);
+            $manager->flush($cat);
+
+            $this->addFlash('success', "Le chat ". $cat->getName() . " a bien été modifié");
+
+            return $this->redirectToRoute('cat-list');
+        }
+
+        return $this->render('cat-interface/add_edit_cat_info.html.twig', [
+            'controller_name' => 'CatController',
+            'catForm' => $form->createView(),
+            'cat' => $cat,
         ]);
     }
 }

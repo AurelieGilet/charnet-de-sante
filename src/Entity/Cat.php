@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CatRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CatRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=CatRepository::class)
@@ -27,6 +28,17 @@ class Cat
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
+     * @Assert\NotBlank(
+	 * 		message="Merci de saisir le nom de votre chat",
+	 * )
+     * 
+     * @Assert\Length(
+	 * 		min="1", 
+	 * 		minMessage="Le nom de votre chat doit faire au moins 1 caractère",
+     *      max="30",
+     *      maxMessage="Le nom de votre chat doit faire moins de 30 caractères"
+	 * )
      */
     private $name;
 
@@ -67,6 +79,11 @@ class Cat
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     * @Assert\Regex(
+     *     pattern="/[0-9]{15}/",
+     *     message="Le numéro identifiant d'une puce électronique contient 15 chiffres"
+	 * )
      */
     private $microchip;
 

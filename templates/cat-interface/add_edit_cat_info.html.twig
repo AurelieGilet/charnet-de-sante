@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %} 
+    {% if cat|default %}
+        Le Charnet de Santé - Modifier le chat {{ cat.name }}
+    {% else %}
+        Le Charnet de Santé - Ajouter un chat   
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/add-edit-cat-info.css') }}" >
+{% endblock %}
+
+{% block body %}
+<main class="container">
+    <section>
+        {% if cat|default %}
+        <h2>Modifier les infos du chat {{ cat.name }}</h2>
+        {% else %}
+        <h2>Ajouter un chat</h2>
+        {% endif %}
+
+        {{ form_start(catForm) }}
+            <span>Les champs suivis d'un * sont obligatoires</span>
+            {{ form_row(catForm.name) }}
+            <div class="form-group">
+                {{ form_row(catForm.race) }}
+                {{ form_row(catForm.coat) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(catForm.sexe) }}
+                {{ form_row(catForm.isSterilized) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(catForm.dateOfBirth) }}
+                {{ form_row(catForm.dateOfDeath) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(catForm.microchip) }}
+                {{ form_row(catForm.tattoo) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(catForm.ownerName) }}
+                {{ form_row(catForm.veterinaryName) }}
+            </div>
+            {{ form_row(catForm.send) }}
+            <a href="{{ path('cat-list') }}" class="return">Retour</a>
+        {{ form_end(catForm) }}
+    </section>
+</main>
+
+{% endblock %}
