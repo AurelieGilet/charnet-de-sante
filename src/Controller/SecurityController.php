@@ -99,9 +99,7 @@ class SecurityController extends AbstractController
     public function editUsername(Request $request, EntityManagerInterface $manager): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(EditUsernameFormType::class, $user, [
-            'action' => $this->generateUrl('edit-username'),
-        ]);
+        $form = $this->createForm(EditUsernameFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -129,9 +127,7 @@ class SecurityController extends AbstractController
     {
         $user = $this->getUser();
         $actualPassword = $user->getPassword();
-        $form = $this->createForm(EditEmailFormType::class, $user, [
-            'action' => $this->generateUrl('edit-email'),
-        ]);
+        $form = $this->createForm(EditEmailFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -167,9 +163,7 @@ class SecurityController extends AbstractController
     {
         $user = $this->getUser();
         $actualPassword = $user->getPassword();
-        $form = $this->createForm(EditPasswordFormType::class, $user, [
-            'action' => $this->generateUrl('edit-password'),
-        ]);
+        $form = $this->createForm(EditPasswordFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -209,9 +203,7 @@ class SecurityController extends AbstractController
         $user = $this->getUser();
         $oldPicture = $user->getPicture();
 
-        $form = $this->createForm(EditPictureFormType::class, $user, [
-            'action' => $this->generateUrl('edit-picture'),
-        ]);
+        $form = $this->createForm(EditPictureFormType::class, $user);
         $form->handleRequest($request);
 
         if ($request->isXmlHttpRequest()) {
