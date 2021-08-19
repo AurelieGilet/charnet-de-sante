@@ -20,7 +20,7 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => "Adresse email",
+                'label' => "Adresse email *",
                 'attr' => ['placeholder' => "Ex: michelle@mail.com"],
                 'required' => true,
                 'constraints' => [
@@ -29,7 +29,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('username', TextType::class, [
-                'label' => "Nom d'utilisateur",
+                'label' => "Nom d'utilisateur *",
                 'attr' => ['placeholder' => "Nom d'utilisateur"],
                 'required' => true,
             ])
@@ -37,11 +37,11 @@ class RegistrationFormType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => "Les mots de passe ne correspondent pas",
                 'first_options' => [
-                    'label' => "Mot de passe", 
+                    'label' => "Mot de passe *", 
                     'attr' => ['placeholder' => "Entrez votre mot de passe"]
                 ],
                 'second_options' => [
-                    'label' => "Répétez votre mot de passe", 
+                    'label' => "Répétez votre mot de passe *", 
                     'attr' => ['placeholder' => "Entrez le même mot de passe"]
                 ],
                 'required' => true,                

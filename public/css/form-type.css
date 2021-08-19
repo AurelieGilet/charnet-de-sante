@@ -37,11 +37,17 @@ form div {
     margin: 10px 0 ;
 }
 
+form span {
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
 label {
     margin: 5px 0;
 }
 
-input, textarea {
+input, textarea, select {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--list-border-color);
@@ -94,5 +100,14 @@ form li:before {
     }
     form div {
         margin: 20px 0 ;
+    }
+    .form-group {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        margin: 20px 0;
+    }
+    .form-group div {
+        width: 48%;
     }
 }

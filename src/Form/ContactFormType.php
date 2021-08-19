@@ -34,7 +34,7 @@ class ContactFormType extends AbstractType
                 ],
             ])
             ->add('email', EmailType::class, [
-                'label' => "Adresse email",
+                'label' => "Adresse email *",
                 'attr' => ['placeholder' => 'Ex: michelle@mail.com'],
                 'required' => true,
                 'constraints' => [
@@ -43,7 +43,7 @@ class ContactFormType extends AbstractType
                 ],
             ])
             ->add('message', TextareaType::class, [
-                'label' => "Message",
+                'label' => "Message *",
                 'attr' => ['placeholder' => 'Votre message ...', 'rows' => 10], 
                 'required' => true,
                 'constraints' => [
