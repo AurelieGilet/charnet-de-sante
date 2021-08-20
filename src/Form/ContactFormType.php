@@ -57,7 +57,7 @@ class ContactFormType extends AbstractType
             ])
             ->add('send', SubmitType::class, [
                 'label' => "Envoyer"
-            ]);
+            ])
         ;
     }
 }

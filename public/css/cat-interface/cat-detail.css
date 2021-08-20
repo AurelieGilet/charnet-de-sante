@@ -66,10 +66,11 @@ section {
     width: 100%;
     max-width: 100%;
     border-radius: 0;
+    box-sizing: border-box;
 }
 
 .cat-card {
-    width: 85%;
+    width: 90%;
     max-width: 1000px;
     display: flex;
     flex-direction: column;
@@ -155,6 +156,29 @@ section {
     margin: 10px 0;
 }
 
+.info-label {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.update-info {
+    font-size: 0.8rem;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 3px;
+    white-space: nowrap;
+}
+
+.modify {
+    color: var(--medium-purple);
+}
+
+.delete {
+    color: #626364;
+    margin: 10px 0;
+}
+
 .cat-info, .human-info {
     width: 100%;
     display: flex;
@@ -167,13 +191,25 @@ section {
     line-height: 1.2rem;
 }
 
-.human-info h3 {
+.cat-card h3 {
     font-weight: bold;
     padding: 3px 0;
+    white-space: nowrap;
 }
 
-.desktop-info {
+.hidden {
     display: none;
+}
+
+.return-btn {
+    background-color: var(--medium-purple);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
+    cursor: pointer;
+    color: white;
+    white-space: nowrap;
+    margin: 10px 0;
 }
 
 /*PICTURE FORM*/
@@ -257,10 +293,13 @@ section {
     .card-template {
         padding: 20px 15px;
     }
+    .cat-card {
+        width: 85%;
+    }
     .cat-info-wrapper {
         flex-direction: row;
         justify-content: space-between;
-        height: 220px;
+        height: 280px;
         margin: 10px 0;
     }
     .card-picture {
@@ -270,18 +309,14 @@ section {
     #edit-picture {
         font-size: 1rem;
     }
+    .update-info {
+        font-size: 1rem;
+    }
     .cat-info {
         width: 65%;
         height: 100%;
     }
-    .desktop-display {
-        display: flex;
-        justify-content: space-between;
-    }
-    .desktop-info {
-        display: block;
-    }
-    .mobile-info {
-        display: none;
+    .return-btn {
+        margin: 20px 0;
     }
 }

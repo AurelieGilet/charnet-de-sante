@@ -10,8 +10,6 @@ const fileInput = document.getElementById("edit_cat_picture_form_picture");
 const previewPicture = document.getElementById("preview-picture");
 const form = document.getElementById("picture-form");
 
-console.log(catID);
-
 fileInput.addEventListener("change", () => {
   previewFile();
 });

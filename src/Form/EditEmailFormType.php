@@ -18,20 +18,20 @@ class EditEmailFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('email', EmailType::class, [
-            'label' => "Nouvelle adresse email",
-            'attr' => ['placeholder' => "Ex: michelle@mail.com"],
-            'required' => true,
+            ->add('email', EmailType::class, [
+                'label' => "Nouvelle adresse email",
+                'attr' => ['placeholder' => "Ex: michelle@mail.com"],
+                'required' => true,
+                ])
+            ->add('confirm_password', PasswordType::class, [
+                'label' => "Confirmez par mot de passe",
+                'attr' => ['placeholder' => "Entrez votre mot de passe"],
+                'required' => true,
+                'mapped' => false,
             ])
-        ->add('confirm_password', PasswordType::class, [
-            'label' => "Confirmez par mot de passe",
-            'attr' => ['placeholder' => "Entrez votre mot de passe"],
-            'required' => true,
-            'mapped' => false,
-        ])
-        ->add('submit', SubmitType::class, [
-            'label' => "Valider"
-        ])
+            ->add('submit', SubmitType::class, [
+                'label' => "Valider"
+            ])
         ;
     }
 

@@ -1,0 +1,43 @@
+{% set route_name = app.request.attributes.get('_route') %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %} 
+    {% if route_name == 'edit-cat-owner-address' %}
+        Le Charnet de Santé - Modifier l'adresse du propriétaire {{ cat.name }}
+    {% elseif route_name == 'edit-cat-veterinary-address' %}
+        Le Charnet de Santé - Modifier l'adresse du vétérinaire   
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+{% endblock %}
+
+{% block body %}
+<main class="container">
+    <section>
+        {% if route_name == 'edit-cat-owner-address' %}
+        <h2>Modifier l'adresse du propriétaire</h2>
+        {% elseif route_name == 'edit-cat-veterinary-address' %}
+        <h2>Modifier l'adresse du vétérinaire</h2>
+        {% endif %}
+
+        {{ form_start(addressForm) }}
+            {{ form_row(addressForm.address1) }}
+            {{ form_row(addressForm.address2) }}
+            <div class="form-group">
+                {{ form_row(addressForm.postalCode) }}
+                {{ form_row(addressForm.city) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(addressForm.phoneNumber) }}
+                {{ form_row(addressForm.email) }}
+            </div>
+            {{ form_row(addressForm.send) }}
+            <a href="{{ path('cat-detail', {'id': cat.id}) }}" class="return">Retour</a>
+        {{ form_end(addressForm) }}
+    </section>
+</main>
+
+{% endblock %}

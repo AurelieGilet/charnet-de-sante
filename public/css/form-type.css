@@ -89,6 +89,15 @@ form li:before {
     margin-right: 5px;
 }
 
+.return {
+    display: block;
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #626364;
+    margin: 20px 0;
+}
+
 /***** RESPONSIVE *****/
 
 @media screen and (min-width: 768px) {
@@ -105,7 +114,7 @@ form li:before {
         display: flex !important;
         flex-direction: row !important;
         justify-content: space-between !important;
-        margin: 20px 0;
+        margin: 0 0;
     }
     .form-group div {
         width: 48%;

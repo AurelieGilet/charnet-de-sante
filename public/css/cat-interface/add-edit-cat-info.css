@@ -1,0 +1,16 @@
+form {
+    width: 95%;
+}
+
+#cat_form_dateOfBirth, #cat_form_dateOfDeath {
+    display: flex;
+    flex-direction: row;
+}
+
+/***** RESPONSIVE *****/
+
+@media screen and (min-width: 768px) {
+    form {
+        width: 90%;
+    }
+}

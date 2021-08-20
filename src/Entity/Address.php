@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AddressRepository::class)
@@ -34,11 +35,21 @@ class Address
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     * @Assert\Regex(
+     *     pattern="/[0-9]{5}/",
+     *     message="Le code postal doit contenir 5 chiffres"
+	 * )
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     * @Assert\Regex(
+     *     pattern="/[0-9]{10}/",
+     *     message="Le numéro de téléphone doit contenir 10 chiffres"
+	 * )
      */
     private $phoneNumber;
 
@@ -53,6 +64,11 @@ class Address
      * @ORM\JoinColumn(nullable=true)
      */
     private $veterinaryAddressCat;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $email;
 
     public function getId(): ?int
     {
@@ -139,6 +155,18 @@ class Address
     public function setVeterinaryAddressCat(?Cat $veterinaryAddressCat): self
     {
         $this->veterinaryAddressCat = $veterinaryAddressCat;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

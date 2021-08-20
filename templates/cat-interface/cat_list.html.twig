@@ -30,9 +30,9 @@
             <p>Vous n'avez pas encore ajouté de chat</p></p>
             {% endif %}
             </div>
-            <a href="" class="add-cat-btn">Ajouter un chat</a>
+            <a href="{{ path('add-cat') }}" class="add-cat-btn">Ajouter un chat</a>
+            <a href="{{ path('user-interface') }}" class="return">Retour</a>
         </section>
-        
     </main>
 
 {% endblock %}
