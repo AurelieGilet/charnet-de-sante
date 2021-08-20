@@ -36,8 +36,8 @@ class Cat
      * @Assert\Length(
 	 * 		min="1", 
 	 * 		minMessage="Le nom de votre chat doit faire au moins 1 caractère",
-     *      max="30",
-     *      maxMessage="Le nom de votre chat doit faire moins de 30 caractères"
+     *      max="20",
+     *      maxMessage="Le nom de votre chat doit faire moins de 20 caractères"
 	 * )
      */
     private $name;
