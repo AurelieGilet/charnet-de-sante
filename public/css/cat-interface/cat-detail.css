@@ -197,6 +197,10 @@ section {
     white-space: nowrap;
 }
 
+.hidden {
+    display: none;
+}
+
 .return-btn {
     background-color: var(--medium-purple);
     padding: 10px;
@@ -295,7 +299,7 @@ section {
     .cat-info-wrapper {
         flex-direction: row;
         justify-content: space-between;
-        height: 220px;
+        height: 280px;
         margin: 10px 0;
     }
     .card-picture {

@@ -15,14 +15,14 @@ class EditUsernameFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('username', TextType::class, [
-            'label' => "Nom d'utilisateur",
-            'attr' => ['placeholder' => "Nom d'utilisateur"],
-            'required' => true,
-        ])
-        ->add('submit', SubmitType::class, [
-            'label' => "Valider"
-        ])
+            ->add('username', TextType::class, [
+                'label' => "Nom d'utilisateur",
+                'attr' => ['placeholder' => "Nom d'utilisateur"],
+                'required' => true,
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => "Valider"
+            ])
         ;
     }
 
