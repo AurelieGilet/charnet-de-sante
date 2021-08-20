@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class AddCatFormType extends AbstractType
+class CatFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,7 +24,6 @@ class AddCatFormType extends AbstractType
             ->add('sexe', ChoiceType::class, [
                 'label' => "Sexe",
                 'choices' => [
-                    '' => '',
                     'Femelle' => "F",
                     'Mâle' => "M",
                 ],
@@ -43,7 +42,6 @@ class AddCatFormType extends AbstractType
             ->add('isSterilized', ChoiceType::class, [
                 'label' => "Stérilisation",
                 'choices' => [
-                    '' => '',
                     'Oui' => true,
                     'Non' => false,
                 ],
@@ -57,6 +55,7 @@ class AddCatFormType extends AbstractType
                 ],
                 'years' => range(date('Y')-25, date('Y')),
                 'required' => false,
+                'empty_data' => '',
             ])
             ->add('dateOfDeath', DateType::class, [
                 'label' => "Date de décès",
@@ -66,6 +65,7 @@ class AddCatFormType extends AbstractType
                 ],
                 'years' => range(date('Y')-25, date('Y')),
                 'required' => false,
+                'empty_data' => '',
             ])
             ->add('microchip', TextType::class, [
                 'label' => "N° de puce électronique",
@@ -89,7 +89,7 @@ class AddCatFormType extends AbstractType
             ])
             ->add('send', SubmitType::class, [
                 'label' => "Enregistrer"
-            ]);
+            ])
         ;
     }
 

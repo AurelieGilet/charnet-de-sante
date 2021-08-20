@@ -1,5 +1,6 @@
-{% extends 'base.html.twig' %}
+{% set route_name = app.request.attributes.get('_route') %}
 
+{% extends 'base.html.twig' %}
 
 {% block title %} 
     {% if cat|default %}
@@ -47,7 +48,7 @@
                 {{ form_row(catForm.veterinaryName) }}
             </div>
             {{ form_row(catForm.send) }}
-            <a href="{{ path('cat-list') }}" class="return">Retour</a>
+            <a {% if route_name == 'add-cat' %}href="{{ path('cat-list') }}" {% elseif route_name == 'edit-cat-info' %} href="{{ path('cat-detail', {'id': cat.id}) }}" {% endif %} class="return">Retour</a>
         {{ form_end(catForm) }}
     </section>
 </main>

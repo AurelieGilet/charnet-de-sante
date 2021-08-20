@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Address;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AddressFormType extends AbstractType
 {
@@ -37,6 +39,14 @@ class AddressFormType extends AbstractType
                 'label' => "N° de téléphone",
                 'attr' => ['placeholder' => 'fixe ou portable'],
                 'required' => false,
+            ])
+            ->add('email', EmailType::class, [
+                'label' => "Addresse email",
+                'attr' => ['placeholder' => 'exemple@mail.com'],
+                'required' => false,
+            ])
+            ->add('send', SubmitType::class, [
+                'label' => "Enregistrer"
             ])
         ;
     }
