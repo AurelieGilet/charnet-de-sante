@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Soins de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-data-pages.css') }}" >
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="card-title">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="{{ path('cat-detail', {'id': cat.id}) }}" class="return">Retour à la fiche</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <a href="" class="shaker">
+                    <div class="card-content card-template">
+                        <div class="left-side">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/vaccine.png') }}" alt="Icône de seringue de vaccin'">
+                            </div>
+                            <h3>Vaccin</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            &#11166
+                        </div>
+                    </div>
+                </a>
+                <a href="" class="shaker">
+                    <div class="card-content card-template">
+                        <div class="left-side">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/dewormer.png') }}" alt="Icône d'excrément de chat dans un flacon">
+                            </div>
+                            <h3>Vermifuge</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            &#11166
+                        </div>
+                    </div>
+                </a>
+                <a href="" class="shaker">
+                    <div class="card-content card-template">
+                        <div class="left-side">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/anti-parasite.png') }}" alt="Icône de spray anti-parasitaire">
+                            </div>
+                            <h3>Anti-parasitaire</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            &#11166
+                        </div>
+                    </div>
+                </a>
+                <a href="" class="shaker">
+                    <div class="card-content card-template">
+                        <div class="left-side">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/treatments.png') }}" alt="Icône de médicaments">
+                            </div>
+                            <h3>Traitements</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            &#11166
+                        </div>
+                    </div>
+                </a>
+                <a href="" class="shaker">
+                    <div class="card-content card-template">
+                        <div class="left-side">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/surgery.png') }}" alt="Icône de d'hôpital vétérinaire">
+                            </div>
+                            <h3>Chirurgie</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            &#11166
+                        </div>
+                    </div>
+                </a>
+                <a href="" class="shaker">
+                    <div class="card-content card-template">
+                        <div class="left-side">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/descaling.png') }}" alt="Icône de dentition de chat">
+                            </div>
+                            <h3>Détartrage</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            &#11166
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
