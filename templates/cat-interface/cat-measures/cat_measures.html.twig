@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Mesure de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-data-pages.css') }}" >
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="card-title">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="{{ path('cat-detail', {'id': cat.id}) }}" class="return">Retour à la fiche</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <a href="" class="shaker">
+                    <div class="card-content card-template">
+                        <div class="left-side">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/weight.png') }}" alt="Icône d'un chat sur une balance">
+                            </div>
+                            <h3>Poids</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            &#11166
+                        </div>
+                    </div>
+                </a>
+                <a href="" class="shaker">
+                    <div class="card-content card-template">
+                        <div class="left-side">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/thermometer.png') }}" alt="Icône d'un thermomètre">
+                            </div>
+                            <h3>Température</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            &#11166
+                        </div>
+                    </div>
+                </a>
+                <a href="" class="shaker">
+                    <div class="card-content card-template">
+                        <div class="left-side">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/heat.png') }}" alt="Icône de deux coeurs percés d'une flèche">
+                            </div>
+                            <h3>Chaleurs</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            &#11166
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+{% endblock %}
