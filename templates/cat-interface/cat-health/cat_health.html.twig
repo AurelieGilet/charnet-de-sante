@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Le Charnet de Santé - Entretien de {{ cat.name }} {% endblock %}
+{% block title %}Le Charnet de Santé - Santé de {{ cat.name }} {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
@@ -27,9 +27,9 @@
                     <div class="card-content card-template">
                         <div class="left-side">
                             <div class="icon">
-                                <img src="{{ asset('img/site/feeding.png') }}" alt="Icône de gamelle denourriture pour chat">
+                                <img src="{{ asset('img/site/vet-visit.png') }}" alt="Icône d'un agenda">
                             </div>
-                            <h3>Alimentation</h3>
+                            <h3>Visites chez le vétérinaire</h3>
                         </div>
                         <div class="card-arrow shake">
                             &#11166
@@ -40,9 +40,9 @@
                     <div class="card-content card-template">
                         <div class="left-side">
                             <div class="icon">
-                                <img src="{{ asset('img/site/grooming.png') }}" alt="Icône de ciseaux, brosse et peigne">
+                                <img src="{{ asset('img/site/allergies.png') }}" alt="Icône d'une fleur">
                             </div>
-                            <h3>Toilettage</h3>
+                            <h3>Allergies</h3>
                         </div>
                         <div class="card-arrow shake">
                             &#11166
@@ -53,9 +53,9 @@
                     <div class="card-content card-template">
                         <div class="left-side">
                             <div class="icon">
-                                <img src="{{ asset('img/site/claws.png') }}" alt="Icône de patte de chat">
+                                <img src="{{ asset('img/site/wounds.png') }}" alt="Icône de pansements">
                             </div>
-                            <h3>Griffes</h3>
+                            <h3>Blessures</h3>
                         </div>
                         <div class="card-arrow shake">
                             &#11166
@@ -66,9 +66,9 @@
                     <div class="card-content card-template">
                         <div class="left-side">
                             <div class="icon">
-                                <img src="{{ asset('img/site/eyes-ears.png') }}" alt="Icône de flacon de gouttes">
+                                <img src="{{ asset('img/site/virus.png') }}" alt="Icône de virus">
                             </div>
-                            <h3>Yeux et Oreilles</h3>
+                            <h3>Maladies</h3>
                         </div>
                         <div class="card-arrow shake">
                             &#11166
@@ -79,9 +79,9 @@
                     <div class="card-content card-template">
                         <div class="left-side">
                             <div class="icon">
-                                <img src="{{ asset('img/site/teeth.png') }}" alt="Icône de dent et brosse à dent">
+                                <img src="{{ asset('img/site/analyzes.png') }}" alt="Icône de microscope">
                             </div>
-                            <h3>Dents</h3>
+                            <h3>Analyses</h3>
                         </div>
                         <div class="card-arrow shake">
                             &#11166
@@ -92,22 +92,9 @@
                     <div class="card-content card-template">
                         <div class="left-side">
                             <div class="icon">
-                                <img src="{{ asset('img/site/litterbox.png') }}" alt="Icône de litière pour chat">
+                                <img src="{{ asset('img/site/files.png') }}" alt="Icône de documents">
                             </div>
-                            <h3>Litière</h3>
-                        </div>
-                        <div class="card-arrow shake">
-                            &#11166
-                        </div>
-                    </div>
-                </a>
-                <a href="" class="shaker">
-                    <div class="card-content card-template">
-                        <div class="left-side">
-                            <div class="icon">
-                                <img src="{{ asset('img/site/notes.png') }}" alt="Icône de carnet de notes">
-                            </div>
-                            <h3>Notes</h3>
+                            <h3>Documents</h3>
                         </div>
                         <div class="card-arrow shake">
                             &#11166
