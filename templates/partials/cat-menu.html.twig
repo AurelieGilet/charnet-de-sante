@@ -10,7 +10,7 @@
             </div>
             <ul class="cat-custom-options">
                 <div class="long-line"></div>
-                <li {# {% if route_name == 'cat-health' %} class="selected cat-custom-option" {% else %} {% endif %} #} class="cat-custom-option"><a href="">SANTE</a></li>
+                <li {% if route_name == 'cat-health' %} class="selected cat-custom-option" {% else %} {% endif %} class="cat-custom-option"><a href="{{ path('cat-health', {'id': cat.id}) }}">SANTE</a></li>
                 <div class="long-line"></div>
                 <li {#  {% if route_name == 'cat-healthcare' %} class="selected cat-custom-option" {% else %} {% endif %} #} class="cat-custom-option"><a href="">SOINS</a></li>
                 <div class="long-line"></div>
@@ -22,7 +22,7 @@
         </div>
         <div id="desktop-cat-menu">
             <ul class="cat-desktop-options">
-                <li {# {% if route_name == 'cat-health' %} class="selected cat-custom-option" {% else %} {% endif %} #} class="cat-custom-option"><a href="">SANTE</a></li>
+                <li {% if route_name == 'cat-health' %} class="selected cat-custom-option" {% else %} {% endif %} class="cat-custom-option"><a href="{{ path('cat-health', {'id': cat.id}) }}">SANTE</a></li>
                 <li {#  {% if route_name == 'cat-healthcare' %} class="selected cat-custom-option" {% else %} {% endif %} #} class="cat-custom-option"><a href="">SOINS</a></li>
                 <li  {% if route_name == 'cat-measures' %} class="selected cat-custom-option" {% else %} {% endif %} class="cat-custom-option"><a href="{{ path('cat-measures', {'id': cat.id}) }}">MESURES</a></li>
                 <li  {% if route_name == 'cat-petcare' %} class="selected cat-custom-option" {% else %} {% endif %} class="cat-custom-option"><a href="{{ path('cat-petcare', {'id': cat.id}) }}">ENTRETIEN</a></li>
