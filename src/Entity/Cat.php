@@ -112,10 +112,16 @@ class Cat
      */
     private $veterinaryAddress;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Measure::class, mappedBy="cat", orphanRemoval=true)
+     */
+    private $measures;
+
     public function __construct()
     {
         $this->ownerAddress = new ArrayCollection();
         $this->veterinaryAddress = new ArrayCollection();
+        $this->measures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -333,6 +339,36 @@ class Cat
             // set the owning side to null (unless already changed)
             if ($veterinaryAddress->getVeterinaryAddressCat() === $this) {
                 $veterinaryAddress->setVeterinaryAddressCat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Measure[]
+     */
+    public function getMeasures(): Collection
+    {
+        return $this->measures;
+    }
+
+    public function addMeasure(Measure $measure): self
+    {
+        if (!$this->measures->contains($measure)) {
+            $this->measures[] = $measure;
+            $measure->setCat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMeasure(Measure $measure): self
+    {
+        if ($this->measures->removeElement($measure)) {
+            // set the owning side to null (unless already changed)
+            if ($measure->getCat() === $this) {
+                $measure->setCat(null);
             }
         }
 
