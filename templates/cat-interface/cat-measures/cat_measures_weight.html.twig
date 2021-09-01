@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Poids de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-data-pages.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-measures/cat-measures-weight.css') }}" >
+    {{ encore_entry_link_tags('chart-css') }}
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="card-title">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="{{ path('cat-measures', {'id': cat.id}) }}" class="return">Retour aux mesures</a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="left-side">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/weight.png') }}" alt="Icône d'un chat sur une balance">
+                    </div>
+                    <h3>Poids</h3>
+                </div>
+                <span class="add-data mobile"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop">Ajouter une mesure</span>
+            </div>
+            <div class="card-content card-template chart-container">
+                {{ render_chart(chart, {'class': 'chart'}) }}
+            </div>
+            <div class="card-content card-template measures">
+            {% for measure in paginatedMeasures %}                
+                <div class="measure card-template">
+                    <div class="measure-info">
+                        <p class="date">
+                            <span>{{ measure.date|date('d') }}</span>
+                            <span>{{ measure.date|format_datetime(locale='fr', pattern="MMM") }}</span>
+                            <span>{{ measure.date|date('Y') }}</span>
+                        </p>
+                        <p class="data">{{ measure.weight }} Kg</p>
+                    </div>
+                    <div class="measure-options">
+                        <div class="mobile-options">
+                            <span class="edit-data"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="delete-data"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>
+                        </div>
+                        <div class="desktop-options">
+                            <span class="update-info desktop modify">Modifier</span>
+                            <span class="update-info desktop delete">Supprimer</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {{ knp_pagination_render(paginatedMeasures) }}
+            </div>
+        </div>
+    </section>
+</main>
+{{ encore_entry_script_tags('chart-js') }}
+{% endblock %}

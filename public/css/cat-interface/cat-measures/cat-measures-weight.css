@@ -1,0 +1,144 @@
+/* CHART */
+
+.chart-container {
+    justify-content: center;
+    position: relative;
+    height: 40vh;
+    min-height: 250px;
+    max-height: 350px;
+}
+
+.chart {
+    width: 95%;
+}
+
+/* MEASURES */
+
+.add-data, .edit-data, .delete-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--medium-purple);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
+    cursor: pointer;
+    color: white;
+    white-space: nowrap;
+    margin: 10px 20px;
+}
+
+.edit-data {
+    margin: 2px;
+}
+
+.delete-data {
+    background-color: var(--purple-navy);
+    margin: 2px;
+}
+
+.add-data img, .edit-data img, .delete-data img {
+    width: 15px;
+    height: auto;
+}
+
+.add-data.desktop, .desktop-options {
+    display: none;
+}
+
+.mobile-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update-info {
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 3px;
+    white-space: nowrap;
+    margin: 0 10px;
+}
+
+.modify {
+    color: var(--medium-purple);
+}
+
+.delete {
+    color: #626364;
+}
+
+.measures {
+    display: flex;
+    flex-direction: column;
+}
+
+.measure {
+    display: flex;
+    width: 95%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.measure-info {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.date span {
+    padding: 2px 0px;
+    margin: 0px 4px;
+}
+
+.data {
+    font-weight: bold;
+    white-space: nowrap;
+    margin: 0 10px;
+}
+
+/* PAGINATION */
+
+.pagination {
+    color: var(--medium-purple);
+}
+
+.pagination span {
+    margin: 0 5px;
+}
+
+.current, .next, .last, .first, .previous {
+    font-weight: bold;
+}
+
+.current {
+    color: var(--purple-navy);
+}
+
+/***** RESPONSIVE *****/
+
+@media screen and (min-width: 768px) {
+    .chart {
+        width: 90%;
+    }
+    .add-data.desktop,.desktop-options {
+        display: flex;
+    }
+    .add-data.mobile, .mobile-options {
+        display: none;
+    }
+    .measure {
+        width: 90%;
+    }
+    .date {
+        flex-direction: row;
+    }
+}
