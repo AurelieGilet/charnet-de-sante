@@ -19,6 +19,20 @@ class MeasureRepository extends ServiceEntityRepository
         parent::__construct($registry, Measure::class);
     }
 
+    /**
+     * @return Measure[]
+     */
+    public function findCatWeights($cat)
+    {
+        return $this->createQueryBuilder('measure')
+            ->andWhere('measure.cat = :cat and measure.weight IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('measure.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Measure[] Returns an array of Measure objects
     //  */
