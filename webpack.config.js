@@ -22,6 +22,8 @@ Encore
      */
     .addEntry('user-cropper', './assets/user-cropper.js')
     .addEntry('cat-cropper', './assets/cat-cropper.js')
+    .addEntry('chart-js', './assets/chart.js')
+    .addStyleEntry('chart-css', './assets/css/chart.css')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
