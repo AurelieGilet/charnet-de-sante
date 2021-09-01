@@ -39,43 +39,45 @@
                             <h3>Infos :</h3>
                             <a href="{{ path('edit-cat-info', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
                         </div>
-                        <p>Date de naissance : {% if cat.dateOfBirth is null %} {% else %} {{ cat.dateOfBirth|date('d-m-Y') }} {% endif %}</p>
-                        <p>Date de décès : {% if cat.dateOfDeath is null %} {% else %} {{ cat.dateOfDeath|date('d-m-Y') }} {% endif %}</p>
-                        <p>Sexe : {% if cat.sexe == 'F' %} Femelle {% elseif cat.sexe == 'M' %} Mâle {% else %} {% endif %}</p>
-                        <p>Stérilisé : {% if cat.isSterilized is null %} {% elseif cat.isSterilized == true %} Oui {% else %} Non {% endif %}</p>
-                        <p>Race : {{ cat.race|capitalize }} </p>
-                        <p>Robe : {{ cat.coat|capitalize }} </p>
-                        <p>Puce électronique : {{ microchip }}</p>
-                        <p>Tatouage : {{ cat.tattoo }}</p>
+                        <p>Date de naissance : <span class="data">{{ cat.dateOfBirth|date('d-m-Y') }}</span></p>
+                        <p>Date de décès : <span class="data">{{ cat.dateOfDeath|date('d-m-Y') }}</span></p>
+                        <p>Sexe : <span class="data">{% if cat.sexe == 'F' %} Femelle {% elseif cat.sexe == 'M' %} Mâle {% else %} {% endif %}</span></p>
+                        <p>Stérilisé : <span class="data">{% if cat.isSterilized is null %} {% elseif cat.isSterilized == true %} Oui {% else %} Non {% endif %}</span></p>
+                        <p>Race : <span class="data">{{ cat.race|capitalize }}</span> </p>
+                        <p>Robe : <span class="data">{{ cat.coat|capitalize }}</span> </p>
+                        <p>Puce électronique : <span class="data">{{ microchip }}</span></p>
+                        <p>Tatouage : <span class="data">{{ cat.tattoo }}</span></p>
                     </div>
                 </div>
-                <div class="human-info card-template">
-                    <div class="info-label">
-                        <h3>Propriétaire :</h3>
-                        <a href="{{ path('edit-cat-owner-address', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
+                <div class="bottom-card-content">
+                    <div class="human-info card-template">
+                        <div class="info-label">
+                            <h3>Propriétaire :</h3>
+                            <a href="{{ path('edit-cat-owner-address', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
+                        </div>
+                        <p {% if cat.ownerName is null %} class="hidden" {% endif %}>{{ cat.ownerName }}</p>
+                        {% if cat.ownerAddress[0]|default %}
+                            <p {% if cat.ownerAddress[0].address1 is null %} class="hidden" {% endif %}>{{ cat.ownerAddress[0].address1 }}</p>
+                            <p {% if cat.ownerAddress[0].address2 is null %} class="hidden" {% endif %}>{{ cat.ownerAddress[0].address2 }}</p>
+                            <p {% if (cat.ownerAddress[0].postalCode is null) and (cat.ownerAddress[0].city is null) %} class="hidden" {% endif %}>{{ cat.ownerAddress[0].postalCode }} {{ cat.ownerAddress[0].city }}</p>
+                            <p {% if ownerPhone is empty %} class="hidden" {% endif %}>{{ ownerPhone }}</p>
+                            <p {% if cat.ownerAddress[0].email is null %} class="hidden" {% endif %}>{{ cat.ownerAddress[0].email }}</p>
+                        {% endif %}
                     </div>
-                    <p {% if cat.ownerName is null %} class="hidden" {% endif %}>{{ cat.ownerName }}</p>
-                {% if cat.ownerAddress[0]|default %}
-                    <p {% if cat.ownerAddress[0].address1 is null %} class="hidden" {% endif %}>{{ cat.ownerAddress[0].address1 }}</p>
-                    <p {% if cat.ownerAddress[0].address2 is null %} class="hidden" {% endif %}>{{ cat.ownerAddress[0].address2 }}</p>
-                    <p {% if (cat.ownerAddress[0].postalCode is null) and (cat.ownerAddress[0].city is null) %} class="hidden" {% endif %}>{{ cat.ownerAddress[0].postalCode }} {{ cat.ownerAddress[0].city }}</p>
-                    <p {% if ownerPhone is empty %} class="hidden" {% endif %}>{{ ownerPhone }}</p>
-                    <p {% if cat.ownerAddress[0].email is null %} class="hidden" {% endif %}>{{ cat.ownerAddress[0].email }}</p>
-                {% endif %}
-                </div>
-                <div class="human-info card-template">
-                    <div class="info-label">
-                        <h3>Vétérinaire :</h3>
-                        <a href="{{ path('edit-cat-veterinary-address', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
+                    <div class="human-info card-template">
+                        <div class="info-label">
+                            <h3>Vétérinaire :</h3>
+                            <a href="{{ path('edit-cat-veterinary-address', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
+                        </div>
+                        <p {% if cat.veterinaryName is null %} class="hidden" {% endif %}>{{ cat.veterinaryName }}</p>
+                        {% if cat.veterinaryAddress[0]|default %}
+                            <p {% if cat.veterinaryAddress[0].address1 is null %} class="hidden" {% endif %}>{{ cat.veterinaryAddress[0].address1 }}</p>
+                            <p {% if cat.veterinaryAddress[0].address2 is null %} class="hidden" {% endif %}>{{ cat.veterinaryAddress[0].address2 }}</p>
+                            <p {% if (cat.veterinaryAddress[0].postalCode is null) and (cat.veterinaryAddress[0].city is null) %} class="hidden" {% endif %}>{{ cat.veterinaryAddress[0].postalCode }} {{ cat.veterinaryAddress[0].city }}</p>
+                            <p {% if veterinaryPhone is empty %} class="hidden" {% endif %}>{{ veterinaryPhone }}</p>
+                            <p {% if cat.veterinaryAddress[0].email is null %} class="hidden" {% endif %}>{{ cat.veterinaryAddress[0].email }}</p>
+                        {% endif %}
                     </div>
-                    <p {% if cat.veterinaryName is null %} class="hidden" {% endif %}>{{ cat.veterinaryName }}</p>
-                {% if cat.veterinaryAddress[0]|default %}
-                    <p {% if cat.veterinaryAddress[0].address1 is null %} class="hidden" {% endif %}>{{ cat.veterinaryAddress[0].address1 }}</p>
-                    <p {% if cat.veterinaryAddress[0].address2 is null %} class="hidden" {% endif %}>{{ cat.veterinaryAddress[0].address2 }}</p>
-                    <p {% if (cat.veterinaryAddress[0].postalCode is null) and (cat.veterinaryAddress[0].city is null) %} class="hidden" {% endif %}>{{ cat.veterinaryAddress[0].postalCode }} {{ cat.veterinaryAddress[0].city }}</p>
-                    <p {% if veterinaryPhone is empty %} class="hidden" {% endif %}>{{ veterinaryPhone }}</p>
-                    <p {% if cat.veterinaryAddress[0].email is null %} class="hidden" {% endif %}>{{ cat.veterinaryAddress[0].email }}</p>
-                {% endif %}
                 </div>
             </div>
             <span class="update-info delete">Supprimer le chat</span>
