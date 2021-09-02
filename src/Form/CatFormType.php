@@ -53,7 +53,7 @@ class CatFormType extends AbstractType
                 'placeholder' => [
                     'day' => "Jour", 'month' => "Mois", 'year' => "Année",
                 ],
-                'years' => range(date('Y')-25, date('Y')),
+                'years' => range(date('Y') - 25, date('Y')),
                 'required' => false,
                 'empty_data' => '',
             ])
@@ -63,7 +63,7 @@ class CatFormType extends AbstractType
                 'placeholder' => [
                     'day' => "Jour", 'month' => "Mois", 'year' => "Année",
                 ],
-                'years' => range(date('Y')-25, date('Y')),
+                'years' => range(date('Y') - 25, date('Y')),
                 'required' => false,
                 'empty_data' => '',
             ])
@@ -87,7 +87,7 @@ class CatFormType extends AbstractType
                 'attr' => ['placeholder' => "Dr Dolittle"],
                 'required' => false,
             ])
-            ->add('send', SubmitType::class, [
+            ->add('submit', SubmitType::class, [
                 'label' => "Enregistrer"
             ])
         ;

@@ -99,7 +99,9 @@ class SecurityController extends AbstractController
     public function editUsername(Request $request, EntityManagerInterface $manager): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(EditUsernameFormType::class, $user);
+        $form = $this->createForm(EditUsernameFormType::class, $user, [
+            'action' => $this->generateUrl('edit-username'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -127,7 +129,9 @@ class SecurityController extends AbstractController
     {
         $user = $this->getUser();
         $actualPassword = $user->getPassword();
-        $form = $this->createForm(EditEmailFormType::class, $user);
+        $form = $this->createForm(EditEmailFormType::class, $user, [
+            'action' => $this->generateUrl('edit-email'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -163,7 +167,9 @@ class SecurityController extends AbstractController
     {
         $user = $this->getUser();
         $actualPassword = $user->getPassword();
-        $form = $this->createForm(EditPasswordFormType::class, $user);
+        $form = $this->createForm(EditPasswordFormType::class, $user, [
+            'action' => $this->generateUrl('edit-password'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
