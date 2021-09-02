@@ -3,6 +3,7 @@
 {% block title %}Le Charnet de Santé - Poids de {{ cat.name }} {% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
     <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
     <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-data-pages.css') }}" >
     <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-measures/cat-measures-weight.css') }}" >
@@ -11,6 +12,8 @@
 
 {% block body %}
 <main>
+    {% include 'partials/message-modal.html.twig' %}
+
     {% include 'partials/cat-menu.html.twig' %} 
 
     <section>
@@ -31,8 +34,8 @@
                     </div>
                     <h3>Poids</h3>
                 </div>
-                <span class="add-data mobile"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
-                <span class="add-data desktop">Ajouter une mesure</span>
+                <span class="add-data mobile add-weight"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-weight">Ajouter une mesure</span>
             </div>
             <div class="card-content card-template chart-container">
                 {{ render_chart(chart, {'class': 'chart'}) }}
@@ -50,20 +53,39 @@
                     </div>
                     <div class="measure-options">
                         <div class="mobile-options">
-                            <span class="edit-data"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
-                            <span class="delete-data"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="edit-data edit-weight-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="delete-data delete-weight-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>
                         </div>
                         <div class="desktop-options">
-                            <span class="update-info desktop modify">Modifier</span>
-                            <span class="update-info desktop delete">Supprimer</span>
+                            <span class="update-info desktop modify edit-weight-btn" data-measure-id="{{ measure.id }}">Modifier</span>
+                            <span class="update-info desktop delete delete-weight-btn" data-measure-id="{{ measure.id }}">Supprimer</span>
                         </div>
                     </div>
+                </div>
+                <div id="edit-{{ measure.id }}"class="edit-weight-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatMeasuresController::editWeight',
+                        { 'catId': cat.id, 'weightId': measure.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ measure.id }}"class="delete-weight-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatMeasuresController::deleteWeight',
+                        { 'catId': cat.id, 'weightId': measure.id }
+                    ))}}
                 </div>
             {% endfor %}
             {{ knp_pagination_render(paginatedMeasures) }}
             </div>
         </div>
     </section>
+    <div id="add-weight-form">
+        {{ render(controller(
+            'App\\Controller\\CatMeasuresController::addWeight',
+            { 'id': cat.id }
+        ))}}
+    </div>
 </main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-measures.js') }}"></script>
 {{ encore_entry_script_tags('chart-js') }}
 {% endblock %}

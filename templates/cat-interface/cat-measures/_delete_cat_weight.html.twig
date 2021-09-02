@@ -1,0 +1,12 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close delete-modal-close-btn">X</div>
+        <h3>Etes-vous sûr de vouloir supprimer cette mesure ?</h3>
+        {{ form_start(weightForm) }}
+            {{ form_row(weightForm.weight,{'label': false, 'attr' : { 'style':'display:none'}}) }}
+            {{ form_row(weightForm.date, {'label': false, 'attr' : { 'style':'display:none'}}, ) }}
+            {{ form_row(weightForm._token) }}
+            {{ form_row(weightForm.submit, {'label': 'Supprimer'}) }}
+        {{ form_end(weightForm, {render_rest: false}) }}
+    </div>
+</div>

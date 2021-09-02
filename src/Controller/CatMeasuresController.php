@@ -3,8 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Cat;
+use App\Entity\Measure;
+use App\Form\CatMeasureFormType;
+use App\Repository\CatRepository;
 use Symfony\UX\Chartjs\Model\Chart;
 use App\Repository\MeasureRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,6 +88,129 @@ class CatMeasuresController extends AbstractController
             'cat' => $cat,
             'paginatedMeasures' => $paginatedMeasures,
             'chart' => $chart,
+        ]);
+    }
+
+    /**
+     * @Route("/espace-utilisateur/chat/{id}/mesures/poids/ajouter", name="add-weight")
+     */
+    public function addWeight(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
+    {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
+        $measure = new Measure;
+
+        $form = $this->createForm(CatMeasureFormType::class, $measure, [
+            'action' => $this->generateUrl('add-weight', ['id' => $cat->getId(),
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getWeight() == null) {
+                $this->addFlash('danger', "La mesure n'a pas été ajoutée. Les deux champs sont requis.");
+
+                return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+            }
+
+            $measure->setCat($cat);
+
+            $manager->persist($measure);
+            $manager->flush();
+
+            $this->addFlash('success', "La mesure a été ajoutée");
+
+            return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "La mesure n'a pas été ajoutée. Les deux champs sont requis.");
+
+            return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/cat-measures/_add_cat_weight.html.twig', [
+            'controller_name' => 'CatMeasuresController',
+            'weightForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/espace-utilisateur/chat/{catId}/mesures/poids/{weightId}/editer", name="edit-weight")
+     */
+    public function editWeight(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
+    {
+        $catID = $request->attributes->get('catId');
+        $cat = $catRepository->findOneBy(['id' => $catID]);
+
+        $measureID = $request->attributes->get('weightId');
+        $measure = $measureRepository->findOneBy(['id' => $measureID]);
+
+        $form = $this->createForm(CatMeasureFormType::class, $measure, [
+            'action' => $this->generateUrl('edit-weight', ['catId' => $cat->getId(), 'weightId' => $measure->getId()
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getWeight() == null) {
+                $this->addFlash('danger', "La mesure n'a pas été modifiée. Les deux champs sont requis.");
+
+                return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+            }
+
+            $manager->persist($measure);
+            $manager->flush();
+
+            $this->addFlash('success', "La mesure a été modifiée");
+
+            return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "La mesure n'a pas été modifiée. Les deux champs sont requis.");
+
+            return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/cat-measures/_edit_cat_weight.html.twig', [
+            'controller_name' => 'CatMeasuresController',
+            'weightForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/espace-utilisateur/chat/{catId}/mesures/poids/{weightId}/supprimer", name="delete-weight")
+     */
+    public function deleteWeight(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
+    {
+        $catID = $request->attributes->get('catId');
+        $cat = $catRepository->findOneBy(['id' => $catID]);
+
+        $measureID = $request->attributes->get('weightId');
+        $measure = $measureRepository->findOneBy(['id' => $measureID]);
+
+        $form = $this->createForm(CatMeasureFormType::class, $measure, [
+            'action' => $this->generateUrl('delete-weight', ['catId' => $cat->getId(), 'weightId' => $measure->getId()
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $manager->remove($measure);
+            $manager->flush();
+
+            $this->addFlash('success', "La mesure a été supprimée");
+
+            return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "La mesure n'a pas été supprimée");
+
+            return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/cat-measures/_delete_cat_weight.html.twig', [
+            'controller_name' => 'CatMeasuresController',
+            'weightForm' => $form->createView(),
+            'catId' => $cat->getId(),
+            'weightId' => $measure->getId(),
         ]);
     }
 }
