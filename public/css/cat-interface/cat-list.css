@@ -21,7 +21,7 @@ section {
 }
 
 section h2 {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: bold;
     margin: 20px 0;
 }
@@ -156,7 +156,7 @@ section p {
 
 @media screen and (min-width: 768px) {
     section h2 {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
     }
     section h3, section p, .add-cat-btn  {
         font-size: 1.2rem;

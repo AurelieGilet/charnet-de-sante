@@ -22,7 +22,7 @@ section {
 
 section h2 {
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     text-align: center;
     margin: 20px 0;
 }
@@ -102,7 +102,7 @@ form li:before {
 
 @media screen and (min-width: 768px) {
     section h2 {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
     }
     label, input, textarea, button {
         font-size: 1.2rem;
