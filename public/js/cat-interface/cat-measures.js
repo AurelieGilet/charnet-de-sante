@@ -1,17 +1,17 @@
 const close = document.querySelectorAll(".close");
 const editModalClose = document.getElementsByClassName("edit-modal-close-btn");
 const deleteModalClose = document.getElementsByClassName("delete-modal-close-btn");
-const addWeightBtn = document.getElementsByClassName("add-weight");
-const addWeightForm = document.getElementById("add-weight-form");
-const editWeightBtn = document.getElementsByClassName("edit-weight-btn");
-const editWeightForm = document.getElementsByClassName("edit-weight-form");
-const deleteWeightBtn = document.getElementsByClassName("delete-weight-btn");
-const deleteWeightForm = document.getElementsByClassName("delete-weight-form");
+const addMeasureBtn = document.getElementsByClassName("add-measure-btn");
+const addMeasureForm = document.getElementById("add-measure-form");
+const editMeasureBtn = document.getElementsByClassName("edit-measure-btn");
+const editMeasureForm = document.getElementsByClassName("edit-measure-form");
+const deleteMeasureBtn = document.getElementsByClassName("delete-measure-btn");
+const deleteMeasureForm = document.getElementsByClassName("delete-measure-form");
 
 if (close != null) {
   for (let i = 0; i < close.length; i++) {
     close[i].addEventListener("click", function () {
-      addWeightForm.style.display = "none";
+      addMeasureForm.style.display = "none";
       body[0].classList.remove("modal-open");
     });
   }
@@ -20,7 +20,7 @@ if (close != null) {
 if (editModalClose != null) {
   for (let i = 0; i < editModalClose.length; i++) {
     editModalClose[i].addEventListener("click", function () {
-      editWeightForm[i].style.display = "none";
+      editMeasureForm[i].style.display = "none";
       body[0].classList.remove("modal-open");
     });
   }
@@ -29,33 +29,33 @@ if (editModalClose != null) {
 if (deleteModalClose != null) {
   for (let i = 0; i < deleteModalClose.length; i++) {
     deleteModalClose[i].addEventListener("click", function () {
-      deleteWeightForm[i].style.display = "none";
+      deleteMeasureForm[i].style.display = "none";
       body[0].classList.remove("modal-open");
     });
   }
 }
 
-for (let i = 0; i < addWeightBtn.length; i++) {
-  addWeightBtn[i].addEventListener("click", function () {
-    addWeightForm.style.display = "block";
+for (let i = 0; i < addMeasureBtn.length; i++) {
+  addMeasureBtn[i].addEventListener("click", function () {
+    addMeasureForm.style.display = "block";
     body[0].classList.add("modal-open");
   });
 }
 
-for (let i = 0; i < editWeightBtn.length; i++) {
-  editWeightBtn[i].addEventListener("click", function () {
-    let measureId = editWeightBtn[i].dataset.measureId;
-    let editWeightForm = document.getElementById("edit-" + measureId);
-    editWeightForm.style.display = "block";
+for (let i = 0; i < editMeasureBtn.length; i++) {
+  editMeasureBtn[i].addEventListener("click", function () {
+    let measureId = editMeasureBtn[i].dataset.measureId;
+    let editMeasureForm = document.getElementById("edit-" + measureId);
+    editMeasureForm.style.display = "block";
     body[0].classList.add("modal-open");
   });
 }
 
-for (let i = 0; i < deleteWeightBtn.length; i++) {
-  deleteWeightBtn[i].addEventListener("click", function () {
-    let measureId = deleteWeightBtn[i].dataset.measureId;
-    let deleteWeightForm = document.getElementById("delete-" + measureId);
-    deleteWeightForm.style.display = "block";
+for (let i = 0; i < deleteMeasureBtn.length; i++) {
+  deleteMeasureBtn[i].addEventListener("click", function () {
+    let measureId = deleteMeasureBtn[i].dataset.measureId;
+    let deleteMeasureForm = document.getElementById("delete-" + measureId);
+    deleteMeasureForm.style.display = "block";
     body[0].classList.add("modal-open");
   });
 }

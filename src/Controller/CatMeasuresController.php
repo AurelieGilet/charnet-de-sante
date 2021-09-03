@@ -92,16 +92,16 @@ class CatMeasuresController extends AbstractController
     }
 
     /**
-     * @Route("/espace-utilisateur/chat/{id}/mesures/poids/ajouter", name="add-weight")
+     * @Route("/espace-utilisateur/chat/{id}/mesures/poids/ajouter", name="add-measure")
      */
-    public function addWeight(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
+    public function addMeasure(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
         $measure = new Measure;
 
         $form = $this->createForm(CatMeasureFormType::class, $measure, [
-            'action' => $this->generateUrl('add-weight', ['id' => $cat->getId(),
+            'action' => $this->generateUrl('add-measure', ['id' => $cat->getId(),
             ]),
         ]);
         $form->handleRequest($request);
@@ -127,25 +127,25 @@ class CatMeasuresController extends AbstractController
             return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-measures/_add_cat_weight.html.twig', [
+        return $this->render('cat-interface/cat-measures/_add_cat_measure.html.twig', [
             'controller_name' => 'CatMeasuresController',
-            'weightForm' => $form->createView()
+            'measureForm' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/espace-utilisateur/chat/{catId}/mesures/poids/{weightId}/editer", name="edit-weight")
+     * @Route("/espace-utilisateur/chat/{catId}/mesures/poids/{measureId}/editer", name="edit-measure")
      */
-    public function editWeight(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
+    public function editMeasure(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
     {
         $catID = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catID]);
 
-        $measureID = $request->attributes->get('weightId');
+        $measureID = $request->attributes->get('measureId');
         $measure = $measureRepository->findOneBy(['id' => $measureID]);
 
         $form = $this->createForm(CatMeasureFormType::class, $measure, [
-            'action' => $this->generateUrl('edit-weight', ['catId' => $cat->getId(), 'weightId' => $measure->getId()
+            'action' => $this->generateUrl('edit-measure', ['catId' => $cat->getId(), 'measureId' => $measure->getId()
             ]),
         ]);
         $form->handleRequest($request);
@@ -169,25 +169,25 @@ class CatMeasuresController extends AbstractController
             return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-measures/_edit_cat_weight.html.twig', [
+        return $this->render('cat-interface/cat-measures/_edit_cat_measure.html.twig', [
             'controller_name' => 'CatMeasuresController',
-            'weightForm' => $form->createView()
+            'measureForm' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/espace-utilisateur/chat/{catId}/mesures/poids/{weightId}/supprimer", name="delete-weight")
+     * @Route("/espace-utilisateur/chat/{catId}/mesures/poids/{measureId}/supprimer", name="delete-measure")
      */
-    public function deleteWeight(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
+    public function deleteMeasure(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
     {
         $catID = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catID]);
 
-        $measureID = $request->attributes->get('weightId');
+        $measureID = $request->attributes->get('measureId');
         $measure = $measureRepository->findOneBy(['id' => $measureID]);
 
         $form = $this->createForm(CatMeasureFormType::class, $measure, [
-            'action' => $this->generateUrl('delete-weight', ['catId' => $cat->getId(), 'weightId' => $measure->getId()
+            'action' => $this->generateUrl('delete-measure', ['catId' => $cat->getId(), 'measureId' => $measure->getId()
             ]),
         ]);
         $form->handleRequest($request);
@@ -206,11 +206,11 @@ class CatMeasuresController extends AbstractController
             return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-measures/_delete_cat_weight.html.twig', [
+        return $this->render('cat-interface/cat-measures/_delete_cat_measure.html.twig', [
             'controller_name' => 'CatMeasuresController',
-            'weightForm' => $form->createView(),
+            'measureForm' => $form->createView(),
             'catId' => $cat->getId(),
-            'weightId' => $measure->getId(),
+            'measureId' => $measure->getId(),
         ]);
     }
 }

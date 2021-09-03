@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
     <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
     <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-data-pages.css') }}" >
-    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-measures/cat-measures-weight.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-measures/cat-measures.css') }}" >
     {{ encore_entry_link_tags('chart-css') }}
 {% endblock %}
 
@@ -28,14 +28,14 @@
                 </div>
             </div>
             <div class="card-content card-template">
-                <div class="left-side">
+                <div class="card-title">
                     <div class="icon">
                         <img src="{{ asset('img/site/weight.png') }}" alt="Icône d'un chat sur une balance">
                     </div>
                     <h3>Poids</h3>
                 </div>
-                <span class="add-data mobile add-weight"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
-                <span class="add-data desktop add-weight">Ajouter une mesure</span>
+                <span class="add-data mobile add-measure-btn"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-measure-btn">Ajouter une mesure</span>
             </div>
             <div class="card-content card-template chart-container">
                 {{ render_chart(chart, {'class': 'chart'}) }}
@@ -53,25 +53,25 @@
                     </div>
                     <div class="measure-options">
                         <div class="mobile-options">
-                            <span class="edit-data edit-weight-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
-                            <span class="delete-data delete-weight-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="edit-data edit-measure-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="delete-data delete-measure-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>
                         </div>
                         <div class="desktop-options">
-                            <span class="update-info desktop modify edit-weight-btn" data-measure-id="{{ measure.id }}">Modifier</span>
-                            <span class="update-info desktop delete delete-weight-btn" data-measure-id="{{ measure.id }}">Supprimer</span>
+                            <span class="update-info desktop modify edit-measure-btn" data-measure-id="{{ measure.id }}">Modifier</span>
+                            <span class="update-info desktop delete delete-measure-btn" data-measure-id="{{ measure.id }}">Supprimer</span>
                         </div>
                     </div>
                 </div>
-                <div id="edit-{{ measure.id }}"class="edit-weight-form">
+                <div id="edit-{{ measure.id }}"class="edit-measure-form">
                     {{ render(controller(
-                        'App\\Controller\\CatMeasuresController::editWeight',
-                        { 'catId': cat.id, 'weightId': measure.id }
+                        'App\\Controller\\CatMeasuresController::editMeasure',
+                        { 'catId': cat.id, 'measureId': measure.id }
                     ))}}
                 </div>
-                <div id="delete-{{ measure.id }}"class="delete-weight-form">
+                <div id="delete-{{ measure.id }}"class="delete-measure-form">
                     {{ render(controller(
-                        'App\\Controller\\CatMeasuresController::deleteWeight',
-                        { 'catId': cat.id, 'weightId': measure.id }
+                        'App\\Controller\\CatMeasuresController::deleteMeasure',
+                        { 'catId': cat.id, 'measureId': measure.id }
                     ))}}
                 </div>
             {% endfor %}
@@ -79,9 +79,9 @@
             </div>
         </div>
     </section>
-    <div id="add-weight-form">
+    <div id="add-measure-form">
         {{ render(controller(
-            'App\\Controller\\CatMeasuresController::addWeight',
+            'App\\Controller\\CatMeasuresController::addMeasure',
             { 'id': cat.id }
         ))}}
     </div>
