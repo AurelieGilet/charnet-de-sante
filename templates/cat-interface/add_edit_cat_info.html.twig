@@ -47,7 +47,7 @@
                 {{ form_row(catForm.ownerName) }}
                 {{ form_row(catForm.veterinaryName) }}
             </div>
-            {{ form_row(catForm.send) }}
+            {{ form_row(catForm.submit) }}
             <a {% if route_name == 'add-cat' %}href="{{ path('cat-list') }}" {% elseif route_name == 'edit-cat-info' %} href="{{ path('cat-detail', {'id': cat.id}) }}" {% endif %} class="return">Retour</a>
         {{ form_end(catForm) }}
     </section>

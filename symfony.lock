@@ -115,6 +115,12 @@
             "./config/routes/fos_js_routing.yaml"
         ]
     },
+    "knplabs/knp-components": {
+        "version": "v3.1.0"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.6.0"
+    },
     "laminas/laminas-code": {
         "version": "4.4.0"
     },
@@ -595,6 +601,9 @@
     "symfony/twig-pack": {
         "version": "v1.0.1"
     },
+    "symfony/ux-chartjs": {
+        "version": "v1.3.0"
+    },
     "symfony/validator": {
         "version": "4.3",
         "recipe": {
@@ -661,6 +670,9 @@
     },
     "twig/extra-bundle": {
         "version": "v3.3.1"
+    },
+    "twig/intl-extra": {
+        "version": "v3.3.0"
     },
     "twig/twig": {
         "version": "v3.3.2"

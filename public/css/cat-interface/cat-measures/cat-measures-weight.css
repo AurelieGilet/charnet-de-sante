@@ -1,0 +1,230 @@
+/* CHART */
+
+.chart-container {
+    justify-content: center;
+    position: relative;
+    height: 40vh;
+    min-height: 250px;
+    max-height: 350px;
+}
+
+.chart {
+    width: 95%;
+}
+
+/* MEASURES */
+
+.add-data, .edit-data, .delete-data, .delete-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--medium-purple);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
+    cursor: pointer;
+    color: white;
+    white-space: nowrap;
+    margin: 10px 20px;
+}
+
+.edit-data {
+    margin: 2px;
+}
+
+.delete-data {
+    background-color: var(--purple-navy);
+    margin: 2px;
+}
+
+.add-data img, .edit-data img, .delete-data img {
+    width: 15px;
+    height: auto;
+}
+
+.add-data.desktop, .desktop-options {
+    display: none;
+}
+
+.mobile-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update-info {
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 3px;
+    white-space: nowrap;
+    margin: 0 10px;
+}
+
+.modify {
+    color: var(--medium-purple);
+}
+
+.delete {
+    color: #626364;
+}
+
+.measures {
+    display: flex;
+    flex-direction: column;
+}
+
+.measure {
+    display: flex;
+    width: 95%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.measure-info {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.date span {
+    padding: 2px 0px;
+    margin: 0px 4px;
+}
+
+.data {
+    font-weight: bold;
+    white-space: nowrap;
+    margin: 0 10px;
+}
+
+/* PAGINATION */
+
+.pagination {
+    color: var(--medium-purple);
+    margin: 10px 5px;
+}
+
+.pagination span {
+    margin: 0 5px;
+}
+
+.current, .next, .last, .first, .previous {
+    font-weight: bold;
+}
+
+.current {
+    color: var(--purple-navy);
+}
+
+/* FORMS */
+
+#add-weight-form, .edit-weight-form, .delete-weight-form {
+    display: none;
+}
+
+.form-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background-color: #24004656;
+}
+
+.form-wrapper {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 5px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: var(--purple-navy);
+    color: white;
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin: 5px;
+    padding: 5px;
+    background-color: var(--medium-purple);
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.delete-btn {
+    font-weight: bold;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form div {
+    width: 90%;
+    margin: 10px auto;
+}
+
+.form-wrapper h3 {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-top: 40px;
+}
+
+#cat_measure_form_date {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+}
+
+#cat_measure_form_date select {
+    margin: 0 5px;
+}
+
+/***** RESPONSIVE *****/
+
+@media screen and (min-width: 768px) {
+    .chart {
+        width: 90%;
+    }
+    .add-data.desktop,.desktop-options {
+        display: flex;
+    }
+    .add-data.mobile, .mobile-options {
+        display: none;
+    }
+    .measure {
+        width: 90%;
+    }
+    .date {
+        flex-direction: row;
+    }
+    form div {
+        width: 50%;
+        margin: 20px auto;
+    }
+    .form-wrapper h3 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+}

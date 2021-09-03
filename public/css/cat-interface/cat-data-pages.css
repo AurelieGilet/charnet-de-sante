@@ -67,12 +67,13 @@ section {
 }
 
 .card h2 {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: bold;
     margin: 10px 0;
 }
 
 .card h3 {
+    font-size: 1.1rem;
     font-weight: bold;
     margin: 10px;
 }
@@ -194,21 +195,27 @@ section {
     .card {
         width: 90%;
     }
+    .left-side {
+        margin-left: 20px;
+    }
     .card-title {
         flex-direction: row;
         justify-content: space-between;
     }
     .card h2 {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
     }
     .card h3 {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
+    }
+    .card p {
+        font-size: 1.1rem;
     }
     .card-body {
         width: 90%;
     }
     .card-arrow {
         font-size: 1.8rem;
-        margin-right: 10px;
+        margin-right: 20px;
     }
 }

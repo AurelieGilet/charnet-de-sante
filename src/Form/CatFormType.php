@@ -53,9 +53,9 @@ class CatFormType extends AbstractType
                 'placeholder' => [
                     'day' => "Jour", 'month' => "Mois", 'year' => "Année",
                 ],
-                'years' => range(date('Y')-25, date('Y')),
+                'years' => range(date('Y') - 25, date('Y')),
                 'required' => false,
-                'empty_data' => '',
+                'by_reference' => true,
             ])
             ->add('dateOfDeath', DateType::class, [
                 'label' => "Date de décès",
@@ -63,9 +63,9 @@ class CatFormType extends AbstractType
                 'placeholder' => [
                     'day' => "Jour", 'month' => "Mois", 'year' => "Année",
                 ],
-                'years' => range(date('Y')-25, date('Y')),
+                'years' => range(date('Y') - 25, date('Y')),
                 'required' => false,
-                'empty_data' => '',
+                'by_reference' => true,
             ])
             ->add('microchip', TextType::class, [
                 'label' => "N° de puce électronique",
@@ -87,7 +87,7 @@ class CatFormType extends AbstractType
                 'attr' => ['placeholder' => "Dr Dolittle"],
                 'required' => false,
             ])
-            ->add('send', SubmitType::class, [
+            ->add('submit', SubmitType::class, [
                 'label' => "Enregistrer"
             ])
         ;

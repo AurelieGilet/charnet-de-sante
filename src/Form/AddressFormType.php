@@ -45,7 +45,7 @@ class AddressFormType extends AbstractType
                 'attr' => ['placeholder' => 'exemple@mail.com'],
                 'required' => false,
             ])
-            ->add('send', SubmitType::class, [
+            ->add('submit', SubmitType::class, [
                 'label' => "Enregistrer"
             ])
         ;
