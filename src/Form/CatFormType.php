@@ -55,7 +55,7 @@ class CatFormType extends AbstractType
                 ],
                 'years' => range(date('Y') - 25, date('Y')),
                 'required' => false,
-                'empty_data' => '',
+                'by_reference' => true,
             ])
             ->add('dateOfDeath', DateType::class, [
                 'label' => "Date de décès",
@@ -65,7 +65,7 @@ class CatFormType extends AbstractType
                 ],
                 'years' => range(date('Y') - 25, date('Y')),
                 'required' => false,
-                'empty_data' => '',
+                'by_reference' => true,
             ])
             ->add('microchip', TextType::class, [
                 'label' => "N° de puce électronique",

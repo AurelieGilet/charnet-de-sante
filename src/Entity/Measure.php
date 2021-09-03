@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MeasureRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,7 +25,11 @@ class Measure
     private $cat;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=false)
+     * 
+     * @Assert\NotBlank(
+	 * 		message="Merci de saisir une date",
+	 * )
      */
     private $date;
 

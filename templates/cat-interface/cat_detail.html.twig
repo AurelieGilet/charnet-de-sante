@@ -39,8 +39,8 @@
                             <h3>Infos :</h3>
                             <a href="{{ path('edit-cat-info', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
                         </div>
-                        <p>Date de naissance : <span class="data">{{ cat.dateOfBirth|date('d-m-Y') }}</span></p>
-                        <p>Date de décès : <span class="data">{{ cat.dateOfDeath|date('d-m-Y') }}</span></p>
+                        <p>Date de naissance : {% if cat.dateOfBirth is not null %}<span class="data">{{ cat.dateOfBirth|date('d-m-Y') }}{% endif %}</span></p>
+                        <p>Date de décès : <span class="data">{% if cat.dateOfDeath is not null %}{{ cat.dateOfDeath|date('d-m-Y') }}{% endif %}</span></p>
                         <p>Sexe : <span class="data">{% if cat.sexe == 'F' %} Femelle {% elseif cat.sexe == 'M' %} Mâle {% else %} {% endif %}</span></p>
                         <p>Stérilisé : <span class="data">{% if cat.isSterilized is null %} {% elseif cat.isSterilized == true %} Oui {% else %} Non {% endif %}</span></p>
                         <p>Race : <span class="data">{{ cat.race|capitalize }}</span> </p>

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Measure;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,6 +25,7 @@ class CatMeasureFormType extends AbstractType
                 ],
                 'years' => range(date('Y') - 25, date('Y') + 1),
                 'required' => true,
+                'by_reference' => true,
             ])
             ->add('weight', NumberType::class, [
                 'label' => "Poids (Kg)",
@@ -66,6 +68,7 @@ class CatMeasureFormType extends AbstractType
                 ],
                 'years' => range(date('Y') - 25, date('Y') + 1),
                 'required' => false,
+                'by_reference' => true,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "Enregistrer"
