@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Le Charnet de Santé - Poids de {{ cat.name }} {% endblock %}
+{% block title %}Le Charnet de Santé - Température de {{ cat.name }} {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
@@ -30,9 +30,9 @@
             <div class="card-content card-template">
                 <div class="card-title">
                     <div class="icon">
-                        <img src="{{ asset('img/site/weight.png') }}" alt="Icône d'un chat sur une balance">
+                        <img src="{{ asset('img/site/thermometer.png') }}" alt="Icône d'un chat sur une balance">
                     </div>
-                    <h3>Poids</h3>
+                    <h3>Température</h3>
                 </div>
                 <span class="add-data mobile add-measure-btn"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
                 <span class="add-data desktop add-measure-btn">Ajouter une mesure</span>
@@ -49,7 +49,7 @@
                             <span>{{ measure.date|format_datetime(locale='fr', pattern="MMM") }}</span>
                             <span>{{ measure.date|date('Y') }}</span>
                         </p>
-                        <p class="data">{{ measure.weight }} Kg</p>
+                        <p class="data">{{ measure.temperature }} °C</p>
                     </div>
                     <div class="measure-options">
                         <div class="mobile-options">
@@ -64,13 +64,13 @@
                 </div>
                 <div id="edit-{{ measure.id }}"class="edit-measure-form">
                     {{ render(controller(
-                        'App\\Controller\\CatMeasuresController::editWeight',
+                        'App\\Controller\\CatMeasuresController::editTemperature',
                         { 'catId': cat.id, 'measureId': measure.id }
                     ))}}
                 </div>
                 <div id="delete-{{ measure.id }}"class="delete-measure-form">
                     {{ render(controller(
-                        'App\\Controller\\CatMeasuresController::deleteWeight',
+                        'App\\Controller\\CatMeasuresController::deleteTemperature',
                         { 'catId': cat.id, 'measureId': measure.id }
                     ))}}
                 </div>
@@ -81,7 +81,7 @@
     </section>
     <div id="add-measure-form">
         {{ render(controller(
-            'App\\Controller\\CatMeasuresController::addWeight',
+            'App\\Controller\\CatMeasuresController::addTemperature',
             { 'id': cat.id }
         ))}}
     </div>

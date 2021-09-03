@@ -126,7 +126,7 @@
 
 /* FORMS */
 
-#add-weight-form, .edit-weight-form, .delete-weight-form {
+#add-measure-form, .edit-measure-form, .delete-measure-form {
     display: none;
 }
 

@@ -58,7 +58,7 @@ section {
     clip-path: circle(50% at 50% 50%);
 }
 
-.card-title {
+.cat-name {
     width: 60%;
     display: flex;
     flex-direction: column;
@@ -120,7 +120,7 @@ section {
     align-items: center;
 }
 
-.left-side {
+.card-title {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -198,7 +198,7 @@ section {
     .left-side {
         margin-left: 20px;
     }
-    .card-title {
+    .cat-name  {
         flex-direction: row;
         justify-content: space-between;
     }

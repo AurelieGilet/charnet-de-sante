@@ -1,11 +1,12 @@
 <div class="form-overlay">
     <div class="form-wrapper">
         <div class="close add-modal-close-btn">X</div>
-        {{ form_start(weightForm) }}
-            {{ form_row(weightForm.weight) }}
-            {{ form_row(weightForm.date) }}
-            {{ form_row(weightForm._token) }}
-            {{ form_row(weightForm.submit) }}
-        {{ form_end(weightForm, {render_rest: false}) }}
+        {{ form_start(measureForm) }}
+            {{ form_row(measureForm.weight) }}
+            {{ form_row(measureForm.date) }}
+            {{ form_row(measureForm._token) }}
+            {{ form_row(measureForm.submit) }}
+        {{ form_end(measureForm, {render_rest: false}) }}
     </div>
 </div>
+    

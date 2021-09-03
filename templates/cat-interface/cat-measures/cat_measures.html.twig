@@ -17,7 +17,7 @@
                 <div class="picture">
                     <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
                 </div>
-                <div class="card-title">
+                <div class="cat-name">
                     <h2>{{ cat.name }}</h2>
                     <a href="{{ path('cat-detail', {'id': cat.id}) }}" class="return">Retour à la fiche</a>
                 </div>
@@ -25,7 +25,7 @@
             <div class="card-body">
                 <a href="{{ path('cat-weight', {'id': cat.id}) }}" class="shaker">
                     <div class="card-content card-template">
-                        <div class="left-side">
+                        <div class="card-title">
                             <div class="icon">
                                 <img src="{{ asset('img/site/weight.png') }}" alt="Icône d'un chat sur une balance">
                             </div>
@@ -36,9 +36,9 @@
                         </div>
                     </div>
                 </a>
-                <a href="" class="shaker">
+                <a href="{{ path('cat-temperature', {'id': cat.id}) }}" class="shaker">
                     <div class="card-content card-template">
-                        <div class="left-side">
+                        <div class="card-title">
                             <div class="icon">
                                 <img src="{{ asset('img/site/thermometer.png') }}" alt="Icône d'un thermomètre">
                             </div>
@@ -51,7 +51,7 @@
                 </a>
                 <a href="" class="shaker">
                     <div class="card-content card-template">
-                        <div class="left-side">
+                        <div class="card-title">
                             <div class="icon">
                                 <img src="{{ asset('img/site/heat.png') }}" alt="Icône de deux coeurs percés d'une flèche">
                             </div>
