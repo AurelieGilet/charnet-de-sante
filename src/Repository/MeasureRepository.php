@@ -33,6 +33,20 @@ class MeasureRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return Measure[]
+     */
+    public function findCatTemperatures($cat)
+    {
+        return $this->createQueryBuilder('measure')
+            ->andWhere('measure.cat = :cat and measure.temperature IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('measure.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Measure[] Returns an array of Measure objects
     //  */

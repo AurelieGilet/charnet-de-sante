@@ -3,7 +3,6 @@
         <div class="close delete-modal-close-btn">X</div>
         <h3>Etes-vous sûr de vouloir supprimer cette mesure ?</h3>
         {{ form_start(measureForm) }}
-            {{ form_row(measureForm.weight,{'label': false, 'attr' : { 'style':'display:none'}}) }}
             {{ form_row(measureForm.date, {'label': false, 'attr' : { 'style':'display:none'}}, ) }}
             {{ form_row(measureForm._token) }}
             {{ form_row(measureForm.submit, {'label': 'Supprimer'}) }}
