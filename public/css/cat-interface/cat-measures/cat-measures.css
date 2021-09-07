@@ -13,7 +13,6 @@
 }
 
 /* MEASURES */
-
 .add-data, .edit-data, .delete-data, .delete-btn {
     display: flex;
     justify-content: center;
@@ -71,6 +70,15 @@
 .measures {
     display: flex;
     flex-direction: column;
+    
+}
+
+.last-measures {
+    margin-bottom: 20px;
+}
+
+.last-measures h3, .current-measures h3{
+    width: 95%;
 }
 
 .measure {
@@ -87,6 +95,10 @@
     justify-content: space-between;
 }
 
+.measure-info.heat {
+    width: 70%;
+}
+
 .date {
     display: flex;
     flex-direction: column;
@@ -94,7 +106,7 @@
     align-items: center;
 }
 
-.date span {
+.date span, .data span {
     padding: 2px 0px;
     margin: 0px 4px;
 }
@@ -103,6 +115,22 @@
     font-weight: bold;
     white-space: nowrap;
     margin: 0 10px;
+}
+ em {
+     font-weight: bold;
+ }
+
+.date.heat, .data.heat {
+    align-content: flex-start;
+    margin: 0;
+    font-weight: normal;
+}
+
+.heat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    white-space: nowrap;
 }
 
 /* PAGINATION */
@@ -216,8 +244,18 @@ form div {
     .measure {
         width: 90%;
     }
-    .date {
+    .last-measures {
+        margin-bottom: 40px;
+    }
+    .last-measures h3, .current-measures h3 {
+        width: 90%;
+    }
+    .date, .data.heat {
         flex-direction: row;
+    }
+    .heat {
+        justify-content: space-between;
+        align-items: stretch;
     }
     form div {
         width: 50%;
@@ -226,5 +264,11 @@ form div {
     .form-wrapper h3 {
         font-size: 1.3rem;
         text-align: center;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .measure-info.heat {
+        width: 60%;
     }
 }

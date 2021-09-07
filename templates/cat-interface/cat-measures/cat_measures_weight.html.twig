@@ -40,7 +40,8 @@
             <div class="card-content card-template chart-container">
                 {{ render_chart(chart, {'class': 'chart'}) }}
             </div>
-            <div class="card-content card-template measures">
+            <div class="card-content card-template measures last-measures">
+            <h3>Dernières mesures :</h3>
             {% for measure in paginatedMeasures %}                
                 <div class="measure card-template">
                     <div class="measure-info">
