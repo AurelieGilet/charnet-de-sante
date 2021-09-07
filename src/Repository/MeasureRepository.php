@@ -47,6 +47,34 @@ class MeasureRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return Measure[]
+     */
+    public function findCatHeat($cat)
+    {
+        return $this->createQueryBuilder('measure')
+            ->andWhere('measure.cat = :cat and measure.isInHeat = TRUE and measure.heatEndDate IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('measure.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Measure[]
+     */
+    public function findCatCurrentHeat($cat)
+    {
+        return $this->createQueryBuilder('measure')
+            ->andWhere('measure.cat = :cat and measure.isInHeat = TRUE and measure.heatEndDate IS NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('measure.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Measure[] Returns an array of Measure objects
     //  */

@@ -153,6 +153,36 @@ class CatMeasuresController extends AbstractController
     }
 
     /**
+     * @Route("/espace-utilisateur/chat/{id}/mesures/chaleurs", name="cat-heat")
+     */
+    public function catHeat(Request $request, Cat $cat, MeasureRepository $measureRepository, PaginatorInterface $paginator): Response
+    {
+        $measures = $measureRepository->findCatHeat($cat);
+
+        $paginatedMeasures = $paginator->paginate(
+            $measures,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        $currentMeasures = $measureRepository->findCatCurrentHeat($cat);
+
+        $paginatedCurrentMeasures = $paginator->paginate(
+            $currentMeasures,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        return $this->render('cat-interface/cat-measures/cat_measures_heat.html.twig', [
+            'controller_name' => 'CatMeasuresController',
+            'cat' => $cat,
+            'paginatedMeasures' => $paginatedMeasures,
+            'paginatedCurrentMeasures' => $paginatedCurrentMeasures,
+            'currentMeasures' => $currentMeasures,
+        ]);
+    }
+
+    /**
      * @Route("/espace-utilisateur/chat/{id}/mesures/poids/ajouter", name="add-weight")
      */
     public function addWeight(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
@@ -188,7 +218,7 @@ class CatMeasuresController extends AbstractController
             return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-measures/_add_cat_weight.html.twig', [
+        return $this->render('cat-interface/cat-measures/_add_edit_cat_weight.html.twig', [
             'controller_name' => 'CatMeasuresController',
             'measureForm' => $form->createView(),
         ]);
@@ -230,7 +260,50 @@ class CatMeasuresController extends AbstractController
             return $this->redirectToRoute('cat-temperature', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-measures/_add_cat_temperature.html.twig', [
+        return $this->render('cat-interface/cat-measures/_add_edit_cat_temperature.html.twig', [
+            'controller_name' => 'CatMeasuresController',
+            'measureForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/espace-utilisateur/chat/{id}/mesures/chaleur/ajouter", name="add-heat")
+     */
+    public function addHeat(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
+    {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
+        $measure = new Measure;
+
+        $form = $this->createForm(CatMeasureFormType::class, $measure, [
+            'action' => $this->generateUrl('add-heat', ['id' => $cat->getId(),
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getDate() == null) {
+                $this->addFlash('danger', "La mesure n'a pas été ajoutée. La date de début est requise.");
+
+                return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
+            }
+
+            $measure->setCat($cat);
+            $measure->setIsInHeat(true);
+
+            $manager->persist($measure);
+            $manager->flush();
+
+            $this->addFlash('success', "La mesure a été ajoutée");
+
+            return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "La mesure n'a pas été ajoutée. La date de début est requise.");
+
+            return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/cat-measures/_add_edit_cat_heat.html.twig', [
             'controller_name' => 'CatMeasuresController',
             'measureForm' => $form->createView(),
         ]);
@@ -272,7 +345,7 @@ class CatMeasuresController extends AbstractController
             return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-measures/_edit_cat_weight.html.twig', [
+        return $this->render('cat-interface/cat-measures/_add_edit_cat_weight.html.twig', [
             'controller_name' => 'CatMeasuresController',
             'measureForm' => $form->createView()
         ]);
@@ -314,16 +387,16 @@ class CatMeasuresController extends AbstractController
             return $this->redirectToRoute('cat-temperature', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-measures/_edit_cat_temperature.html.twig', [
+        return $this->render('cat-interface/cat-measures/_add_edit_cat_temperature.html.twig', [
             'controller_name' => 'CatMeasuresController',
             'measureForm' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/espace-utilisateur/chat/{catId}/mesures/poids/{measureId}/supprimer", name="delete-weight")
+     * @Route("/espace-utilisateur/chat/{catId}/mesures/chaleurs/{measureId}/editer", name="edit-heat")
      */
-    public function deleteWeight(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
+    public function editHeat(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
     {
         $catID = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catID]);
@@ -332,36 +405,44 @@ class CatMeasuresController extends AbstractController
         $measure = $measureRepository->findOneBy(['id' => $measureID]);
 
         $form = $this->createForm(CatMeasureFormType::class, $measure, [
-            'action' => $this->generateUrl('delete-weight', ['catId' => $cat->getId(), 'measureId' => $measure->getId()
+            'action' => $this->generateUrl('edit-heat', ['catId' => $cat->getId(), 'measureId' => $measure->getId()
             ]),
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getDate() == null) {
+                $this->addFlash('danger', "La mesure n'a pas été modifiée. La date de début est requise.");
 
-            $manager->remove($measure);
+                return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
+            }
+
+            $manager->persist($measure);
             $manager->flush();
 
-            $this->addFlash('success', "La mesure a été supprimée");
+            $this->addFlash('success', "La mesure a été modifiée");
 
-            return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+            return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "La mesure n'a pas été supprimée");
+            $this->addFlash('danger', "La mesure n'a pas été modifiée. Les deux champs sont requis.");
 
-            return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+            return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-measures/_delete_cat_measure.html.twig', [
+        return $this->render('cat-interface/cat-measures/_add_edit_cat_heat.html.twig', [
             'controller_name' => 'CatMeasuresController',
-            'measureForm' => $form->createView(),
-            'catId' => $cat->getId(),
-            'measureId' => $measure->getId(),
+            'measureForm' => $form->createView()
         ]);
     }
+
     /**
-     * @Route("/espace-utilisateur/chat/{catId}/mesures/temperature/{measureId}/supprimer", name="delete-temperature")
+     * @Route("/espace-utilisateur/chat/{catId}/mesures/poids/{measureId}/supprimer", name="delete-measure")
+     * 
+     * @Route("/espace-utilisateur/chat/{catId}/mesures/temperature/{measureId}/supprimer", name="delete-measure")
+     * 
+     * @Route("/espace-utilisateur/chat/{catId}/mesures/chaleurs/{measureId}/supprimer", name="delete-measure")
      */
-    public function deleteTemperature(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
+    public function deleteMeasure(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
     {
         $catID = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catID]);
@@ -369,8 +450,12 @@ class CatMeasuresController extends AbstractController
         $measureID = $request->attributes->get('measureId');
         $measure = $measureRepository->findOneBy(['id' => $measureID]);
 
+        $weight = $measure->getWeight();
+        $temperature = $measure->getTemperature();
+        $heat = $measure->getIsInHeat();
+
         $form = $this->createForm(CatMeasureFormType::class, $measure, [
-            'action' => $this->generateUrl('delete-weight', ['catId' => $cat->getId(), 'measureId' => $measure->getId()
+            'action' => $this->generateUrl('delete-measure', ['catId' => $cat->getId(), 'measureId' => $measure->getId()
             ]),
         ]);
         $form->handleRequest($request);
@@ -382,11 +467,27 @@ class CatMeasuresController extends AbstractController
 
             $this->addFlash('success', "La mesure a été supprimée");
 
-            return $this->redirectToRoute('cat-temperature', ['id' => $cat->getId() ]);
+            if ($weight != null) {
+                return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+            } else if ($temperature != null) {
+                return $this->redirectToRoute('cat-temperature', ['id' => $cat->getId() ]);
+            } else if ($heat != null) {
+                return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
+            } else {
+                return $this->redirectToRoute('cat-measures', ['id' => $cat->getId() ]);
+            }
         } else if($form->isSubmitted() && !$form->isValid()) {
             $this->addFlash('danger', "La mesure n'a pas été supprimée");
 
-            return $this->redirectToRoute('cat-temperature', ['id' => $cat->getId() ]);
+            if ($weight  != null) {
+                return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+            } else if ($temperature != null) {
+                return $this->redirectToRoute('cat-temperature', ['id' => $cat->getId() ]);
+            } else if ($heat != null) {
+                return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
+            } else {
+                return $this->redirectToRoute('cat-measures', ['id' => $cat->getId() ]);
+            }
         }
 
         return $this->render('cat-interface/cat-measures/_delete_cat_measure.html.twig', [

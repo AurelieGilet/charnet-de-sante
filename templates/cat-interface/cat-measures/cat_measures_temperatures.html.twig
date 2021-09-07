@@ -34,13 +34,14 @@
                     </div>
                     <h3>Température</h3>
                 </div>
-                <span class="add-data mobile add-measure-btn"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
-                <span class="add-data desktop add-measure-btn">Ajouter une mesure</span>
+                <span class="add-data mobile add-edit-measure-btn" data-measure-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-edit-measure-btn" data-measure-id="new">Ajouter une mesure</span>
             </div>
             <div class="card-content card-template chart-container">
                 {{ render_chart(chart, {'class': 'chart'}) }}
             </div>
-            <div class="card-content card-template measures">
+            <div class="card-content card-template measures last-measures">
+            <h3>Dernières mesures :</h3>
             {% for measure in paginatedMeasures %}                
                 <div class="measure card-template">
                     <div class="measure-info">
@@ -53,16 +54,16 @@
                     </div>
                     <div class="measure-options">
                         <div class="mobile-options">
-                            <span class="edit-data edit-measure-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="edit-data add-edit-measure-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
                             <span class="delete-data delete-measure-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>
                         </div>
                         <div class="desktop-options">
-                            <span class="update-info desktop modify edit-measure-btn" data-measure-id="{{ measure.id }}">Modifier</span>
+                            <span class="update-info desktop modify add-edit-measure-btn" data-measure-id="{{ measure.id }}">Modifier</span>
                             <span class="update-info desktop delete delete-measure-btn" data-measure-id="{{ measure.id }}">Supprimer</span>
                         </div>
                     </div>
                 </div>
-                <div id="edit-{{ measure.id }}"class="edit-measure-form">
+                <div id="edit-{{ measure.id }}"class="add-edit-measure-form">
                     {{ render(controller(
                         'App\\Controller\\CatMeasuresController::editTemperature',
                         { 'catId': cat.id, 'measureId': measure.id }
@@ -70,7 +71,7 @@
                 </div>
                 <div id="delete-{{ measure.id }}"class="delete-measure-form">
                     {{ render(controller(
-                        'App\\Controller\\CatMeasuresController::deleteTemperature',
+                        'App\\Controller\\CatMeasuresController::deleteMeasure',
                         { 'catId': cat.id, 'measureId': measure.id }
                     ))}}
                 </div>
@@ -79,7 +80,7 @@
             </div>
         </div>
     </section>
-    <div id="add-measure-form">
+    <div id="edit-new" class="add-edit-measure-form">
         {{ render(controller(
             'App\\Controller\\CatMeasuresController::addTemperature',
             { 'id': cat.id }

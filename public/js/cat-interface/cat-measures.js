@@ -1,26 +1,14 @@
-const close = document.querySelectorAll(".close");
-const editModalClose = document.getElementsByClassName("edit-modal-close-btn");
+const addEditModalClose = document.getElementsByClassName("add-edit-modal-close-btn");
 const deleteModalClose = document.getElementsByClassName("delete-modal-close-btn");
-const addMeasureBtn = document.getElementsByClassName("add-measure-btn");
-const addMeasureForm = document.getElementById("add-measure-form");
-const editMeasureBtn = document.getElementsByClassName("edit-measure-btn");
-const editMeasureForm = document.getElementsByClassName("edit-measure-form");
+const addEditMeasureBtn = document.getElementsByClassName("add-edit-measure-btn");
+const addEditMeasureForm = document.getElementsByClassName("add-edit-measure-form");
 const deleteMeasureBtn = document.getElementsByClassName("delete-measure-btn");
 const deleteMeasureForm = document.getElementsByClassName("delete-measure-form");
 
-if (close != null) {
-  for (let i = 0; i < close.length; i++) {
-    close[i].addEventListener("click", function () {
-      addMeasureForm.style.display = "none";
-      body[0].classList.remove("modal-open");
-    });
-  }
-}
-
-if (editModalClose != null) {
-  for (let i = 0; i < editModalClose.length; i++) {
-    editModalClose[i].addEventListener("click", function () {
-      editMeasureForm[i].style.display = "none";
+if (addEditModalClose != null) {
+  for (let i = 0; i < addEditModalClose.length; i++) {
+    addEditModalClose[i].addEventListener("click", function () {
+      addEditMeasureForm[i].style.display = "none";
       body[0].classList.remove("modal-open");
     });
   }
@@ -35,18 +23,11 @@ if (deleteModalClose != null) {
   }
 }
 
-for (let i = 0; i < addMeasureBtn.length; i++) {
-  addMeasureBtn[i].addEventListener("click", function () {
-    addMeasureForm.style.display = "block";
-    body[0].classList.add("modal-open");
-  });
-}
-
-for (let i = 0; i < editMeasureBtn.length; i++) {
-  editMeasureBtn[i].addEventListener("click", function () {
-    let measureId = editMeasureBtn[i].dataset.measureId;
-    let editMeasureForm = document.getElementById("edit-" + measureId);
-    editMeasureForm.style.display = "block";
+for (let i = 0; i < addEditMeasureBtn.length; i++) {
+  addEditMeasureBtn[i].addEventListener("click", function () {
+    let measureId = addEditMeasureBtn[i].dataset.measureId;
+    let addEditMeasureForm = document.getElementById("edit-" + measureId);
+    addEditMeasureForm.style.display = "block";
     body[0].classList.add("modal-open");
   });
 }
