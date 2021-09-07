@@ -69,8 +69,7 @@
 
 .measures {
     display: flex;
-    flex-direction: column;
-    
+    flex-direction: column; 
 }
 
 .last-measures {
@@ -116,9 +115,10 @@
     white-space: nowrap;
     margin: 0 10px;
 }
- em {
-     font-weight: bold;
- }
+
+em {
+    font-weight: bold;
+}
 
 .date.heat, .data.heat {
     align-content: flex-start;
