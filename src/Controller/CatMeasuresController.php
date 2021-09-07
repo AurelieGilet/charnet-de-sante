@@ -153,6 +153,35 @@ class CatMeasuresController extends AbstractController
     }
 
     /**
+     * @Route("/espace-utilisateur/chat/{id}/mesures/chaleurs", name="cat-heat")
+     */
+    public function catHeat(Request $request, Cat $cat, MeasureRepository $measureRepository, PaginatorInterface $paginator): Response
+    {
+        $measures = $measureRepository->findCatHeat($cat);
+
+        $paginatedMeasures = $paginator->paginate(
+            $measures,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        $currentMeasures = $measureRepository->findCatCurrentHeat($cat);
+
+        $paginatedCurrentMeasures = $paginator->paginate(
+            $currentMeasures,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        return $this->render('cat-interface/cat-measures/cat_measures_heat.html.twig', [
+            'controller_name' => 'CatMeasuresController',
+            'cat' => $cat,
+            'paginatedMeasures' => $paginatedMeasures,
+            'paginatedCurrentMeasures' => $paginatedCurrentMeasures,
+        ]);
+    }
+
+    /**
      * @Route("/espace-utilisateur/chat/{id}/mesures/poids/ajouter", name="add-weight")
      */
     public function addWeight(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
