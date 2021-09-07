@@ -34,10 +34,10 @@
                     </div>
                     <h3>Chaleurs</h3>
                 </div>
-                <span class="add-data mobile add-measure-btn"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
-                <span class="add-data desktop add-measure-btn">Ajouter une mesure</span>
+                <span class="add-data mobile add-edit-measure-btn" data-measure-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-edit-measure-btn" data-measure-id="new">Ajouter une mesure</span>
             </div>
-            {% if paginatedCurrentMeasures is not null %}
+            {% if currentMeasures is not empty %}
             <div class="card-content card-template measures current-measures">
                 <h3>Chaleur en cours :</h3> 
                 {% for measure in paginatedCurrentMeasures %}              
@@ -49,30 +49,30 @@
                                 En cours{% endif %}</em></span>
                         </p>
                         <p class="data heat">
-                            <span>Saillie : {% if measure.isMated is null %} {% elseif measure.isMated == true %} <em>Oui</em> {% else %} <em>Non</em> {% endif %}</span>
-                            <span>Fécondation : {% if measure.isPregnant is null %} {% elseif measure.isPregnant == true %} <em>Oui</em> {% else %} <em>Non</em> {% endif %}</span>
+                            <span>Saillie : {% if measure.isMated is null %}...{% elseif measure.isMated == true %}<em>Oui</em>{% else %}<em>Non</em>{% endif %}</span>
+                            <span>Fécondation : {% if measure.isPregnant is null %}...{% elseif measure.isPregnant == true %}<em>Oui</em>{% else %}<em>Non</em>{% endif %}</span>
                         </p>
                     </div>
                     <div class="measure-options">
                         <div class="mobile-options heat">
-                            <span class="edit-data edit-measure-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="edit-data add-edit-measure-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
                             <span class="delete-data delete-measure-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>
                         </div>
                         <div class="desktop-options">
-                            <span class="update-info desktop modify edit-measure-btn" data-measure-id="{{ measure.id }}">Modifier</span>
+                            <span class="update-info desktop modify add-edit-measure-btn" data-measure-id="{{ measure.id }}">Modifier</span>
                             <span class="update-info desktop delete delete-measure-btn" data-measure-id="{{ measure.id }}">Supprimer</span>
                         </div>
                     </div>
                 </div>
-                <div id="edit-{{ measure.id }}"class="edit-measure-form">
+                <div id="edit-{{ measure.id }}"class="add-edit-measure-form">
                     {{ render(controller(
-                        'App\\Controller\\CatMeasuresController::editTemperature',
+                        'App\\Controller\\CatMeasuresController::editHeat',
                         { 'catId': cat.id, 'measureId': measure.id }
                     ))}}
                 </div>
                 <div id="delete-{{ measure.id }}"class="delete-measure-form">
                     {{ render(controller(
-                        'App\\Controller\\CatMeasuresController::deleteTemperature',
+                        'App\\Controller\\CatMeasuresController::deleteMeasure',
                         { 'catId': cat.id, 'measureId': measure.id }
                     ))}}
                 </div>
@@ -96,24 +96,24 @@
                     </div>
                     <div class="measure-options">
                         <div class="mobile-options heat">
-                            <span class="edit-data edit-measure-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="edit-data add-edit-measure-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
                             <span class="delete-data delete-measure-btn" data-measure-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>
                         </div>
                         <div class="desktop-options">
-                            <span class="update-info desktop modify edit-measure-btn" data-measure-id="{{ measure.id }}">Modifier</span>
+                            <span class="update-info desktop modify add-edit-measure-btn" data-measure-id="{{ measure.id }}">Modifier</span>
                             <span class="update-info desktop delete delete-measure-btn" data-measure-id="{{ measure.id }}">Supprimer</span>
                         </div>
                     </div>
                 </div>
-                <div id="edit-{{ measure.id }}"class="edit-measure-form">
+                <div id="edit-{{ measure.id }}"class="add-edit-measure-form">
                     {{ render(controller(
-                        'App\\Controller\\CatMeasuresController::editTemperature',
+                        'App\\Controller\\CatMeasuresController::editHeat',
                         { 'catId': cat.id, 'measureId': measure.id }
                     ))}}
                 </div>
                 <div id="delete-{{ measure.id }}"class="delete-measure-form">
                     {{ render(controller(
-                        'App\\Controller\\CatMeasuresController::deleteTemperature',
+                        'App\\Controller\\CatMeasuresController::deleteMeasure',
                         { 'catId': cat.id, 'measureId': measure.id }
                     ))}}
                 </div>
@@ -122,9 +122,9 @@
             </div>
         </div>
     </section>
-    <div id="add-measure-form">
+    <div id="edit-new" class="add-edit-measure-form">
         {{ render(controller(
-            'App\\Controller\\CatMeasuresController::addTemperature',
+            'App\\Controller\\CatMeasuresController::addHeat',
             { 'id': cat.id }
         ))}}
     </div>
