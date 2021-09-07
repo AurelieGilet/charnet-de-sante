@@ -465,8 +465,6 @@ class CatMeasuresController extends AbstractController
             $manager->remove($measure);
             $manager->flush();
 
-            dump($measure);
-
             $this->addFlash('success', "La mesure a été supprimée");
 
             if ($weight != null) {
