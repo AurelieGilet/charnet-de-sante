@@ -1,9 +1,21 @@
-const addEditModalClose = document.getElementsByClassName("add-edit-modal-close-btn");
-const deleteModalClose = document.getElementsByClassName("delete-modal-close-btn");
-const addEditMeasureBtn = document.getElementsByClassName("add-edit-measure-btn");
-const addEditMeasureForm = document.getElementsByClassName("add-edit-measure-form");
+// MODALS
+
+const addEditModalClose = document.getElementsByClassName(
+  "add-edit-modal-close-btn"
+);
+const deleteModalClose = document.getElementsByClassName(
+  "delete-modal-close-btn"
+);
+const addEditMeasureBtn = document.getElementsByClassName(
+  "add-edit-measure-btn"
+);
+const addEditMeasureForm = document.getElementsByClassName(
+  "add-edit-measure-form"
+);
 const deleteMeasureBtn = document.getElementsByClassName("delete-measure-btn");
-const deleteMeasureForm = document.getElementsByClassName("delete-measure-form");
+const deleteMeasureForm = document.getElementsByClassName(
+  "delete-measure-form"
+);
 
 if (addEditModalClose != null) {
   for (let i = 0; i < addEditModalClose.length; i++) {
@@ -40,3 +52,26 @@ for (let i = 0; i < deleteMeasureBtn.length; i++) {
     body[0].classList.add("modal-open");
   });
 }
+
+// TOOLTIPS
+
+const helpIcon = document.getElementById("help-icon");
+const helpPurpleIcon = document.getElementById("help-purple");
+const helpWhiteIcon = document.getElementById("help-white");
+const helpContent = document.getElementById("help-content");
+
+helpIcon.addEventListener("click", function () {
+  helpIcon.classList.toggle("icon-background-color");
+  helpPurpleIcon.classList.toggle("show");
+  helpWhiteIcon.classList.toggle("hide");
+  helpContent.classList.toggle("hide");
+});
+
+window.addEventListener("click", function (event) {
+  if (!helpIcon.contains(event.target)) {
+    helpIcon.classList.remove("icon-background-color");
+    helpPurpleIcon.classList.add("show");
+    helpWhiteIcon.classList.add("hide");
+    helpContent.classList.add("hide");
+  }
+});

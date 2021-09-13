@@ -51,9 +51,13 @@ class CatMeasuresController extends AbstractController
 
         $weights = array_reverse($weights);
 
-        $minDataValue = min(array_values($weights)) - 1;
-
-        $maxDataValue = max(array_values($weights)) + 1;
+        if ($weights != null) {
+            $minDataValue = min(array_values($weights));
+            $maxDataValue = max(array_values($weights));
+        } else {
+            $minDataValue = 0;
+            $maxDataValue = 1;
+        }
 
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
 
@@ -112,9 +116,13 @@ class CatMeasuresController extends AbstractController
 
         $temperatures = array_reverse($temperatures);
 
-        $minDataValue = min(array_values($temperatures)) - 1;
-
-        $maxDataValue = max(array_values($temperatures)) + 1;
+        if ($temperatures != null) {
+            $minDataValue = min(array_values($temperatures));
+            $maxDataValue = max(array_values($temperatures));
+        } else {
+            $minDataValue = 0;
+            $maxDataValue = 1;
+        }
 
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
 
