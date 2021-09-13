@@ -39,7 +39,7 @@
             </div>
             {% if currentMeasures is not empty %}
             <div class="card-content card-template measures current-measures">
-                <h3>Chaleur en cours :</h3> 
+                <h3>Chaleur en cours :</h3>
                 {% for measure in paginatedCurrentMeasures %}              
                 <div class="measure card-template">
                     <div class="measure-info heat">
@@ -82,6 +82,22 @@
             {% endif %}
             <div class="card-content card-template measures last-measures">
                 <h3>Dernières mesures :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>L'âge de la puberté chez les mâles se situe entre 7 et 12 mois et chez les femelles entre 6 et 12 mois (selon les races et la date de naissance).</p>
+                        <p>La période des chaleurs s'étend de février à septembre.</p>
+                        <p>Si une chatte n'est pas saillie, les chaleurs durent 8 à 12 jours et reprennent tous les 15 jours.</p>
+                        <p>Si la saillie n'est pas fécondante, la chatte revient en chaleur au bout d'1 mois.</p>
+                        <p>Sinon, la gestation dure 2 mois et la chatte retourne en chaleur 1 mois après la mise bas.</p>
+                        <p>Une chatte en chaleur voit son comportement changer : elle est très affectueuse et câline, se roule ou se frotte au sol, perd l'appêtit, néglige ses besoins et produit des miaulements rauques.</p>
+                        <p>Des chaleurs répétées sont extrêmement stressantes physiquement et mentalement pour la chatte, surtout si elle n'est pas saillie et peuvent être détrimentales pour sa santé.</p>
+                        <p>Si votre animal n'est pas un reproducteur, pensez à la stérilisation pour le bien-être et la santé de votre chat.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                    </div>
+                </div> 
                 {% for measure in paginatedMeasures %}                
                 <div class="measure card-template">
                     <div class="measure-info heat">

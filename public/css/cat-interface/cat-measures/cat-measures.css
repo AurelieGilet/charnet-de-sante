@@ -12,6 +12,78 @@
     width: 95%;
 }
 
+/* TOOLTIP */
+
+.tooltip {
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 95%;
+    height: 40px;
+    overflow: visible;
+}
+
+#help-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+    background-color: var(--list-background-color);
+}
+
+#help-icon img {
+    width: 100%;
+    height: auto;
+}
+
+#help-purple {
+    display: none;
+}
+
+#help-white {
+    display: block;
+}
+
+#help-content {
+    position: absolute;
+    right: 50px;
+    bottom: -30%;
+    width: 80%;
+    max-height: 50vh;
+    overflow: auto;
+    z-index: 2;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--medium-purple);
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
+}
+
+#help-content p {
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    line-height: 1.2rem;
+}
+
+.hide {
+    display: none !important;
+}
+
+.show {
+    display: block !important;
+}
+
+.icon-background-color {
+    background-color: var(--medium-purple) !important;
+}
+
 /* MEASURES */
 .add-data, .edit-data, .delete-data, .delete-btn {
     display: flex;
@@ -24,7 +96,7 @@
     cursor: pointer;
     color: white;
     white-space: nowrap;
-    margin: 10px 20px;
+    margin: 10px;
 }
 
 .edit-data {
@@ -74,6 +146,7 @@
 
 .last-measures {
     margin-bottom: 20px;
+    position: relative;
 }
 
 .last-measures h3, .current-measures h3{
@@ -235,6 +308,9 @@ form div {
     .chart {
         width: 90%;
     }
+    #help-content {
+        width: 90%;
+    }
     .add-data.desktop,.desktop-options {
         display: flex;
     }
@@ -247,7 +323,7 @@ form div {
     .last-measures {
         margin-bottom: 40px;
     }
-    .last-measures h3, .current-measures h3 {
+    .last-measures h3, .current-measures h3, .tooltip {
         width: 90%;
     }
     .date, .data.heat {

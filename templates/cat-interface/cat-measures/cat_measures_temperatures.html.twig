@@ -42,6 +42,17 @@
             </div>
             <div class="card-content card-template measures last-measures">
             <h3>Dernières mesures :</h3>
+            <div class="tooltip">
+                <div id="help-content" class="hide">
+                    <p>Selon son activité et son état émotionnel, la température du chat peut varier en restant comprise entre 38°C et 39,2°C.</p>
+                    <p>Par exemple, sa température augmente en cas de stress et diminue lors du sommeil.</p>
+                    <p>Pour prendre la température de façon fiable, utilisez un thermomètre électronique rectal à embout souble, sur leque vous aurez pris soin de mettre du lubrifiant. Si votre chat se débat, enroulez-le dans une serviette.</p>
+                </div>
+                <div id="help-icon">
+                    <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
+                    <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                </div>
+            </div>
             {% for measure in paginatedMeasures %}                
                 <div class="measure card-template">
                     <div class="measure-info">
