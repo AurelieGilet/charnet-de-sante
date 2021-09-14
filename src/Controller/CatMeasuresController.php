@@ -8,7 +8,6 @@ use App\Form\CatMeasureFormType;
 use App\Repository\CatRepository;
 use Symfony\UX\Chartjs\Model\Chart;
 use App\Repository\MeasureRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
