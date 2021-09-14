@@ -17,7 +17,7 @@
                 <div class="picture">
                     <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
                 </div>
-                <div class="card-title">
+                <div class="cat-name">
                     <h2>{{ cat.name }}</h2>
                     <a href="{{ path('cat-detail', {'id': cat.id}) }}" class="return">Retour à la fiche</a>
                 </div>
@@ -25,7 +25,7 @@
             <div class="card-body">
                 <a href="" class="shaker">
                     <div class="card-content card-template">
-                        <div class="left-side">
+                        <div class="card-title">
                             <div class="icon">
                                 <img src="{{ asset('img/site/feeding.png') }}" alt="Icône de gamelle de nourriture pour chat">
                             </div>
@@ -38,7 +38,7 @@
                 </a>
                 <a href="" class="shaker">
                     <div class="card-content card-template">
-                        <div class="left-side">
+                        <div class="card-title">
                             <div class="icon">
                                 <img src="{{ asset('img/site/grooming.png') }}" alt="Icône de ciseaux, brosse et peigne">
                             </div>
@@ -51,7 +51,7 @@
                 </a>
                 <a href="" class="shaker">
                     <div class="card-content card-template">
-                        <div class="left-side">
+                        <div class="card-title">
                             <div class="icon">
                                 <img src="{{ asset('img/site/claws.png') }}" alt="Icône de patte de chat">
                             </div>
@@ -64,7 +64,7 @@
                 </a>
                 <a href="" class="shaker">
                     <div class="card-content card-template">
-                        <div class="left-side">
+                        <div class="card-title">
                             <div class="icon">
                                 <img src="{{ asset('img/site/eyes-ears.png') }}" alt="Icône de flacon de gouttes">
                             </div>
@@ -77,7 +77,7 @@
                 </a>
                 <a href="" class="shaker">
                     <div class="card-content card-template">
-                        <div class="left-side">
+                        <div class="card-title">
                             <div class="icon">
                                 <img src="{{ asset('img/site/teeth.png') }}" alt="Icône de dent et brosse à dent">
                             </div>
@@ -90,7 +90,7 @@
                 </a>
                 <a href="" class="shaker">
                     <div class="card-content card-template">
-                        <div class="left-side">
+                        <div class="card-title">
                             <div class="icon">
                                 <img src="{{ asset('img/site/litterbox.png') }}" alt="Icône de litière pour chat">
                             </div>
@@ -103,7 +103,7 @@
                 </a>
                 <a href="" class="shaker">
                     <div class="card-content card-template">
-                        <div class="left-side">
+                        <div class="card-title">
                             <div class="icon">
                                 <img src="{{ asset('img/site/notes.png') }}" alt="Icône de carnet de notes">
                             </div>
