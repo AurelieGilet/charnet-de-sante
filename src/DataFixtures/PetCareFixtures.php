@@ -154,9 +154,7 @@ class PetCareFixtures extends Fixture implements DependentFixtureInterface
                 $manager->persist($petCare);
             }
         }
-
-
-
+        
         $manager->flush();
     }
 
