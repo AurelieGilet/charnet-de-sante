@@ -4,9 +4,9 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
-    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}" >
-    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-measures.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
     <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
     {{ encore_entry_link_tags('chart-css') }}
 {% endblock %}
@@ -41,7 +41,7 @@
             <div class="card-content card-template chart-container">
                 {{ render_chart(chart, {'class': 'chart'}) }}
             </div>
-            <div class="card-content card-template measures last-measures">
+            <div class="card-content card-template entries last-entries">
             <h3>Dernières mesures :</h3>
             <div class="tooltip">
                 <div id="help-content" class="hide">
@@ -55,8 +55,8 @@
                 </div>
             </div>
             {% for measure in paginatedMeasures %}                
-                <div class="measure card-template">
-                    <div class="measure-info">
+                <div class="entry card-template">
+                    <div class="entry-info">
                         <p class="date">
                             <span>{{ measure.date|date('d') }}</span>
                             <span>{{ measure.date|format_datetime(locale='fr', pattern="MMM") }}</span>
@@ -64,7 +64,7 @@
                         </p>
                         <p class="data">{{ measure.weight }} Kg</p>
                     </div>
-                    <div class="measure-options">
+                    <div>
                         <div class="mobile-options">
                             <span class="edit-data add-edit-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
                             <span class="delete-data delete-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>

@@ -14,35 +14,35 @@
 
 /* MEASURES */
 
-.measures {
+.entries {
     display: flex;
     flex-direction: column; 
 }
 
-.last-measures {
+.last-entries {
     margin-bottom: 20px;
     position: relative;
 }
 
-.last-measures h3, .current-measures h3{
+.last-entries h3, .current-entries h3{
     width: 95%;
 }
 
-.measure {
+.entry {
     display: flex;
     width: 95%;
     justify-content: space-between;
     align-items: center;
 }
 
-.measure-info {
+.entry-info {
     width: 50%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.measure-info.heat {
+.entry-info.heat {
     width: 70%;
 }
 
@@ -87,13 +87,13 @@ em {
     .chart {
         width: 90%;
     }
-    .measure {
+    .entry {
         width: 90%;
     }
-    .last-measures {
+    .last-entries {
         margin-bottom: 40px;
     }
-    .last-measures h3, .current-measures h3, .tooltip {
+    .last-entries h3, .current-entries h3, .tooltip {
         width: 90%;
     }
     .date, .data.heat {
@@ -107,7 +107,7 @@ em {
 }
 
 @media screen and (min-width: 1024px) {
-    .measure-info.heat {
+    .entry-info.heat {
         width: 60%;
     }
 }
