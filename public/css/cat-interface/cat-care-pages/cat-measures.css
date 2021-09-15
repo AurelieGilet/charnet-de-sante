@@ -13,59 +13,6 @@
 }
 
 /* MEASURES */
-.add-data, .edit-data, .delete-data, .delete-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--medium-purple);
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
-    cursor: pointer;
-    color: white;
-    white-space: nowrap;
-    margin: 10px;
-}
-
-.edit-data {
-    margin: 2px;
-}
-
-.delete-data {
-    background-color: var(--purple-navy);
-    margin: 2px;
-}
-
-.add-data img, .edit-data img, .delete-data img {
-    width: 15px;
-    height: auto;
-}
-
-.add-data.desktop, .desktop-options {
-    display: none;
-}
-
-.mobile-options {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.update-info {
-    text-decoration: underline;
-    cursor: pointer;
-    padding: 3px;
-    white-space: nowrap;
-    margin: 0 10px;
-}
-
-.modify {
-    color: var(--medium-purple);
-}
-
-.delete {
-    color: #626364;
-}
 
 .measures {
     display: flex;
@@ -134,18 +81,11 @@ em {
     white-space: nowrap;
 }
 
-
 /***** RESPONSIVE *****/
 
 @media screen and (min-width: 768px) {
     .chart {
         width: 90%;
-    }
-    .add-data.desktop,.desktop-options {
-        display: flex;
-    }
-    .add-data.mobile, .mobile-options {
-        display: none;
     }
     .measure {
         width: 90%;
