@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Le Charnet de Santé - Chaleurs de {{ cat.name|capitalize }} {% endblock %}
+{% block title %}Le Charnet de Santé - Chaleurs de {{ cat.name }} {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
@@ -21,10 +21,10 @@
         <div class="card">
             <div class="card-header">
                 <div class="picture">
-                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name|capitalize }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
                 </div>
                 <div class="cat-name">
-                    <h2>{{ cat.name|capitalize }}</h2>
+                    <h2>{{ cat.name }}</h2>
                     <a href="{{ path('cat-measures', {'id': cat.id}) }}" class="return">Retour aux mesures</a>
                 </div>
             </div>
@@ -43,19 +43,19 @@
                 <h3>Chaleur en cours :</h3>
                 {% for measure in paginatedCurrentMeasures %}              
                 <div class="entry card-template">
-                    <div class="entry-info heat">
-                        <p class="date heat">
+                    <div class="entry-info data--variation">
+                        <p class="date data--variation">
                             <span>Du : <em>{{ measure.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
                             <span>Au : <em>{% if measure.heatEndDate is not null %}{{ measure.heatEndDate|format_datetime(locale='fr', pattern="dd MMM Y")}}{% else %}
                                 En cours{% endif %}</em></span>
                         </p>
-                        <p class="data heat">
+                        <p class="data data--variation">
                             <span>Saillie : {% if measure.isMated is null %}...{% elseif measure.isMated == true %}<em>Oui</em>{% else %}<em>Non</em>{% endif %}</span>
                             <span>Fécondation : {% if measure.isPregnant is null %}...{% elseif measure.isPregnant == true %}<em>Oui</em>{% else %}<em>Non</em>{% endif %}</span>
                         </p>
                     </div>
                     <div>
-                        <div class="mobile-options heat">
+                        <div class="mobile-options data--variation">
                             <span class="edit-data add-edit-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
                             <span class="delete-data delete-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
                         </div>
@@ -101,18 +101,18 @@
                 </div> 
                 {% for measure in paginatedMeasures %}                
                 <div class="entry card-template">
-                    <div class="entry-info heat">
-                        <p class="date heat">
+                    <div class="entry-info data--variation">
+                        <p class="date data--variation">
                             <span>Du : <em>{{ measure.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
                             <span>Au : <em>{{ measure.heatEndDate|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
                         </p>
-                        <p class="data heat">
+                        <p class="data data--variation">
                             <span>Saillie : {% if measure.isMated is null %} {% elseif measure.isMated == true %} <em>Oui</em> {% else %} <em>Non</em> {% endif %}</span>
                             <span>Fécondation : {% if measure.isPregnant is null %} {% elseif measure.isPregnant == true %} <em>Oui</em> {% else %} <em>Non</em> {% endif %}</span>
                         </p>
                     </div>
                     <div>
-                        <div class="mobile-options heat">
+                        <div class="mobile-options data--variation">
                             <span class="edit-data add-edit-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
                             <span class="delete-data delete-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
                         </div>
