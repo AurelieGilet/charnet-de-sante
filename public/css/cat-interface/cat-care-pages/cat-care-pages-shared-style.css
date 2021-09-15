@@ -1,3 +1,96 @@
+/* TOOLTIP */
+
+.tooltip {
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 95%;
+    height: 40px;
+    overflow: visible;
+}
+
+#help-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+    background-color: var(--list-background-color);
+}
+
+#help-icon img {
+    width: 100%;
+    height: auto;
+}
+
+#help-purple {
+    display: none;
+}
+
+#help-white {
+    display: block;
+}
+
+#help-content {
+    position: absolute;
+    right: 50px;
+    bottom: -30%;
+    width: 80%;
+    max-height: 50vh;
+    overflow: auto;
+    z-index: 2;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--medium-purple);
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
+}
+
+#help-content p {
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    line-height: 1.2rem;
+}
+
+.hide {
+    display: none !important;
+}
+
+.show {
+    display: block !important;
+}
+
+.icon-background-color {
+    background-color: var(--medium-purple) !important;
+}
+
+/* PAGINATION */
+
+.pagination {
+    color: var(--medium-purple);
+    margin: 10px 5px;
+}
+
+.pagination span {
+    margin: 0 5px;
+}
+
+.current, .next, .last, .first, .previous {
+    font-weight: bold;
+}
+
+.current {
+    color: var(--purple-navy);
+}
+
+/* PAGES SHARED TEMPLATE */
+
 main {
     min-height: 90vh;
     background-color: var(--main-background-color);
@@ -187,9 +280,68 @@ section {
     }
 } 
 
+/* CAT DATA ACTIONS */
+
+.add-data, .edit-data, .delete-data, .delete-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--medium-purple);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
+    cursor: pointer;
+    color: white;
+    white-space: nowrap;
+    margin: 10px;
+}
+
+.edit-data {
+    margin: 2px;
+}
+
+.delete-data {
+    background-color: var(--purple-navy);
+    margin: 2px;
+}
+
+.add-data img, .edit-data img, .delete-data img {
+    width: 15px;
+    height: auto;
+}
+
+.add-data.desktop, .desktop-options {
+    display: none;
+}
+
+.mobile-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update-info {
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 3px;
+    white-space: nowrap;
+    margin: 0 10px;
+}
+
+.modify {
+    color: var(--medium-purple);
+}
+
+.delete {
+    color: #626364;
+}
+
 /***** RESPONSIVE *****/
 
 @media screen and (min-width: 768px) {
+    #help-content {
+        width: 90%;
+    }
     .picture {
         margin-right: 20px;
     }
@@ -218,5 +370,11 @@ section {
     .card-arrow {
         font-size: 1.8rem;
         margin-right: 20px;
+    }
+    .add-data.desktop,.desktop-options {
+        display: flex;
+    }
+    .add-data.mobile, .mobile-options {
+        display: none;
     }
 }
