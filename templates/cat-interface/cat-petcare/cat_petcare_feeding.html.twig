@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Alimentation de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
+    {{ encore_entry_link_tags('chart-css') }}
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="{{ path('cat-petcare', {'id': cat.id}) }}" class="return">Retour à l'entretien</a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/feeding.png') }}" alt="Icône d'une gamelle de nourriture pour chat chat">
+                    </div>
+                    <h3>Alimentation</h3>
+                </div>
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+            </div>
+            {% if currentPetCares is not empty %}
+            <div class="card-content card-template entries current-entries">
+                <h3>Alimentation en cours :</h3>
+                {% for petCare in paginatedCurrentPetCares %}              
+                <div class="entry card-template">
+                    <div class="entry-info data--variation">
+                        <p class="date data--variation">
+                            <span>Du : <em>{{ petCare.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
+                            <span>Au : <em>{% if petCare.endDate is not null %}{{ petCare.endDate|format_datetime(locale='fr', pattern="dd MMM Y")}}{% else %}Toujours utilisé{% endif %}</em></span>
+                        </p>
+                        <p class="data data--variation">
+                            <span>Type : <em>{% if petCare.foodType is null %}...{% else %}{{ petCare.foodType|capitalize }}{% endif %}</em></span>
+                            <span>Marque : <em>{% if petCare.foodBrand is null %}...{% else %}{{ petCare.foodBrand|capitalize }}{% endif %}</em></span>
+                        </p>
+                        <p class="data data--variation">
+                            <span>Quantité : <em>{% if petCare.foodQuantity is null %}...{% else %}{{ petCare.foodQuantity }} g{% endif %}</em></span>
+                        </p>
+                    </div>
+                    <div>
+                        <div class="mobile-options data--variation">
+                            <span class="edit-data add-edit-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="delete-data delete-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
+                        </div>
+                        <div class="desktop-options">
+                            <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ petCare.id }}">Modifier</span>
+                            <span class="update-info desktop delete delete-data-btn" data-data-id="{{ petCare.id }}">Supprimer</span>
+                        </div>
+                    </div>
+                </div>
+                {# <div id="edit-{{ petCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatPetCareController::editFeeding',
+                        { 'catId': cat.id, 'petCareId': petCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ petCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatPetCareController::deleteMeasure',
+                        { 'catId': cat.id, 'petCareId': petCare.id }
+                    ))}}
+                </div> #}
+                {% endfor %}
+                {{ knp_pagination_render(paginatedCurrentPetCares) }}
+            </div>
+            {% endif %}
+            <div class="card-content card-template entries last-entries">
+                <h3>Dernières entrées :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>Les besoins nutritionnels varient d'un chat à l'autre en fonction de l'âge, de l'état de santé, du statut sexuel et du degré d'activité.</p>
+                        <p>Qu'elle soit industrielle ou ménagère, sèche ou humide, la ration alimentaire doit respecter les besoins en protéines, lipides, glucides, vitamines et sels minéraux de votre chat.</p>
+                        <p>La chat est un carnivore strict et ses besoins en protéines sont très importants. Ces protéines doivent être de bonne qualité et d'origine animale.</p>
+                        <p>Les lipides sont également importants et doivent être présents en quantité suffisante.</p>
+                        <p>En revanche, les glucides sont non seulement non indispensables mais très mal assimilés par le chat et peuvent provoquer des problèmes de santé sur le long terme s'ils sont consommés en trop grande quantité.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for petCare in paginatedPetCares %}                
+                <div class="entry card-template">
+                    <div class="entry-info data--variation">
+                        <p class="date data--variation">
+                            <span>Du : <em>{{ petCare.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
+                            <span>Au : <em>{{ petCare.endDate|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
+                        </p>
+                        <p class="data data--variation">
+                            <span>Type : <em>{% if petCare.foodType is null %}...{% else %}{{ petCare.foodType|capitalize }}{% endif %}</em></span>
+                            <span>Marque : <em>{% if petCare.foodBrand is null %}...{% else %}{{ petCare.foodBrand|capitalize }}{% endif %}</em></span>
+                        </p>
+                        <p class="data data--variation">
+                            <span>Quantité : <em>{% if petCare.foodQuantity is null %}...{% else %}{{ petCare.foodQuantity }} g{% endif %}</em></span>
+                        </p>
+                    </div>
+                    <div>
+                        <div class="mobile-options data--variation">
+                            <span class="edit-data add-edit-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="delete-data delete-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
+                        </div>
+                        <div class="desktop-options">
+                            <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ petCare.id }}">Modifier</span>
+                            <span class="update-info desktop delete delete-data-btn" data-data-id="{{ petCare.id }}">Supprimer</span>
+                        </div>
+                    </div>
+                </div>
+                {# <div id="edit-{{ petCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatPetCareController::editFeeding',
+                        { 'catId': cat.id, 'petCareId': petCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ petCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatPetCareController::deletePetCare',
+                        { 'catId': cat.id, 'petCareId': petCare.id }
+                    ))}}
+                </div> #}
+                {% endfor %}
+                {{ knp_pagination_render(paginatedPetCares) }}
+            </div>
+        </div>
+    </section>
+    {# <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatPetCareController::addFeeding',
+            { 'id': cat.id }
+        ))}}
+    </div> #}
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
+{{ encore_entry_script_tags('chart-js') }}
+{% endblock %}

@@ -18,10 +18,10 @@ class PetCare
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cat::class, inversedBy="petCares")
+     * @ORM\ManyToOne(targetEntity=cat::class, inversedBy="petCares")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Cat;
+    private $cat;
 
     /**
      * @ORM\Column(type="date")
@@ -83,14 +83,14 @@ class PetCare
         return $this->id;
     }
 
-    public function getCat(): ?Cat
+    public function getCat(): ?cat
     {
-        return $this->Cat;
+        return $this->cat;
     }
 
-    public function setCat(?Cat $Cat): self
+    public function setCat(?cat $cat): self
     {
-        $this->Cat = $Cat;
+        $this->cat = $cat;
 
         return $this;
     }

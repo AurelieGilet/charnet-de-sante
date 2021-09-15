@@ -19,6 +19,34 @@ class PetCareRepository extends ServiceEntityRepository
         parent::__construct($registry, PetCare::class);
     }
 
+    /**
+     * @return PetCare[]
+     */
+    public function findCatFeedings($cat)
+    {
+        return $this->createQueryBuilder('petcare')
+            ->andWhere('petcare.cat = :cat and petcare.endDate IS NOT NULL and (petcare.foodType IS NOT NULL or petcare.foodBrand IS NOT NULL or petcare.foodQuantity IS NOT NULL)')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('petcare.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return PetCare[]
+     */
+    public function findCatCurrentFeedings($cat)
+    {
+        return $this->createQueryBuilder('petcare')
+            ->andWhere('petcare.cat = :cat and petcare.endDate IS NULL and (petcare.foodType IS NOT NULL or petcare.foodBrand IS NOT NULL or petcare.foodQuantity IS NOT NULL)')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('petcare.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return PetCare[] Returns an array of PetCare objects
     //  */
