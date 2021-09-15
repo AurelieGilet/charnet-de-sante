@@ -6,21 +6,21 @@ const addEditModalClose = document.getElementsByClassName(
 const deleteModalClose = document.getElementsByClassName(
   "delete-modal-close-btn"
 );
-const addEditMeasureBtn = document.getElementsByClassName(
-  "add-edit-measure-btn"
+const addEditDataBtn = document.getElementsByClassName(
+  "add-edit-data-btn"
 );
-const addEditMeasureForm = document.getElementsByClassName(
-  "add-edit-measure-form"
+const addEditDataForm = document.getElementsByClassName(
+  "add-edit-data-form"
 );
-const deleteMeasureBtn = document.getElementsByClassName("delete-measure-btn");
-const deleteMeasureForm = document.getElementsByClassName(
-  "delete-measure-form"
+const deleteDataBtn = document.getElementsByClassName("delete-data-btn");
+const deleteDataForm = document.getElementsByClassName(
+  "delete-data-form"
 );
 
 if (addEditModalClose != null) {
   for (let i = 0; i < addEditModalClose.length; i++) {
     addEditModalClose[i].addEventListener("click", function () {
-      addEditMeasureForm[i].style.display = "none";
+      addEditDataForm[i].style.display = "none";
       body[0].classList.remove("modal-open");
     });
   }
@@ -29,26 +29,26 @@ if (addEditModalClose != null) {
 if (deleteModalClose != null) {
   for (let i = 0; i < deleteModalClose.length; i++) {
     deleteModalClose[i].addEventListener("click", function () {
-      deleteMeasureForm[i].style.display = "none";
+      deleteDataForm[i].style.display = "none";
       body[0].classList.remove("modal-open");
     });
   }
 }
 
-for (let i = 0; i < addEditMeasureBtn.length; i++) {
-  addEditMeasureBtn[i].addEventListener("click", function () {
-    let measureId = addEditMeasureBtn[i].dataset.measureId;
-    let addEditMeasureForm = document.getElementById("edit-" + measureId);
-    addEditMeasureForm.style.display = "block";
+for (let i = 0; i < addEditDataBtn.length; i++) {
+  addEditDataBtn[i].addEventListener("click", function () {
+    let dataId = addEditDataBtn[i].dataset.dataId;
+    let addEditDataForm = document.getElementById("edit-" + dataId);
+    addEditDataForm.style.display = "block";
     body[0].classList.add("modal-open");
   });
 }
 
-for (let i = 0; i < deleteMeasureBtn.length; i++) {
-  deleteMeasureBtn[i].addEventListener("click", function () {
-    let measureId = deleteMeasureBtn[i].dataset.measureId;
-    let deleteMeasureForm = document.getElementById("delete-" + measureId);
-    deleteMeasureForm.style.display = "block";
+for (let i = 0; i < deleteDataBtn.length; i++) {
+  deleteDataBtn[i].addEventListener("click", function () {
+    let dataId = deleteDataBtn[i].dataset.dataId;
+    let deleteDataForm = document.getElementById("delete-" + dataId);
+    deleteDataForm.style.display = "block";
     body[0].classList.add("modal-open");
   });
 }
