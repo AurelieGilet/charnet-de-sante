@@ -4,9 +4,9 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
-    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}" >
-    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-measures.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
     {{ encore_entry_link_tags('chart-css') }}
 {% endblock %}
@@ -39,11 +39,11 @@
                 <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une mesure</span>
             </div>
             {% if currentMeasures is not empty %}
-            <div class="card-content card-template measures current-measures">
+            <div class="card-content card-template entries current-entries">
                 <h3>Chaleur en cours :</h3>
                 {% for measure in paginatedCurrentMeasures %}              
-                <div class="measure card-template">
-                    <div class="measure-info heat">
+                <div class="entry card-template">
+                    <div class="entry-info heat">
                         <p class="date heat">
                             <span>Du : <em>{{ measure.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
                             <span>Au : <em>{% if measure.heatEndDate is not null %}{{ measure.heatEndDate|format_datetime(locale='fr', pattern="dd MMM Y")}}{% else %}
@@ -54,7 +54,7 @@
                             <span>Fécondation : {% if measure.isPregnant is null %}...{% elseif measure.isPregnant == true %}<em>Oui</em>{% else %}<em>Non</em>{% endif %}</span>
                         </p>
                     </div>
-                    <div class="measure-options">
+                    <div>
                         <div class="mobile-options heat">
                             <span class="edit-data add-edit-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
                             <span class="delete-data delete-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>
@@ -81,7 +81,7 @@
                 {{ knp_pagination_render(paginatedCurrentMeasures) }}
             </div>
             {% endif %}
-            <div class="card-content card-template measures last-measures">
+            <div class="card-content card-template entries last-entries">
                 <h3>Dernières mesures :</h3>
                 <div class="tooltip">
                     <div id="help-content" class="hide">
@@ -100,8 +100,8 @@
                     </div>
                 </div> 
                 {% for measure in paginatedMeasures %}                
-                <div class="measure card-template">
-                    <div class="measure-info heat">
+                <div class="entry card-template">
+                    <div class="entry-info heat">
                         <p class="date heat">
                             <span>Du : <em>{{ measure.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
                             <span>Au : <em>{{ measure.heatEndDate|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
@@ -111,7 +111,7 @@
                             <span>Fécondation : {% if measure.isPregnant is null %} {% elseif measure.isPregnant == true %} <em>Oui</em> {% else %} <em>Non</em> {% endif %}</span>
                         </p>
                     </div>
-                    <div class="measure-options">
+                    <div>
                         <div class="mobile-options heat">
                             <span class="edit-data add-edit-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
                             <span class="delete-data delete-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>
