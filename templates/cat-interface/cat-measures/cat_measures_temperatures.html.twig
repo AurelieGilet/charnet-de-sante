@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Le Charnet de Santé - Température de {{ cat.name }} {% endblock %}
+{% block title %}Le Charnet de Santé - Température de {{ cat.name|capitalize }} {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
@@ -21,17 +21,17 @@
         <div class="card">
             <div class="card-header">
                 <div class="picture">
-                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name|capitalize }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
                 </div>
                 <div class="cat-name">
-                    <h2>{{ cat.name }}</h2>
+                    <h2>{{ cat.name|capitalize }}</h2>
                     <a href="{{ path('cat-measures', {'id': cat.id}) }}" class="return">Retour aux mesures</a>
                 </div>
             </div>
             <div class="card-content card-template">
                 <div class="card-title">
                     <div class="icon">
-                        <img src="{{ asset('img/site/thermometer.png') }}" alt="Icône d'un chat sur une balance">
+                        <img src="{{ asset('img/site/thermometer.png') }}" alt="Icône d'un thermomètre">
                     </div>
                     <h3>Température</h3>
                 </div>
@@ -67,7 +67,7 @@
                     <div>
                         <div class="mobile-options">
                             <span class="edit-data add-edit-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
-                            <span class="delete-data delete-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="delete-data delete-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
                         </div>
                         <div class="desktop-options">
                             <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ measure.id }}">Modifier</span>

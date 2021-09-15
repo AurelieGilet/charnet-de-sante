@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Le Charnet de Santé - Mesures de {{ cat.name }} {% endblock %}
+{% block title %}Le Charnet de Santé - Mesures de {{ cat.name|capitalize }} {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
@@ -15,10 +15,10 @@
         <div class="card">
             <div class="card-header">
                 <div class="picture">
-                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name|capitalize }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
                 </div>
                 <div class="cat-name">
-                    <h2>{{ cat.name }}</h2>
+                    <h2>{{ cat.name|capitalize }}</h2>
                     <a href="{{ path('cat-detail', {'id': cat.id}) }}" class="return">Retour à la fiche</a>
                 </div>
             </div>
