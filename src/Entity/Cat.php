@@ -118,7 +118,7 @@ class Cat
     private $measures;
 
     /**
-     * @ORM\OneToMany(targetEntity=PetCare::class, mappedBy="Cat", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=PetCare::class, mappedBy="cat", orphanRemoval=true)
      */
     private $petCares;
 
