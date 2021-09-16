@@ -321,11 +321,11 @@ class CatMeasuresController extends AbstractController
      */
     public function editWeight(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
     {
-        $catID = $request->attributes->get('catId');
-        $cat = $catRepository->findOneBy(['id' => $catID]);
+        $catId = $request->attributes->get('catId');
+        $cat = $catRepository->findOneBy(['id' => $catId]);
 
-        $measureID = $request->attributes->get('measureId');
-        $measure = $measureRepository->findOneBy(['id' => $measureID]);
+        $measureId = $request->attributes->get('measureId');
+        $measure = $measureRepository->findOneBy(['id' => $measureId]);
 
         $form = $this->createForm(CatMeasureFormType::class, $measure, [
             'action' => $this->generateUrl('edit-weight', ['catId' => $cat->getId(), 'measureId' => $measure->getId()
@@ -363,11 +363,11 @@ class CatMeasuresController extends AbstractController
      */
     public function editTemperature(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
     {
-        $catID = $request->attributes->get('catId');
-        $cat = $catRepository->findOneBy(['id' => $catID]);
+        $catId = $request->attributes->get('catId');
+        $cat = $catRepository->findOneBy(['id' => $catId]);
 
-        $measureID = $request->attributes->get('measureId');
-        $measure = $measureRepository->findOneBy(['id' => $measureID]);
+        $measureId = $request->attributes->get('measureId');
+        $measure = $measureRepository->findOneBy(['id' => $measureId]);
 
         $form = $this->createForm(CatMeasureFormType::class, $measure, [
             'action' => $this->generateUrl('edit-temperature', ['catId' => $cat->getId(), 'measureId' => $measure->getId()
@@ -405,11 +405,11 @@ class CatMeasuresController extends AbstractController
      */
     public function editHeat(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
     {
-        $catID = $request->attributes->get('catId');
-        $cat = $catRepository->findOneBy(['id' => $catID]);
+        $catId = $request->attributes->get('catId');
+        $cat = $catRepository->findOneBy(['id' => $catId]);
 
-        $measureID = $request->attributes->get('measureId');
-        $measure = $measureRepository->findOneBy(['id' => $measureID]);
+        $measureId = $request->attributes->get('measureId');
+        $measure = $measureRepository->findOneBy(['id' => $measureId]);
 
         $form = $this->createForm(CatMeasureFormType::class, $measure, [
             'action' => $this->generateUrl('edit-heat', ['catId' => $cat->getId(), 'measureId' => $measure->getId()
@@ -451,11 +451,11 @@ class CatMeasuresController extends AbstractController
      */
     public function deleteMeasure(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, MeasureRepository $measureRepository, Cat $cat = null, Measure $measure = null): Response 
     {
-        $catID = $request->attributes->get('catId');
-        $cat = $catRepository->findOneBy(['id' => $catID]);
+        $catId = $request->attributes->get('catId');
+        $cat = $catRepository->findOneBy(['id' => $catId]);
 
-        $measureID = $request->attributes->get('measureId');
-        $measure = $measureRepository->findOneBy(['id' => $measureID]);
+        $measureId = $request->attributes->get('measureId');
+        $measure = $measureRepository->findOneBy(['id' => $measureId]);
 
         $weight = $measure->getWeight();
         $temperature = $measure->getTemperature();
