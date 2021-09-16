@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PetCareRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +26,10 @@ class PetCare
 
     /**
      * @ORM\Column(type="date")
+     * 
+     * @Assert\NotBlank(
+	 * 	    message="Merci de saisir une date",
+	 * )
      */
     private $date;
 

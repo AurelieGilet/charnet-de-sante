@@ -61,6 +61,20 @@ class PetCareRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return PetCare[]
+     */
+    public function findCatClaws($cat)
+    {
+        return $this->createQueryBuilder('petcare')
+            ->andWhere('petcare.cat = :cat and petcare.claws IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('petcare.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return PetCare[] Returns an array of PetCare objects
     //  */

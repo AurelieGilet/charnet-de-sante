@@ -78,6 +78,26 @@ class CatPetCareController extends AbstractController
     }
 
     /**
+     * @Route("/espace-utilisateur/chat/{id}/entretien/griffes", name="cat-claws")
+     */
+    public function catClaws(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
+    {
+        $petCares = $petCareRepository->findCatClaws($cat);
+
+        $paginatedPetCares = $paginator->paginate(
+            $petCares,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        return $this->render('cat-interface/cat-petcare/cat_petcare_claws.html.twig', [
+            'controller_name' => 'CatPetCareController',
+            'cat' => $cat,
+            'paginatedPetCares' => $paginatedPetCares,
+        ]);
+    }
+
+    /**
      * @Route("/espace-utilisateur/chat/{id}/entretien/alimentation/ajouter", name="add-feeding")
      */
     public function addFeeding(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
@@ -158,6 +178,45 @@ class CatPetCareController extends AbstractController
         }
 
         return $this->render('cat-interface/cat-petcare/_add_edit_cat_grooming.html.twig', [
+            'controller_name' => 'CatPetCareController',
+            'petCareForm' => $form->createView(),
+        ]);
+    }
+
+/**
+     * @Route("/espace-utilisateur/chat/{id}/entretien/griffes/ajouter", name="add-claws")
+     */
+    public function addClaws(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
+    {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
+        $petCare = new PetCare;
+
+        $form = $this->createForm(CatPetCareFormType::class, $petCare, [
+            'action' => $this->generateUrl('add-claws', ['id' => $cat->getId(),
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $petCare->setCat($cat);
+            $petCare->setClaws(true);
+
+            $manager->persist($petCare);
+            $manager->flush();
+
+            $this->addFlash('success', "L'entrée a été ajoutée");
+
+            return $this->redirectToRoute('cat-claws', ['id' => $cat->getId() ]);
+
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date.");
+
+            return $this->redirectToRoute('cat-claws', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/cat-petcare/_add_edit_cat_claws.html.twig', [
             'controller_name' => 'CatPetCareController',
             'petCareForm' => $form->createView(),
         ]);
@@ -250,9 +309,49 @@ class CatPetCareController extends AbstractController
     }
 
     /**
+     * @Route("/espace-utilisateur/chat/{catId}/entretien/griffes/{petCareId}/editer", name="edit-claws")
+     */
+    public function editClaws(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, PetCareRepository $petCareRepository, Cat $cat = null, PetCare $petCare = null): Response 
+    {
+        $catId = $request->attributes->get('catId');
+        $cat = $catRepository->findOneBy(['id' => $catId]);
+
+        $petCareId = $request->attributes->get('petCareId');
+        $petCare = $petCareRepository->findOneBy(['id' => $petCareId]);
+
+        $form = $this->createForm(CatPetCareFormType::class, $petCare, [
+            'action' => $this->generateUrl('edit-claws', ['catId' => $cat->getId(), 'petCareId' => $petCare->getId()
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $manager->persist($petCare);
+            $manager->flush();
+
+            $this->addFlash('success', "L'entrée a été modifiée");
+
+            return $this->redirectToRoute('cat-claws', ['id' => $cat->getId() ]);
+
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Veuillez saisir une date.");
+
+            return $this->redirectToRoute('cat-claws', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/cat-petcare/_add_edit_cat_claws.html.twig', [
+            'controller_name' => 'CatPetCareController',
+            'petCareForm' => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/espace-utilisateur/chat/{catId}/entretien/alimentation/{petCareId}/supprimer", name="delete-petCare")
      * 
      * @Route("/espace-utilisateur/chat/{catId}/entretien/toilettage/{petCareId}/supprimer", name="delete-petcare")
+     * 
+     * @Route("/espace-utilisateur/chat/{catId}/entretien/griffes/{petCareId}/supprimer", name="delete-petcare")
      */
     public function deletePetCare(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, PetCareRepository $petCareRepository, Cat $cat = null, PetCare $petCare = null): Response 
     {
@@ -264,6 +363,7 @@ class CatPetCareController extends AbstractController
 
         $feeding = $petCare->getFoodQuantity();
         $grooming = $petCare->getgrooming();
+        $claws = $petCare->getClaws();
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
             'action' => $this->generateUrl('delete-petCare', ['catId' => $cat->getId(), 'petCareId' => $petCare->getId()
@@ -282,9 +382,9 @@ class CatPetCareController extends AbstractController
                 return $this->redirectToRoute('cat-feeding', ['id' => $cat->getId() ]);
             } else if ($grooming != null) {
                 return $this->redirectToRoute('cat-grooming', ['id' => $cat->getId() ]);
-            } /*else if ($heat != null) {
-                return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
-            } */else {
+            } else if ($claws != null) {
+                return $this->redirectToRoute('cat-claws', ['id' => $cat->getId() ]);
+            } else {
                 return $this->redirectToRoute('cat-petCare', ['id' => $cat->getId() ]);
             } 
         } else if($form->isSubmitted() && !$form->isValid()) {
@@ -294,9 +394,9 @@ class CatPetCareController extends AbstractController
                 return $this->redirectToRoute('cat-feeding', ['id' => $cat->getId() ]);
             } else if ($grooming != null) {
                 return $this->redirectToRoute('cat-grooming', ['id' => $cat->getId() ]);
-            } /*else if ($heat != null) {
-                return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
-            }*/ else {
+            } else if ($claws != null) {
+                return $this->redirectToRoute('cat-claws', ['id' => $cat->getId() ]);
+            } else {
                 return $this->redirectToRoute('cat-petCare', ['id' => $cat->getId() ]);
             }
         }
