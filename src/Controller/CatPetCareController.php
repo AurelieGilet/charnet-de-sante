@@ -183,7 +183,7 @@ class CatPetCareController extends AbstractController
         ]);
     }
 
-/**
+    /**
      * @Route("/espace-utilisateur/chat/{id}/entretien/griffes/ajouter", name="add-claws")
      */
     public function addClaws(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
