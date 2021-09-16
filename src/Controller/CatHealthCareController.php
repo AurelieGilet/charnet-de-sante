@@ -10,11 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CatHealthCareController extends AbstractController
 {
     /**
-     * @Route("/espace-utilisateur/chat/{id}/soins", name="cat-healthcare")
+     * @Route("/espace-utilisateur/chat/{id}/soins", name="cat-healthCare")
      */
-    public function catHealthcare(Cat $cat): Response
+    public function catHealthCare(Cat $cat): Response
     {
-        return $this->render('cat-interface/cat-healthcare/cat_healthcare.html.twig', [
+        return $this->render('cat-interface/cat-healthcare/cat_healthCare.html.twig', [
             'controller_name' => 'CatHealthCareController',
             'cat' => $cat
         ]);

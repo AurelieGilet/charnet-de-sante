@@ -4,11 +4,14 @@ namespace App\Form;
 
 use App\Entity\PetCare;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CatPetCareFormType extends AbstractType
 {
@@ -85,6 +88,21 @@ class CatPetCareFormType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => "Enregistrer"
             ])
+        ;
+
+        $builder
+            ->get('eyesEars')
+            ->addModelTransformer(new CallbackTransformer(
+                // Transform a string to an array
+                function ($eyesEarsString) {
+                    return explode(',', $eyesEarsString);
+                },
+                // Transform an array to a string
+                function ($eyesEarsArray) {
+                    return implode(',', $eyesEarsArray);
+                },
+                
+            ))
         ;
     }
 

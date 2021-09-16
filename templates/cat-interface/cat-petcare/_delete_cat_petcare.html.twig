@@ -1,0 +1,11 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close delete-modal-close-btn">X</div>
+        <h3>Etes-vous sûr de vouloir supprimer cette mesure ?</h3>
+        {{ form_start(petCareForm) }}
+            {{ form_row(petCareForm.date, {'label': false, 'attr' : { 'style':'display:none'}}, ) }}
+            {{ form_row(petCareForm._token) }}
+            {{ form_row(petCareForm.submit, {'label': 'Supprimer'}) }}
+        {{ form_end(petCareForm, {render_rest: false}) }}
+    </div>
+</div>
