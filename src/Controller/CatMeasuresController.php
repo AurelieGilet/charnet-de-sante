@@ -219,6 +219,7 @@ class CatMeasuresController extends AbstractController
             $this->addFlash('success', "La mesure a été ajoutée");
 
             return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+
         } else if($form->isSubmitted() && !$form->isValid()) {
             $this->addFlash('danger', "La mesure n'a pas été ajoutée. Les deux champs sont requis.");
 
@@ -261,6 +262,7 @@ class CatMeasuresController extends AbstractController
             $this->addFlash('success', "La mesure a été ajoutée");
 
             return $this->redirectToRoute('cat-temperature', ['id' => $cat->getId() ]);
+
         } else if($form->isSubmitted() && !$form->isValid()) {
             $this->addFlash('danger', "La mesure n'a pas été ajoutée. Les deux champs sont requis.");
 
@@ -304,6 +306,7 @@ class CatMeasuresController extends AbstractController
             $this->addFlash('success', "La mesure a été ajoutée");
 
             return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
+
         } else if($form->isSubmitted() && !$form->isValid()) {
             $this->addFlash('danger', "La mesure n'a pas été ajoutée. La date de début est requise.");
 
@@ -346,6 +349,7 @@ class CatMeasuresController extends AbstractController
             $this->addFlash('success', "La mesure a été modifiée");
 
             return $this->redirectToRoute('cat-weight', ['id' => $cat->getId() ]);
+
         } else if($form->isSubmitted() && !$form->isValid()) {
             $this->addFlash('danger', "La mesure n'a pas été modifiée. Les deux champs sont requis.");
 
@@ -388,6 +392,7 @@ class CatMeasuresController extends AbstractController
             $this->addFlash('success', "La mesure a été modifiée");
 
             return $this->redirectToRoute('cat-temperature', ['id' => $cat->getId() ]);
+
         } else if($form->isSubmitted() && !$form->isValid()) {
             $this->addFlash('danger', "La mesure n'a pas été modifiée. Les deux champs sont requis.");
 
@@ -430,6 +435,7 @@ class CatMeasuresController extends AbstractController
             $this->addFlash('success', "La mesure a été modifiée");
 
             return $this->redirectToRoute('cat-heat', ['id' => $cat->getId() ]);
+            
         } else if($form->isSubmitted() && !$form->isValid()) {
             $this->addFlash('danger', "La mesure n'a pas été modifiée. Les deux champs sont requis.");
 

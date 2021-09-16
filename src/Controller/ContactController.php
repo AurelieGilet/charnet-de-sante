@@ -36,6 +36,7 @@ class ContactController extends AbstractController
             $this->addFlash('success', 'Votre message a bien été envoyé');
 
             return $this->redirectToRoute('contact');
+            
         } else if ($form->isSubmitted() && !$form->isValid()) {
             $this->addFlash('danger', 'Votre message n\'a pas été envoyé');
         }
