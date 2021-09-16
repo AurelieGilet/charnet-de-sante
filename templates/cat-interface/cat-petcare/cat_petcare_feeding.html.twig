@@ -25,7 +25,7 @@
                 </div>
                 <div class="cat-name">
                     <h2>{{ cat.name }}</h2>
-                    <a href="{{ path('cat-petcare', {'id': cat.id}) }}" class="return">Retour à l'entretien</a>
+                    <a href="{{ path('cat-petCare', {'id': cat.id}) }}" class="return">Retour à l'entretien</a>
                 </div>
             </div>
             <div class="card-content card-template">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                {# <div id="edit-{{ petCare.id }}"class="add-edit-data-form">
+                <div id="edit-{{ petCare.id }}"class="add-edit-data-form">
                     {{ render(controller(
                         'App\\Controller\\CatPetCareController::editFeeding',
                         { 'catId': cat.id, 'petCareId': petCare.id }
@@ -75,10 +75,10 @@
                 </div>
                 <div id="delete-{{ petCare.id }}"class="delete-data-form">
                     {{ render(controller(
-                        'App\\Controller\\CatPetCareController::deleteMeasure',
+                        'App\\Controller\\CatPetCareController::deletePetCare',
                         { 'catId': cat.id, 'petCareId': petCare.id }
                     ))}}
-                </div> #}
+                </div>
                 {% endfor %}
                 {{ knp_pagination_render(paginatedCurrentPetCares) }}
             </div>
@@ -124,7 +124,7 @@
                         </div>
                     </div>
                 </div>
-                {# <div id="edit-{{ petCare.id }}"class="add-edit-data-form">
+                <div id="edit-{{ petCare.id }}"class="add-edit-data-form">
                     {{ render(controller(
                         'App\\Controller\\CatPetCareController::editFeeding',
                         { 'catId': cat.id, 'petCareId': petCare.id }
@@ -135,18 +135,18 @@
                         'App\\Controller\\CatPetCareController::deletePetCare',
                         { 'catId': cat.id, 'petCareId': petCare.id }
                     ))}}
-                </div> #}
+                </div>
                 {% endfor %}
                 {{ knp_pagination_render(paginatedPetCares) }}
             </div>
         </div>
     </section>
-    {# <div id="edit-new" class="add-edit-data-form">
+    <div id="edit-new" class="add-edit-data-form">
         {{ render(controller(
             'App\\Controller\\CatPetCareController::addFeeding',
             { 'id': cat.id }
         ))}}
-    </div> #}
+    </div>
 </main>
 <script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
 {{ encore_entry_script_tags('chart-js') }}

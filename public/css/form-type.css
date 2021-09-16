@@ -55,7 +55,7 @@ input, textarea, select {
     font-family: Do Hyeon, sans-serif;
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus, select:focus {
     outline-color: var(--medium-purple);
 }
 
