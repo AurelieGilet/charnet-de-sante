@@ -62,6 +62,11 @@
     font-weight: bold;
     white-space: nowrap;
     margin: 0 10px;
+    width: 40%;
+}
+
+.data.data--variation {
+    width: 100%;
 }
 
 em {
