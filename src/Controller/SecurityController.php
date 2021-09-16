@@ -111,6 +111,7 @@ class SecurityController extends AbstractController
             $this->addFlash('success', "Votre nom d'utilisateur a été changé");
 
             return $this->redirectToRoute('user-account');
+
         } else if ($form->isSubmitted() && !$form->isValid()) {
             $this->addFlash('danger', "Votre nom d'utilisateur doit faire entre 3 et 30 caractères");
 
@@ -144,6 +145,7 @@ class SecurityController extends AbstractController
                 $this->addFlash('success', "Votre e-mail a bien été changé");
 
                 return $this->redirectToRoute('user-account');
+
             } else {
                 $this->addFlash('danger', "Ce n'est pas le bon mot de passe");
 
@@ -185,6 +187,7 @@ class SecurityController extends AbstractController
                 $this->addFlash('success', "Votre mot de passe a bien été changé");
 
                 return $this->redirectToRoute('user-account');
+
             } else {
                 $this->addFlash('danger', "Votre ancien mot de passe ne correspond pas à l'actuel");
 
@@ -238,6 +241,7 @@ class SecurityController extends AbstractController
                 $this->addFlash('success', "Votre photo de profil a été ajoutée");
                 
                 return new JsonResponse();
+                
             } else {
                 $this->addFlash('danger', "Votre photo de profil n'a pas été modifiée. L'image doit faire moins de 2 Mo.");
 

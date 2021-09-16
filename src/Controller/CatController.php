@@ -162,6 +162,7 @@ class CatController extends AbstractController
                 $this->addFlash('success', "La photo de votre chat a été ajoutée");
                 
                 return new JsonResponse();
+                
             } else {
                 $this->addFlash('danger', "La photo de votre chat n'a pas été modifiée. L'image doit faire moins de 2 Mo.");
 
