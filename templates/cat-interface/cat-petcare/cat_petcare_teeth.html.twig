@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Dents de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
+    {{ encore_entry_link_tags('chart-css') }}
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="{{ path('cat-petCare', {'id': cat.id}) }}" class="return">Retour à l'entretien</a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/teeth.png') }}" alt="Icône de dent et brosse à dent">
+                    </div>
+                    <h3>Dents</h3>
+                </div>
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+            </div>
+            <div class="card-content card-template entries last-entries">
+                <h3>Dernières entrées :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>À défaut de pouvoir manger des proies entières qui lui permettraient d'entretenir sa dentition grâce à un effet mécanique, la santé buccale d'un chat passe, comme pour les humains, par un brossage régulier des dents.</p>
+                        <p>Il doit se faire avec une petite brosse très souple ou un doigtier et un dentifrice détartrant spécifique pour les chats (qui puisse être ingéré). N'utilisez surtout pas votre dentifrice qui peut être toxique pour votre chat. Le rinçage n'est pas nécessaire.</p>
+                        <p>Pour parvenir à brosser les dents de votre chat, le mieux est de l'habituer tout petit. Mais si le brossage est impossible, il existe d'autres produits tels que des dentifrices à étaler sur les dents, des lamelles à mâcher, des poudres d'algues à mélanger à la nourriture, etc ...</p>
+                        <p>Vous pouvez également l'aider à nettoyer ses dents par une action mécanique en lui donnant de gros morceaux de viande à mâcher.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for petCare in paginatedPetCares %}                
+                <div class="entry card-template">
+                    <div class="entry-info">
+                        <p class="date">
+                            <span>{{ petCare.date|date('d') }}</span>
+                            <span>{{ petCare.date|format_datetime(locale='fr', pattern="MMM") }}</span>
+                            <span>{{ petCare.date|date('Y') }}</span>
+                        </p>
+                        <p class="data">{{ petCare.teeth|capitalize }}</p>
+                    </div>
+                    <div>
+                        <div class="mobile-options">
+                            <span class="edit-data add-edit-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="delete-data delete-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
+                        </div>
+                        <div class="desktop-options">
+                            <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ petCare.id }}">Modifier</span>
+                            <span class="update-info desktop delete delete-data-btn" data-data-id="{{ petCare.id }}">Supprimer</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="edit-{{ petCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatPetCareController::editTeeth',
+                        { 'catId': cat.id, 'petCareId': petCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ petCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatPetCareController::deletePetCare',
+                        { 'catId': cat.id, 'petCareId': petCare.id }
+                    ))}}
+                </div>
+                {% endfor %}
+                {{ knp_pagination_render(paginatedPetCares) }}
+            </div>
+        </div>
+    </section>
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatPetCareController::addTeeth',
+            { 'id': cat.id }
+        ))}}
+    </div>
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
+{{ encore_entry_script_tags('chart-js') }}
+{% endblock %}
