@@ -43,7 +43,7 @@ class PetCareFixtures extends Fixture implements DependentFixtureInterface
 
         $grooming = ['brossage', 'bain'];
 
-        $eyesEars = ['eyes', 'ears', 'both'];
+        $eyesEars = ['eyes', 'ears', 'eyes,ears'];
 
         $teeth = ['brossage', 'dentifrice', 'algues'];
 

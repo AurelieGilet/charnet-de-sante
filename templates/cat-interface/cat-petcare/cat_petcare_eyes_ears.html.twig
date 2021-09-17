@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Yeux et Oreilles de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
+    {{ encore_entry_link_tags('chart-css') }}
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="{{ path('cat-petCare', {'id': cat.id}) }}" class="return">Retour à l'entretien</a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/claws.png') }}" alt="Icône de flacon de gouttes">
+                    </div>
+                    <h3>Yeux et Oreilles</h3>
+                </div>
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+            </div>
+            <div class="card-content card-template entries last-entries">
+                <h3>Dernières entrées :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>Afin de prévenir des conjonctivites, des inflammations ou même des ulcères de la cornée, il est important de prendre soin des yeux de votre chat.</p>
+                        <p>Pour ce faire, utilisez des nettoyants occulaires pour chat (sérum physiologique spécifique, collyre, ...) et une compresse ou lingette adaptée (pas de coton car risque de "peluche"). Évitez d'utiliser de l'eau, même bouillie.</p>
+                        <p>Pour le nettoyage des oreilles, il permet d'éliminer les débris et le cérumen accumulés.</p>
+                        <p>Il est nécessaire d'utiliser une solution de nettoyage auriculaire adaptée. Munissez vous également de compresses, de disques de coton ou de mouchoirs en papier pour enlever le plus gros des saletés.</p>
+                        <p>N'utilisez surtout pas de coton-tiges, au risque de le blesser ou de repousser les saletés dans le fond et de créer un bouchon.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for petCare in paginatedPetCares %}                
+                <div class="entry card-template">
+                    <div class="entry-info">
+                        <p class="date">
+                            <span>{{ petCare.date|date('d') }}</span>
+                            <span>{{ petCare.date|format_datetime(locale='fr', pattern="MMM") }}</span>
+                            <span>{{ petCare.date|date('Y') }}</span>
+                        </p>
+                        <p class="data">{% if petCare.eyesEars == 'eyes' %}Yeux{% elseif petCare.eyesEars == 'ears' %}Oreilles{% else %}Yeux et Oreilles{% endif %}</p>
+                    </div>
+                    <div>
+                        <div class="mobile-options">
+                            <span class="edit-data add-edit-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                            <span class="delete-data delete-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
+                        </div>
+                        <div class="desktop-options">
+                            <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ petCare.id }}">Modifier</span>
+                            <span class="update-info desktop delete delete-data-btn" data-data-id="{{ petCare.id }}">Supprimer</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="edit-{{ petCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatPetCareController::editEyesEars',
+                        { 'catId': cat.id, 'petCareId': petCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ petCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatPetCareController::deletePetCare',
+                        { 'catId': cat.id, 'petCareId': petCare.id }
+                    ))}}
+                </div>
+                {% endfor %}
+                {{ knp_pagination_render(paginatedPetCares) }}
+            </div>
+        </div>
+    </section>
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatPetCareController::addEyesEars',
+            { 'id': cat.id }
+        ))}}
+    </div>
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
+{{ encore_entry_script_tags('chart-js') }}
+{% endblock %}

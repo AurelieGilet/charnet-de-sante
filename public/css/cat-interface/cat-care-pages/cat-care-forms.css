@@ -55,6 +55,7 @@ form {
 
 form div {
     width: 90%;
+    max-width: 265px;
     margin: 10px auto;
 }
 
@@ -73,6 +74,35 @@ form div {
 
 #cat_measure_form_date select, #cat_measure_form_heatEndDate select,#cat_pet_care_form_date select, #cat_pet_care_form_endDate select {
     margin: 0 5px;
+}
+
+.form-checkbox {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-checkbox input[type=checkbox] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -border-radius: 5px;
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    margin-right: 10px;
+}
+
+.form-checkbox input[type=checkbox]:checked {
+    background: var(--medium-purple);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-checkbox input[type=checkbox]:checked::before {
+    content: '\002713';
+    display: block;
+    color: white;
 }
 
 /***** RESPONSIVE *****/
