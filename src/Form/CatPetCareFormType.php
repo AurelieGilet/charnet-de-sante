@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class CatPetCareFormType extends AbstractType
 {
@@ -80,9 +81,9 @@ class CatPetCareFormType extends AbstractType
                 'attr' => ['placeholder' => "Brossage"],
                 'required' => false,
             ])
-            ->add('notes', TextType::class, [
+            ->add('notes', TextareaType::class, [
                 'label' => "Notes",
-                'attr' => ['placeholder' => "Refuse sa nourriture"],
+                'attr' => ['placeholder' => "Refuse sa nourriture", 'rows' => 10],
                 'required' => false,
             ])
             ->add('submit', SubmitType::class, [

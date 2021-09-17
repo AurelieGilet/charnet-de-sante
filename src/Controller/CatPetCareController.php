@@ -158,6 +158,26 @@ class CatPetCareController extends AbstractController
     }
 
     /**
+     * @Route("/espace-utilisateur/chat/{id}/entretien/notes", name="cat-notes")
+     */
+    public function catNotes(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
+    {
+        $petCares = $petCareRepository->findCatNotes($cat);
+
+        $paginatedPetCares = $paginator->paginate(
+            $petCares,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        return $this->render('cat-interface/cat-petcare/cat_petcare_notes.html.twig', [
+            'controller_name' => 'CatPetCareController',
+            'cat' => $cat,
+            'paginatedPetCares' => $paginatedPetCares,
+        ]);
+    }
+
+    /**
      * @Route("/espace-utilisateur/chat/{id}/entretien/alimentation/ajouter", name="add-feeding")
      */
     public function addFeeding(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
@@ -402,6 +422,49 @@ class CatPetCareController extends AbstractController
         }
 
         return $this->render('cat-interface/cat-petcare/_add_edit_cat_litterbox.html.twig', [
+            'controller_name' => 'CatPetCareController',
+            'petCareForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/espace-utilisateur/chat/{id}/entretien/notes/ajouter", name="add-notes")
+     */
+    public function addNotes(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
+    {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
+        $petCare = new PetCare;
+
+        $form = $this->createForm(CatPetCareFormType::class, $petCare, [
+            'action' => $this->generateUrl('add-notes', ['id' => $cat->getId(),
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getNotes() == null) {
+                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Les deux champs sont requis.");
+
+                return $this->redirectToRoute('cat-notes', ['id' => $cat->getId() ]);
+            }
+
+            $petCare->setCat($cat);
+
+            $manager->persist($petCare);
+            $manager->flush();
+
+            $this->addFlash('success', "L'entrée a été ajoutée");
+
+            return $this->redirectToRoute('cat-notes', ['id' => $cat->getId() ]);
+
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Les deux champs sont requis.");
+
+            return $this->redirectToRoute('cat-notes', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/cat-petcare/_add_edit_cat_notes.html.twig', [
             'controller_name' => 'CatPetCareController',
             'petCareForm' => $form->createView(),
         ]);
@@ -656,6 +719,49 @@ class CatPetCareController extends AbstractController
     }
 
     /**
+     * @Route("/espace-utilisateur/chat/{catId}/entretien/notes/{petCareId}/editer", name="edit-notes")
+     */
+    public function editNotes(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, PetCareRepository $petCareRepository, Cat $cat = null, PetCare $petCare = null): Response 
+    {
+        $catId = $request->attributes->get('catId');
+        $cat = $catRepository->findOneBy(['id' => $catId]);
+
+        $petCareId = $request->attributes->get('petCareId');
+        $petCare = $petCareRepository->findOneBy(['id' => $petCareId]);
+
+        $form = $this->createForm(CatPetCareFormType::class, $petCare, [
+            'action' => $this->generateUrl('edit-notes', ['catId' => $cat->getId(), 'petCareId' => $petCare->getId()
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getNotes() == null) {
+                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Les deux champs sont requis.");
+
+                return $this->redirectToRoute('cat-notes', ['id' => $cat->getId() ]);
+            }
+
+            $manager->persist($petCare);
+            $manager->flush();
+
+            $this->addFlash('success', "L'entrée a été modifiée");
+
+            return $this->redirectToRoute('cat-notes', ['id' => $cat->getId() ]);
+
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Les deux champs sont requis.");
+
+            return $this->redirectToRoute('cat-notes', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/cat-petcare/_add_edit_cat_notes.html.twig', [
+            'controller_name' => 'CatPetCareController',
+            'petCareForm' => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/espace-utilisateur/chat/{catId}/entretien/alimentation/{petCareId}/supprimer", name="delete-petCare")
      * 
      * @Route("/espace-utilisateur/chat/{catId}/entretien/toilettage/{petCareId}/supprimer", name="delete-petcare")
@@ -667,6 +773,8 @@ class CatPetCareController extends AbstractController
      * @Route("/espace-utilisateur/chat/{catId}/entretien/dents/{petCareId}/supprimer", name="delete-petcare")
      * 
      * @Route("/espace-utilisateur/chat/{catId}/entretien/litière/{petCareId}/supprimer", name="delete-petcare")
+     * 
+     * @Route("/espace-utilisateur/chat/{catId}/entretien/notes/{petCareId}/supprimer", name="delete-petcare")
      */
     public function deletePetCare(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, PetCareRepository $petCareRepository, Cat $cat = null, PetCare $petCare = null): Response 
     {
@@ -682,6 +790,7 @@ class CatPetCareController extends AbstractController
         $eyesEars =  $petCare->getEyesEars();
         $teeth = $petCare->getTeeth();
         $litterbox = $petCare->getLitterbox();
+        $notes = $petCare->getNotes();
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
             'action' => $this->generateUrl('delete-petCare', ['catId' => $cat->getId(), 'petCareId' => $petCare->getId()
@@ -708,6 +817,8 @@ class CatPetCareController extends AbstractController
                 return $this->redirectToRoute('cat-teeth', ['id' => $cat->getId() ]);
             } else if ($litterbox != null) {
                 return $this->redirectToRoute('cat-litterbox', ['id' => $cat->getId() ]);
+            } else if ($notes != null) {
+                return $this->redirectToRoute('cat-notes', ['id' => $cat->getId() ]);
             } else {
                 return $this->redirectToRoute('cat-petCare', ['id' => $cat->getId() ]);
             } 
@@ -726,6 +837,8 @@ class CatPetCareController extends AbstractController
                 return $this->redirectToRoute('cat-teeth', ['id' => $cat->getId() ]);
             } else if ($litterbox != null) {
                 return $this->redirectToRoute('cat-litterbox', ['id' => $cat->getId() ]);
+            } else if ($notes != null) {
+                return $this->redirectToRoute('cat-notes', ['id' => $cat->getId() ]);
             } else {
                 return $this->redirectToRoute('cat-petCare', ['id' => $cat->getId() ]);
             }

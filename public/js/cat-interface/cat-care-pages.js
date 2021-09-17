@@ -75,3 +75,24 @@ window.addEventListener("click", function (event) {
     helpContent.classList.add("hide");
   }
 });
+
+// NOTES FORM CHARACTERS COUNT
+
+const notesInput = document.getElementsByClassName('notes-input');
+const notesCounter = document.getElementsByClassName('notes-counter');
+
+for (let i = 0; i < notesInput.length; i++) {
+  notesInput[i].addEventListener('keyup', function() {
+    const value = notesInput[i].value;
+    
+    notesCounter[i].innerHTML = value.length +'/2000';
+
+    if (value.length < 2000) {
+      notesCounter[i].style.color = "var(--success-color)";
+      notesCounter[i].style.fontWeight = "normal";
+    } else {
+      notesCounter[i].style.color = "var(--danger-color)";
+      notesCounter[i].style.fontWeight = "bold";
+    }
+  });
+}

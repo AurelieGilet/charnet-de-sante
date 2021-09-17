@@ -105,6 +105,14 @@ form div {
     color: white;
 }
 
+.notes-label {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
 /***** RESPONSIVE *****/
 
 @media screen and (min-width: 768px) {
