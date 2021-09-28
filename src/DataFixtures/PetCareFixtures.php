@@ -31,10 +31,10 @@ class PetCareFixtures extends Fixture implements DependentFixtureInterface
             array_push($Dates, $newDate);
         }
 
-        $EndDates = [null];
+        $endDates = [null];
         for ($i = 1; $i < 10; $i++) {
             $newDate = date('Y-m-d', strtotime($Dates[$i].'+ 30 days'));
-            array_push($EndDates, $newDate);            
+            array_push($endDates, $newDate);            
         }
 
         $foodTypes = ['croquettes', 'pâtée'];
@@ -66,7 +66,7 @@ class PetCareFixtures extends Fixture implements DependentFixtureInterface
                         if ($j == 0) {
                             $petCare->setEndDate(null);
                         } else {
-                            $petCare->setEndDate(new DateTime($EndDates[$j]));
+                            $petCare->setEndDate(new DateTime($endDates[$j]));
                         }
                         
                 
