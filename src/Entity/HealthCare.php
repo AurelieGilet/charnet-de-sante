@@ -198,12 +198,12 @@ class HealthCare
         return $this;
     }
 
-    public function getDescaling(): ?bool
+    public function getDescaling(): ?string
     {
         return $this->descaling;
     }
 
-    public function setDescaling(?bool $descaling): self
+    public function setDescaling(?string $descaling): self
     {
         $this->descaling = $descaling;
 
