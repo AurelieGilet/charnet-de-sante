@@ -63,6 +63,7 @@ class CatHealthCareFormType extends AbstractType
                     'Tiques' => 'tiques',
                     'Aoûtats' => 'aoutats',
                     'Gale' => 'gale',
+                    'Teigne' => 'teigne',
                     'Autre' => 'autre',
                 ],
                 'required' => false,

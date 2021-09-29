@@ -53,7 +53,7 @@ class HealthCareFixtures extends Fixture implements DependentFixtureInterface
 
         $antiparasiteNames = ['Frontline', 'Advantage', 'Effipro', 'Fibrospot'];
 
-        $parasiteTypes = ['puces', 'tiques', 'poux', 'gale', 'aoutats', 'autre'];
+        $parasiteTypes = ['puces', 'tiques', 'poux', 'gale', 'aoutats', 'teigne', 'autre'];
 
         $treatmentCauses = ['Fracture', 'Fracture', 'gastrite', 'gastrotomie', 'cystite', 'stérilisation'];
 
