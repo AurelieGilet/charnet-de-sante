@@ -23,11 +23,11 @@
                 </div>
             </div>
             <div class="card-body">
-                <a href="" class="shaker">
+                <a href="{{ path('cat-vaccine', {'id': cat.id}) }}" class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
-                                <img src="{{ asset('img/site/vaccine.png') }}" alt="Icône de seringue de vaccin'">
+                                <img src="{{ asset('img/site/vaccine.png') }}" alt="Icône de seringue de vaccin">
                             </div>
                             <h3>Vaccin</h3>
                         </div>
@@ -69,19 +69,6 @@
                                 <img src="{{ asset('img/site/treatments.png') }}" alt="Icône de médicaments">
                             </div>
                             <h3>Traitements</h3>
-                        </div>
-                        <div class="card-arrow shake">
-                            &#11166
-                        </div>
-                    </div>
-                </a>
-                <a href="" class="shaker">
-                    <div class="card-content card-template">
-                        <div class="card-title">
-                            <div class="icon">
-                                <img src="{{ asset('img/site/surgery.png') }}" alt="Icône de d'hôpital vétérinaire">
-                            </div>
-                            <h3>Chirurgie</h3>
                         </div>
                         <div class="card-arrow shake">
                             &#11166
