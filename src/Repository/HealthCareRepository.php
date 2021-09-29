@@ -36,7 +36,7 @@ class HealthCareRepository extends ServiceEntityRepository
     /**
      * @return HealthCare[]
      */
-    public function findCatDewormer($cat)
+    public function findCatDewormers($cat)
     {
         return $this->createQueryBuilder('healthcare')
             ->andWhere('healthcare.cat = :cat and healthcare.dewormer IS NOT NULL')
@@ -50,10 +50,24 @@ class HealthCareRepository extends ServiceEntityRepository
     /**
      * @return HealthCare[]
      */
-    public function findCatAntiparasite($cat)
+    public function findCatAntiparasites($cat)
     {
         return $this->createQueryBuilder('healthcare')
             ->andWhere('healthcare.cat = :cat and healthcare.parasite IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('healthcare.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return HealthCare[]
+     */
+    public function findCatTreatments($cat)
+    {
+        return $this->createQueryBuilder('healthcare')
+            ->andWhere('healthcare.cat = :cat and healthcare.treatment IS NOT NULL')
             ->setParameter('cat', $cat)
             ->addOrderBy('healthcare.date', 'DESC')
             ->getQuery()

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Le Charnet de Santé - Antiparasitaire de {{ cat.name }} {% endblock %}
+{% block title %}Le Charnet de Santé - Traitements de {{ cat.name }} {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
@@ -31,9 +31,9 @@
             <div class="card-content card-template">
                 <div class="card-title">
                     <div class="icon">
-                        <img src="{{ asset('img/site/anti-parasite.png') }}" alt="Icône de spray anti-parasitaire">
+                        <img src="{{ asset('img/site/treatments.png') }}" alt="Icône de médicaments">
                     </div>
-                    <h3>Antiparasitaire</h3>
+                    <h3>Traitements</h3>
                 </div>
                 <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
                 <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
@@ -42,11 +42,13 @@
                 <h3>Dernières entrées :</h3>
                 <div class="tooltip">
                     <div id="help-content" class="hide">
-                        <p>Les principaux parasites externes du chat sont des insectes ou des acariens. Quelques infections par des champignons microscopiques existent également, notamment la teigne.</p>
-                        <p>Parmi les insectes, nous avons les puces et les poux. Pour les acariens, ce sont les tiques, les aoûtats et la gale.</p>
-                        <p>La plupart de ces parasites infectent surtout les chats qui sortent mais les chats d’intérieur ne sont pas à l’abri pour autant.</p>
-                        <p>Aussi, une inspection régulière du pelage du chat est nécessaire, surtout si vous remarquez des démangeaisons ou un toilettage excessif. </p>
-                        <p>Sachez également que ces parasites peuvent transmettre des maladies à votre chat. N’attendez donc pas pour les traiter ainsi que leur environnement.</p>
+                        <p>Donner un traitement à son chat, n’est pas toujours une mince affaire. Il est pourtant primordial de respecter les indications de votre vétérinaire et de s’assurer que votre félin prend bien son médicament. D’autant que certains ont l’art de bluffer pour recracher la pilule dès que vous avez le dos tourné.</p>
+                        <p>Plusieurs stratégies sont possibles :</p>
+                        <p>- Donner le médicament directement à la main : qui ne tente rien, n’a rien ! et certains médicaments sont appétant. Il peut donc arriver que votre chat le voit comme une friandise et le mange tout simplement.</p>
+                        <p>- Mélanger le médicament dans de la nourriture : la plus simple, mais la plus garantie, et votre chat n’est pas dupe, il sent lorsqu’un produit inconnu est mélangé à sa nourriture et peut refuser de la manger. Vous pouvez essayer d’enfoncer le cachet dans un petit morceau de viande ou une friandise préférée dont les gourmands ne feront qu’une bouchée.</p>
+                        <p>- Utiliser une pipette : mélangez le cachet préalablement écrasé à un peu d’eau pour le dissoudre et administrez-le à votre chat à l’aide d’une pipette ou d’une seringue sans aiguille. Pour cela, tenez votre chat et renversez lui un peu la tête en arrière. Insérez doucement la pipette dans sa gueule par le côté et injectez un peu de liquide. N’envoyez pas tout d’un coup ! Vous risquez de le faire paniquer. Allez-y petit à petit, en laissant boire à chaque fois.</p>
+                        <p>- Directement dans le gosier ! : ce n’est pas la méthode la plus douce, mais certainement la plus efficace, sauf si votre chat est une furie. Ouvrez doucement la gueule de votre chat et envoyez le cachet le plus au fond de sa gueule. Pas sur les côtés car il pourrait le bloquer et arriver à le recracher. Fermez tout de suite sa gueule et maintenez-la fermée quelques secondes pour vous assurer qu’il l’a bien avalé. Vous pouvez le caresser sous la gorge pour le faire déglutir. Assurez-vous ensuite que le médicament a bel et bien été avalé.</p>
+                        <p>Pour les techniques qui nécessitent l’immobilisation de votre chat, s’il est du genre à se débattre et que vous n’avez personne sous la main pour vous aider, n’hésitez pas à l’enrouler dans une serviette.</p>
                     </div>
                     <div id="help-icon">
                         <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
@@ -56,8 +58,10 @@
                 {% for healthCare in paginatedHealthCares %}                
                 <div class="entry entry--notes card-template">
                     <div class="entry-info data--notes">
-                        <p class="date">
-                            <span>{{ healthCare.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</span>
+                        <p class="entry-info date data--variation">
+                            <span>Du : <em>{{ healthCare.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
+                            <span>Au : <em>{% if healthCare.endDate is not null %}{{ healthCare.endDate|format_datetime(locale='fr', pattern="dd MMM Y")}}{% else %}
+                                ...{% endif %}</em></span>
                         </p>
                         <div>
                             <div class="mobile-options">
@@ -71,14 +75,14 @@
                         </div>
                     </div>
                     <div class="entry-info data--details">
-                        <p>Type de parasite : <em  class="data">{{ healthCare.parasite|capitalize }}</em></p>
-                        <p>Antiparasitaire : <em class="data">{{ healthCare.productName }}</em></p>
-                        <p>Dose : <em class="data">{{ healthCare.dosage }}</em></p>
+                        <p>Motif du traitement : <em  class="data">{{ healthCare.treatment }}</em></p>
+                        <p>Médicament : <em class="data">{{ healthCare.productName }}</em></p>
+                        <p>Posologie : <em class="data">{{ healthCare.dosage }}</em></p>
                     </div>
                 </div>
                 <div id="edit-{{ healthCare.id }}"class="add-edit-data-form">
                     {{ render(controller(
-                        'App\\Controller\\CatHealthCareController::editAntiparasite',
+                        'App\\Controller\\CatHealthCareController::editTreatment',
                         { 'catId': cat.id, 'healthCareId': healthCare.id }
                     ))}}
                 </div>
@@ -95,7 +99,7 @@
     </section>
     <div id="edit-new" class="add-edit-data-form">
         {{ render(controller(
-            'App\\Controller\\CatHealthCareController::addAntiparasite',
+            'App\\Controller\\CatHealthCareController::addTreatment',
             { 'id': cat.id }
         ))}}
     </div>
