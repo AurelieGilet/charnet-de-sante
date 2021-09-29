@@ -67,7 +67,7 @@ class CatPetCareFormType extends AbstractType
                 'required' => false,
             ])
             ->add('eyesEars', ChoiceType::class, [
-                'label' => "Toiletage",
+                'label' => "Yeux et Oreilles",
                 'choices' => [
                     'Yeux' => 'eyes',
                     'Oreilles' => 'ears',
