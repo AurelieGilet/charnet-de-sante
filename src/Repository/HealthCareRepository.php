@@ -32,4 +32,18 @@ class HealthCareRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return HealthCare[]
+     */
+    public function findCatDewormer($cat)
+    {
+        return $this->createQueryBuilder('healthcare')
+            ->andWhere('healthcare.cat = :cat and healthcare.dewormer IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('healthcare.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
