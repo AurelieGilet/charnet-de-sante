@@ -59,7 +59,7 @@ class HealthCareFixtures extends Fixture implements DependentFixtureInterface
 
         $treatment = ['anti-inflammatoire', 'anti-biotique', 'pansement gastrique', 'anti-biotique', 'anti-biotique', 'anti-biotique'];
 
-        $descaling = ['yes', 'yes', '1 dent arrachée'];
+        $descaling = ['R.A.S', 'R.A.S', '1 dent arrachée'];
 
         // Vaccine Fixtures
         for ($i = 0; $i < count($cats); $i++) {

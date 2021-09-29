@@ -1,0 +1,13 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close add-edit-modal-close-btn">X</div>
+        {{ form_start(healthCareForm) }}
+            <span>Les champs suivis d'un * sont obligatoires</span>
+            {{ form_row(healthCareForm.date) }}
+            {{ form_row(healthCareForm.descaling) }}
+            {{ form_row(healthCareForm._token) }}
+            {{ form_row(healthCareForm.submit) }}
+        {{ form_end(healthCareForm, {render_rest: false}) }}
+    </div>
+</div>
+    

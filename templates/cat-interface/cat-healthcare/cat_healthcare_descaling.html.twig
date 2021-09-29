@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Détartrage de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
+    {{ encore_entry_link_tags('chart-css') }}
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="{{ path('cat-healthCare', {'id': cat.id}) }}" class="return">Retour aux soins</a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/descaling.png') }}" alt="Icône de dentition de chat">
+                    </div>
+                    <h3>Détartrage</h3>
+                </div>
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+            </div>
+            <div class="card-content card-template entries last-entries">
+                <h3>Dernières entrées :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>Le tartre et la plaque dentaire qui s’accumulent sur les dents au fil du temps déclenchent une inflammation et deviennent un milieu favorable au développement de bactéries qui contribuent à l’apparition d’infection des gencives et à la destruction éventuelle des tissus et des os qui entourent chacune des dents.</p>
+                        <p>Une bonne hygiène dentaire est importante non seulement pour permettre à votre chat de garder des dents saines mais également pour le garder en bonne santé. </p>
+                        <p>En effet, les bactéries qui se multiplient dans sa bouche finissent par envahir son sang et se propager dans ses organes, causant des maladies.</p>
+                        <p>Le détartrage, fait sous anesthésie générale, est le seul moyen d’enlever tout le tartre et la plaque dentaire. S’il est fait régulièrement, il prévient la maladie parodontale ou stoppe sa progression.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for healthCare in paginatedHealthCares %}                
+                <div class="entry entry--notes card-template">
+                    <div class="entry-info data--notes">
+                        <p class="date">
+                            <span>{{ healthCare.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</span>
+                        </p>
+                        <div>
+                            <div class="mobile-options">
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
+                            </div>
+                            <div class="desktop-options">
+                                <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ healthCare.id }}">Modifier</span>
+                                <span class="update-info desktop delete delete-data-btn" data-data-id="{{ healthCare.id }}">Supprimer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="entry-info data--notes">
+                        <p>Détartrage : <em class="data">{% if healthCare.descaling == 'yes' %}R.A.S{% else %}{{ healthCare.descaling }}{% endif %}</em></p>
+                    </div>
+                </div>
+                <div id="edit-{{ healthCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::editDescaling',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ healthCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::deleteHealthCare',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                {% endfor %}
+                {{ knp_pagination_render(paginatedHealthCares) }}
+            </div>
+        </div>
+    </section>
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatHealthCareController::addDescaling',
+            { 'id': cat.id }
+        ))}}
+    </div>
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
+{{ encore_entry_script_tags('chart-js') }}
+{% endblock %}

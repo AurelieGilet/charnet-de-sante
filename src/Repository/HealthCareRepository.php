@@ -74,4 +74,18 @@ class HealthCareRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return HealthCare[]
+     */
+    public function findCatDescaling($cat)
+    {
+        return $this->createQueryBuilder('healthcare')
+            ->andWhere('healthcare.cat = :cat and healthcare.descaling IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('healthcare.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
