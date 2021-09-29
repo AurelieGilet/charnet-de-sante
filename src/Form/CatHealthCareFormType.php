@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\PetCare;
+use App\Entity\HealthCare;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,17 +10,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class CatPetCareFormType extends AbstractType
+class CatHealthCareFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('date', DateType::class, [
-                'label' => "Date",
+                'label' => "Date *",
                 'widget' => "choice",
                 'placeholder' => [
                     'day' => "Jour", 'month' => "Mois", 'year' => "Année"
@@ -39,51 +37,53 @@ class CatPetCareFormType extends AbstractType
                 'required' => false,
                 'by_reference' => true,
             ])
-            ->add('foodType', TextType::class, [
-                'label' => "Type de nourriture",
-                'attr' => ['placeholder' => "croquettes"],
-                'required' => false,
-            ])
-            ->add('foodBrand', TextType::class, [
-                'label' => "Marque",
-                'attr' => ['placeholder' => "Croquy"],
-                'required' => false,
-            ])
-            ->add('foodQuantity', NumberType::class, [
-                'label' => "Quantité (g)",
-                'scale' => 2,
-                'attr' => [
-                    'min' => 0,
-                    'max' => 500,
-                ],
-                'required' => false
-            ])
-            ->add('grooming', ChoiceType::class, [
-                'label' => "Toiletage",
+            ->add('vaccine', ChoiceType::class, [
+                'label' => "Type de vaccin *",
                 'choices' => [
-                    'Bain' => 'bain',
-                    'Brossage' => 'brossage',
-                ],
-                'required' => false,
-            ])
-            ->add('eyesEars', ChoiceType::class, [
-                'label' => "Yeux et Oreilles",
-                'choices' => [
-                    'Yeux' => 'eyes',
-                    'Oreilles' => 'ears',
+                    'Typhus (Panleucopénie)' => 'typhus',
+                    'Coryza' => 'coryza',
+                    'Leucose féline (FeLV)' => 'leucose féline',
+                    'Rage' => 'rage',
+                    'Autre' => 'autre',
                 ],
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
             ])
-            ->add('teeth', TextType::class, [
-                'label' => "Type de soin",
-                'attr' => ['placeholder' => "Brossage"],
+            ->add('injectionSite', TextType::class, [
+                'label' => "Site d'injection",
+                'attr' => ['placeholder' => "postérieur gauche/droit"],
                 'required' => false,
             ])
-            ->add('notes', TextareaType::class, [
-                'label' => "Notes",
-                'attr' => ['placeholder' => "Refuse sa nourriture", 'rows' => 10],
+            ->add('parasite', ChoiceType::class, [
+                'label' => "Type de parasite *",
+                'choices' => [
+                    'Puces' => 'puces',
+                    'Poux' => 'poux',
+                    'Tiques' => 'tiques',
+                    'Aoûtats' => 'aoutats',
+                    'Gale' => 'gale',
+                    'Autre' => 'autre',
+                ],
+                'required' => false,
+            ])
+            ->add('treatment', TextType::class, [
+                'label' => "Motif du traitement *",
+                'attr' => ['placeholder' => "A mordu un hérisson"],
+                'required' => false,
+            ])
+            ->add('productName', TextType::class, [
+                'label' => "Nom du produit",
+                'required' => false,
+            ])
+            ->add('dosage', TextType::class, [
+                'label' => "Dose",
+                'attr' => ['placeholder' => "1 comprimé/pipette"],
+                'required' => false,
+            ])
+            ->add('descaling', TextType::class, [
+                'label' => "Observations",
+                'attr' => ['placeholder' => "PicPic"],
                 'required' => false,
             ])
             ->add('submit', SubmitType::class, [
@@ -92,15 +92,15 @@ class CatPetCareFormType extends AbstractType
         ;
 
         $builder
-            ->get('eyesEars')
+            ->get('vaccine')
             ->addModelTransformer(new CallbackTransformer(
                 // Transform a string to an array
-                function ($eyesEarsString) {
-                    return explode(',', $eyesEarsString);
+                function ($vaccineString) {
+                    return explode(',', $vaccineString);
                 },
                 // Transform an array to a string
-                function ($eyesEarsArray) {
-                    return implode(',', $eyesEarsArray);
+                function ($vaccineArray) {
+                    return implode(',', $vaccineArray);
                 },
                 
             ))
@@ -110,7 +110,7 @@ class CatPetCareFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => PetCare::class,
+            'data_class' => HealthCare::class,
         ]);
     }
 }

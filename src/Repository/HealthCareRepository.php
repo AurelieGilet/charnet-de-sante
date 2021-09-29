@@ -19,32 +19,17 @@ class HealthCareRepository extends ServiceEntityRepository
         parent::__construct($registry, HealthCare::class);
     }
 
-    // /**
-    //  * @return HealthCare[] Returns an array of HealthCare objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return HealthCare[]
+     */
+    public function findCatVaccines($cat)
     {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('h.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('healthcare')
+            ->andWhere('healthcare.cat = :cat and healthcare.vaccine IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('healthcare.date', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?HealthCare
-    {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

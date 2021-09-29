@@ -45,7 +45,7 @@ class HealthCareFixtures extends Fixture implements DependentFixtureInterface
 
         $vaccineNames = ['PureVax', 'Feligen', 'Nobivac', 'Versifel'];
 
-        $vaccineTypes = ['RC, P', 'FeLV', 'rage', 'autre'];
+        $vaccineTypes = ['typhus,coryza', 'leucose féline', 'rage', 'autre'];
 
         $vaccineInjectionSites = ['postérieur gauche', 'postérieur droit'];
 

@@ -1,0 +1,24 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close add-edit-modal-close-btn">X</div>
+        {{ form_start(healthCareForm) }}
+            <span>Les champs suivis d'un * sont obligatoires</span>
+            {{ form_row(healthCareForm.date) }}
+            {{ form_row(healthCareForm.productName, { 'label': 'Nom du vaccin' }) }}
+            {{ form_row(healthCareForm.injectionSite) }}
+            <div>
+                <div class="notes-label">
+                    {{ form_label(healthCareForm.vaccine) }} 
+                </div>
+            </div>
+            {% for child in healthCareForm.vaccine %}
+            <div class="form-checkbox">
+                {{ form_widget(child) }} {{ form_label(child) }}  
+            </div>
+            {% endfor %}
+            {{ form_row(healthCareForm._token) }}
+            {{ form_row(healthCareForm.submit) }}
+        {{ form_end(healthCareForm, {render_rest: false}) }}
+    </div>
+</div>
+    
