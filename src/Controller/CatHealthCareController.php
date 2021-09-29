@@ -68,6 +68,26 @@ class CatHealthCareController extends AbstractController
     }
 
     /**
+     * @Route("/espace-utilisateur/chat/{id}/soins/antiparasitaire", name="cat-antiparasite")
+     */
+    public function catAntiparasite(Request $request, Cat $cat, HealthCareRepository $healthCareRepository, PaginatorInterface $paginator): Response
+    {
+        $healthCares = $healthCareRepository->findCatAntiparasite($cat);
+
+        $paginatedHealthCares = $paginator->paginate(
+            $healthCares,
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        return $this->render('cat-interface/cat-healthcare/cat_healthcare_antiparasite.html.twig', [
+            'controller_name' => 'CatHealthCareController',
+            'cat' => $cat,
+            'paginatedHealthCares' => $paginatedHealthCares,
+        ]);
+    }
+
+    /**
      * @Route("/espace-utilisateur/chat/{id}/soins/vaccin/ajouter", name="add-vaccine")
      */
     public function addVaccine(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
@@ -126,11 +146,6 @@ class CatHealthCareController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()->getDate() == null) {
-                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date.");
-
-                return $this->redirectToRoute('cat-dewormer', ['id' => $cat->getId() ]);
-            }
 
             $healthCare->setCat($cat);
             $healthCare->setDewormer(true);
@@ -149,6 +164,49 @@ class CatHealthCareController extends AbstractController
         }
 
         return $this->render('cat-interface/cat-healthcare/_add_edit_cat_dewormer.html.twig', [
+            'controller_name' => 'CatHealthCareController',
+            'healthCareForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/espace-utilisateur/chat/{id}/soins/antiparasitaire/ajouter", name="add-antiparasite")
+     */
+    public function addAntiparasite(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
+    {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
+        $healthCare = new HealthCare;
+
+        $form = $this->createForm(CatHealthCareFormType::class, $healthCare, [
+            'action' => $this->generateUrl('add-antiparasite', ['id' => $cat->getId(),
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getParasite() == null) {
+                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date et un type de parasite.");
+
+                return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
+            }
+
+            $healthCare->setCat($cat);
+
+            $manager->persist($healthCare);
+            $manager->flush();
+
+            $this->addFlash('success', "L'entrée a été ajoutée");
+
+            return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
+
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date et un type de parasite.");
+
+            return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/cat-healthcare/_add_edit_cat_antiparasite.html.twig', [
             'controller_name' => 'CatHealthCareController',
             'healthCareForm' => $form->createView(),
         ]);
@@ -215,11 +273,6 @@ class CatHealthCareController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()->getDate() == null) {
-                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date.");
-
-                return $this->redirectToRoute('cat-dewormer', ['id' => $cat->getId() ]);
-            }
 
             $manager->persist($healthCare);
             $manager->flush();
@@ -241,9 +294,54 @@ class CatHealthCareController extends AbstractController
     }
 
     /**
+     * @Route("/espace-utilisateur/chat/{catId}/soins/antiparasitaire/{healthCareId}/editer", name="edit-antiparasite")
+     */
+    public function editAntiparasite(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, HealthCareRepository $healthCareRepository, Cat $cat = null, HealthCare $healthCare = null): Response 
+    {
+        $catId = $request->attributes->get('catId');
+        $cat = $catRepository->findOneBy(['id' => $catId]);
+
+        $healthCareId = $request->attributes->get('healthCareId');
+        $healthCare = $healthCareRepository->findOneBy(['id' => $healthCareId]);
+
+        $form = $this->createForm(CatHealthCareFormType::class, $healthCare, [
+            'action' => $this->generateUrl('edit-antiparasite', ['catId' => $cat->getId(), 'healthCareId' => $healthCare->getId()
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getParasite() == null) {
+                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date et un type de parasite.");
+
+                return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
+            }
+
+            $manager->persist($healthCare);
+            $manager->flush();
+
+            $this->addFlash('success', "L'entrée a été modifiée");
+
+            return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
+
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date et un type de parasite.");
+
+            return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/cat-healthCare/_add_edit_cat_antiparasite.html.twig', [
+            'controller_name' => 'CatHealthCareController',
+            'healthCareForm' => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/espace-utilisateur/chat/{catId}/soins/vaccin/{healthCareId}/supprimer", name="delete-healthCare")
      * 
      * @Route("/espace-utilisateur/chat/{catId}/soins/vermifuge/{healthCareId}/supprimer", name="delete-healthCare")
+     * 
+     * @Route("/espace-utilisateur/chat/{catId}/soins/antiparasitaire/{healthCareId}/supprimer", name="delete-healthCare")
      */
     public function deleteHealthCare(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, HealthCareRepository $healthCareRepository, Cat $cat = null, HealthCare $healthCare = null): Response 
     {
@@ -255,6 +353,7 @@ class CatHealthCareController extends AbstractController
 
         $vaccine = $healthCare->getVaccine();
         $dewormer = $healthCare->getDewormer();
+        $parasite = $healthCare->getParasite();
 
         $form = $this->createForm(CatHealthCareFormType::class, $healthCare, [
             'action' => $this->generateUrl('delete-healthCare', ['catId' => $cat->getId(), 'healthCareId' => $healthCare->getId()
@@ -273,6 +372,8 @@ class CatHealthCareController extends AbstractController
                 return $this->redirectToRoute('cat-vaccine', ['id' => $cat->getId() ]);
             } else if ($dewormer != null) {
                 return $this->redirectToRoute('cat-dewormer', ['id' => $cat->getId() ]);
+            } else if ($parasite != null) {
+                return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
             } else {
                 return $this->redirectToRoute('cat-healthCare', ['id' => $cat->getId() ]);
             } 
@@ -283,7 +384,9 @@ class CatHealthCareController extends AbstractController
                 return $this->redirectToRoute('cat-vaccine', ['id' => $cat->getId() ]);
             } else if ($dewormer != null) {
                 return $this->redirectToRoute('cat-dewormer', ['id' => $cat->getId() ]);
-            } else {
+            } else if ($parasite != null) {
+                return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
+            }else {
                 return $this->redirectToRoute('cat-healthCare', ['id' => $cat->getId() ]);
             }
         }
