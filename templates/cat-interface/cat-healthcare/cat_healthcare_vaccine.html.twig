@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Vaccin de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
+    {{ encore_entry_link_tags('chart-css') }}
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="{{ path('cat-healthCare', {'id': cat.id}) }}" class="return">Retour aux soins</a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/vaccine.png') }}" alt="Icône de seringue de vaccin">
+                    </div>
+                    <h3>Vaccin</h3>
+                </div>
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+            </div>
+            <div class="card-content card-template entries last-entries">
+                <h3>Dernières entrées :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>Les premières vaccinations doivent intervenir lorsque le chaton a entre 8 et 16 semaines, lorsqu’il n’est plus protégé par les anticorps transmis par sa mère.</p>
+                        <p>Un premier rappel doit être ensuite fait lorsqu’il atteint l’âge d’un an.Les rappels suivants dépendront de l’état de santé du chat, de son mode de vie, etc ... </p>
+                        <p>Bien que les vétérinaires ignorent les recommandations internationales et poussent pour une vaccination annuelle, sachez que la WSAVA (World Small Animal Veterinary Association), la AAFP (American Association of Feline Practitioners) et l’ABCD (European  Advisory Board on Cat Diseases) ont indiqué depuis longtemps que la durée d’immunité était bien supérieure à 1an et même à vie pour certaines maladies. Ainsi leurs recommandations est de <em>ne PAS faire de rappel vaccinal à moins de 3 ans d’intervalle pour les maladies principales</em> (typhus et coryza).</p>
+                        <p>De plus, les vaccins faits à partir de souches de virus mortes contiennent des adjuvants qui ont été reconnus comme causant des sarcomes (tumeurs cancéreuses très agressives) sur les sites d’injection, entraînant le plus souvent une mort rapide.</p>
+                        <p>Prenez donc garde à opter pour un vaccin fait à partir de virus vivants modifiés (atténués).</p>
+                        <p>Ne vaccinez plus aveuglément votre chat. Osez poser les questions à votre vétérinaire et refuser une vaccination inutile ou dangereuse.</p>
+                        <p>Les chats sont habituellement vaccinés contre 4 maladies graves :</p>
+                        <p>- Le Typhus (panleucopénie infectieuse féline) : c’est un virus hautement contagieux avec un taux de mortalité très élevé. Mais une immunité à vie peut être obtenue lors de la primo-vaccination.</p>
+                        <p>- Le Coryza : 2 virus sont impliqués dans cette maladie, le calicivirus et l’herpèsvirus. La maladie est très contagieuse et plusieurs souches de ces deux virus circulent. Une vaccination ne garantit donc pas l’immunité, mais permet de réduire la sévérité des symptômes.</p>
+                        <p>- La leucose féline (FeLV) : maladie mortelle qui se transmet par contacts directs et prolongés entre des chats. Il est conseillé de vacciner tous les chatons mais de ne faire les rappels que chez les chats qui sortent.</p>
+                        <p>- La rage : en France elle n’est plus obligatoire sauf si le chat doit passer une frontière ou s’il vit dans une zone où des cas de rage ont été déclarés et qu’il sort en extérieur. C’est une maladie très grave, mortelle et transmissible à l’homme.</p>
+                        <p>Enfin, pour le FIV (Virus de l’Immunodéficience Féline) ou SIDA des chats, sachez que les vaccins qui existent contiennent tous des adjuvants, doivent être régulièrement injectés, sont très inefficaces et surtout rendent votre chat “positif” car les tests ne savent pas faire la différence entre un chat infecté et un chat vacciné. Ce qui vous empêchera de savoir si votre chat est effectivement infecté ou non. Ne vaccinez pas votre chat contre le FIV !</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for healthCare in paginatedHealthCares %}                
+                <div class="entry entry--notes card-template">
+                    <div class="entry-info data--notes">
+                        <p class="date">
+                            <span>{{ healthCare.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</span>
+                        </p>
+                        <div>
+                            <div class="mobile-options">
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
+                            </div>
+                            <div class="desktop-options">
+                                <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ healthCare.id }}">Modifier</span>
+                                <span class="update-info desktop delete delete-data-btn" data-data-id="{{ healthCare.id }}">Supprimer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="entry-info data--details">
+                        <p>Nom du vaccin : <em  class="data">{{ healthCare.productName }}</em></p>
+                        <p>Site d'injection : <em class="data">{{ healthCare.injectionSite }}</em></p>
+                        <p>Type de vaccin : <em class="data">{{ healthCare.vaccine|replace({',' : ' + '})|title }}</em></p>
+                    </div>
+                </div>
+                <div id="edit-{{ healthCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::editVaccine',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ healthCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::deleteHealthCare',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                {% endfor %}
+                {{ knp_pagination_render(paginatedHealthCares) }}
+            </div>
+        </div>
+    </section>
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatHealthCareController::addVaccine',
+            { 'id': cat.id }
+        ))}}
+    </div>
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
+{{ encore_entry_script_tags('chart-js') }}
+{% endblock %}
