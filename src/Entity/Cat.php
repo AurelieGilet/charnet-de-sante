@@ -127,6 +127,11 @@ class Cat
      */
     private $healthCares;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Health::class, mappedBy="cat", orphanRemoval=true)
+     */
+    private $healths;
+
     public function __construct()
     {
         $this->ownerAddress = new ArrayCollection();
@@ -134,6 +139,7 @@ class Cat
         $this->measures = new ArrayCollection();
         $this->petCares = new ArrayCollection();
         $this->healthCares = new ArrayCollection();
+        $this->healths = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -441,6 +447,36 @@ class Cat
             // set the owning side to null (unless already changed)
             if ($healthCare->getCat() === $this) {
                 $healthCare->setCat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Health[]
+     */
+    public function getHealths(): Collection
+    {
+        return $this->healths;
+    }
+
+    public function addHealth(Health $health): self
+    {
+        if (!$this->healths->contains($health)) {
+            $this->healths[] = $health;
+            $health->setCat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHealth(Health $health): self
+    {
+        if ($this->healths->removeElement($health)) {
+            // set the owning side to null (unless already changed)
+            if ($health->getCat() === $this) {
+                $health->setCat(null);
             }
         }
 
