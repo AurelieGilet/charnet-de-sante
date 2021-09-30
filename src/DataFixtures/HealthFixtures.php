@@ -102,7 +102,6 @@ class HealthFixtures extends Fixture implements DependentFixtureInterface
                             $health->setEndDate(new DateTime($endDates[$j]));
                        }
                     
-
                 $manager->persist($health);
             }
         }
