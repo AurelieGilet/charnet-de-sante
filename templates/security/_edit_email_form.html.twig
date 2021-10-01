@@ -3,6 +3,7 @@
         <h2>Modifier votre email</h2>
         <div class="close">X</div>
         {{ form_start(emailForm) }}
+            <span>Les champs suivis d'un * sont obligatoires</span>
             {{ form_row(emailForm.email) }}
             {{ form_row(emailForm.confirm_password) }}
             {{ form_row(emailForm.submit) }}

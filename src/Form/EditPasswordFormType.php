@@ -16,7 +16,7 @@ class EditPasswordFormType extends AbstractType
     {
         $builder
             ->add('old_password', PasswordType::class, [
-                'label' => "Ancien mot de passe",
+                'label' => "Ancien mot de passe *",
                 'attr' => ['placeholder' => "Entrez votre mot de passe actuel"],
                 'required' => true,
                 'mapped' => false,
@@ -24,11 +24,11 @@ class EditPasswordFormType extends AbstractType
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => [
-                    'label' => "Nouveau mot de passe", 
+                    'label' => "Nouveau mot de passe *", 
                     'attr' => ['placeholder' => "Entrez votre nouveau mot de passe"]
                 ],
                 'second_options' => [
-                    'label' => "Répétez le mot de passe", 
+                    'label' => "Répétez le mot de passe *", 
                     'attr' => ['placeholder' => "Entrez le même mot de passe"]
                 ],
                 'required' => true,                

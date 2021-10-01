@@ -2,8 +2,9 @@
     <div class="form-wrapper">
         <div class="close add-edit-modal-close-btn">X</div>
         {{ form_start(measureForm) }}
-            {{ form_row(measureForm.temperature) }}
+            <span>Les champs suivis d'un * sont obligatoires</span>
             {{ form_row(measureForm.date) }}
+            {{ form_row(measureForm.temperature) }}
             {{ form_row(measureForm._token) }}
             {{ form_row(measureForm.submit) }}
         {{ form_end(measureForm, {render_rest: false}) }}

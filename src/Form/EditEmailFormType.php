@@ -17,12 +17,12 @@ class EditEmailFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => "Nouvelle adresse email",
+                'label' => "Nouvelle adresse email *",
                 'attr' => ['placeholder' => "Ex: michelle@mail.com"],
                 'required' => true,
                 ])
             ->add('confirm_password', PasswordType::class, [
-                'label' => "Confirmez par mot de passe",
+                'label' => "Confirmez par mot de passe *",
                 'attr' => ['placeholder' => "Entrez votre mot de passe"],
                 'required' => true,
                 'mapped' => false,
