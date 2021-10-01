@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Visite chez le vétérinaire de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
+    {{ encore_entry_link_tags('chart-css') }}
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="{{ path('cat-health', {'id': cat.id}) }}" class="return">Retour aux mesures</a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/vet-visit.png') }}" alt="Icône d'un agenda">
+                    </div>
+                    <h3>Visite chez le vétérinaire</h3>
+                </div>
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+            </div>
+            <div class="card-content card-template entries last-entries">
+            <h3>Dernières entrées :</h3>
+            <div class="tooltip">
+                <div id="help-content" class="hide">
+                    <p>Il existe 3 type de visite chez le vétérinaire :</p>
+                    <p>- Le bilan santé complet de votre chat : lors du tout premier rendez-vous avec votre vétérinaire, celui-ci va faire un examen général qui lui permettra de se familiariser avec l’état de santé actuel de votre chat et ses antécédents s’ils sont connus.</p>
+                    <p>- Le bilan de santé général : celui-ci doit se faire tous les ans. Le vétérinaire passe en revue l’état général de votre chat et vérifie s’il doit être vacciné et si les traitements antiparasitaires sont à jour. Cette visite est très importante car elle peut permettre de détecter un problème de santé avant qu’il ne s’aggrave trop.</p>
+                    <p>- La visite liée à un problème de santé ou suivi thérapeutique : cette visite est à faire si vous constatez que votre chat ne va pas bien et que vous avez besoin que votre vétérinaire l’examine.</p>
+                    <p>Ces visites peuvent être une source de stress intense pour votre chat. Pour que cela se passe le mieux possible, il est essentiel que vous soyez calme et détendu car il ressent votre stress. N’hésitez pas à laisser sa boite de transport ouverte dans un endroit où il peut toujours y accéder et à y placer une couverture qui portera son odeur. Si vous n’utilisez sa boîte de transport que pour les visites vétérinaires, il fera vite le lien et se mettra à paniquer chaque fois que vous la sortez. Enfin, le jour de la visite, n’hésitez pas à vaporiser des phéromones apaisantes dans la boîte.</p>
+                </div>
+                <div id="help-icon">
+                    <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
+                    <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                </div>
+            </div>
+            {% for health in paginatedHealths %}                
+                <div class="entry entry--notes card-template">
+                    <div class="entry-info data--notes">
+                        <p class="date">
+                            <span>{{ health.date|format_datetime(locale='fr', pattern="dd MMM Y") }}</span>
+                        </p>
+                        <div>
+                            <div class="mobile-options">
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ health.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ health.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
+                            </div>
+                            <div class="desktop-options">
+                                <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ health.id }}">Modifier</span>
+                                <span class="update-info desktop delete delete-data-btn" data-data-id="{{ health.id }}">Supprimer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="entry-info data--details">
+                        <p class="data data--notes">{{ health.vetVisitMotif }}</p>
+                    </div>
+                </div>
+                <div id="edit-{{ health.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthController::editVetVisit',
+                        { 'catId': cat.id, 'healthId': health.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ health.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthController::deleteHealth',
+                        { 'catId': cat.id, 'healthId': health.id }
+                    ))}}
+                </div>
+            {% endfor %}
+            {{ knp_pagination_render(paginatedHealths) }}
+            </div>
+        </div>
+    </section>
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatHealthController::addVetVisit',
+            { 'id': cat.id }
+        ))}}
+    </div>
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
+{{ encore_entry_script_tags('chart-js') }}
+{% endblock %}

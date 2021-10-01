@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -37,7 +38,7 @@ class CatHealthFormType extends AbstractType
                 'by_reference' => true,
             ])
             ->add('vetVisitMotif', TextType::class, [
-                'label' => "Motif de la visite",
+                'label' => "Motif de la visite *",
                 'attr' => ['placeholder' => "Visite annuelle"],
                 'required' => false,
             ])

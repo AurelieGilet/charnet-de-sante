@@ -170,6 +170,7 @@ section {
     font-size: 1.1rem;
     font-weight: bold;
     margin: 10px;
+    width: 70%;
 }
 
 .return {
@@ -216,8 +217,9 @@ section {
 
 .card-title {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    width: 95%;
 }
 
 .icon {
