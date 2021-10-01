@@ -19,32 +19,17 @@ class HealthRepository extends ServiceEntityRepository
         parent::__construct($registry, Health::class);
     }
 
-    // /**
-    //  * @return Health[] Returns an array of Health objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Health[]
+     */
+    public function findCatVetVisits($cat)
     {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('h.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('health')
+            ->andWhere('health.cat = :cat and health.vetVisitMotif IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('health.date', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Health
-    {
-        return $this->createQueryBuilder('h')
-            ->andWhere('h.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
