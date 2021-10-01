@@ -2,7 +2,13 @@
     <div class="form-wrapper">
         <div class="close add-edit-modal-close-btn">X</div>
         {{ form_start(petCareForm) }}
+            <span>Les champs suivis d'un * sont obligatoires</span>
             {{ form_row(petCareForm.date) }}
+            <div>
+                <div class="notes-label">
+                    {{ form_label(petCareForm.eyesEars) }} 
+                </div>
+            </div>
             {% for child in petCareForm.eyesEars %}
             <div class="form-checkbox">
                 {{ form_widget(child) }} {{ form_label(child) }}  

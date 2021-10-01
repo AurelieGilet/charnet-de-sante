@@ -20,7 +20,7 @@ class CatPetCareFormType extends AbstractType
     {
         $builder
             ->add('date', DateType::class, [
-                'label' => "Date",
+                'label' => "Date *",
                 'widget' => "choice",
                 'placeholder' => [
                     'day' => "Jour", 'month' => "Mois", 'year' => "Année"
@@ -40,7 +40,7 @@ class CatPetCareFormType extends AbstractType
                 'by_reference' => true,
             ])
             ->add('foodType', TextType::class, [
-                'label' => "Type de nourriture",
+                'label' => "Type de nourriture *",
                 'attr' => ['placeholder' => "croquettes"],
                 'required' => false,
             ])
@@ -50,7 +50,7 @@ class CatPetCareFormType extends AbstractType
                 'required' => false,
             ])
             ->add('foodQuantity', NumberType::class, [
-                'label' => "Quantité (g)",
+                'label' => "Quantité (g) *",
                 'scale' => 2,
                 'attr' => [
                     'min' => 0,
@@ -59,7 +59,7 @@ class CatPetCareFormType extends AbstractType
                 'required' => false
             ])
             ->add('grooming', ChoiceType::class, [
-                'label' => "Toiletage",
+                'label' => "Toiletage *",
                 'choices' => [
                     'Bain' => 'bain',
                     'Brossage' => 'brossage',
@@ -67,7 +67,7 @@ class CatPetCareFormType extends AbstractType
                 'required' => false,
             ])
             ->add('eyesEars', ChoiceType::class, [
-                'label' => "Yeux et Oreilles",
+                'label' => "Type de soins (plusieurs choix possibles) *",
                 'choices' => [
                     'Yeux' => 'eyes',
                     'Oreilles' => 'ears',
@@ -77,12 +77,12 @@ class CatPetCareFormType extends AbstractType
                 'required' => false,
             ])
             ->add('teeth', TextType::class, [
-                'label' => "Type de soin",
+                'label' => "Type de soin *",
                 'attr' => ['placeholder' => "Brossage"],
                 'required' => false,
             ])
             ->add('notes', TextareaType::class, [
-                'label' => "Notes",
+                'label' => "Notes *",
                 'attr' => ['placeholder' => "Refuse sa nourriture", 'rows' => 10],
                 'required' => false,
             ])

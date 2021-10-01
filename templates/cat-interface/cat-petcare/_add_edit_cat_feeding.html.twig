@@ -2,7 +2,8 @@
     <div class="form-wrapper">
         <div class="close add-edit-modal-close-btn">X</div>
         {{ form_start(petCareForm) }}
-            {{ form_row(petCareForm.date, { 'label': 'Date de début' }) }}
+            <span>Les champs suivis d'un * sont obligatoires</span>
+            {{ form_row(petCareForm.date, { 'label': 'Date de début *' }) }}
             {{ form_row(petCareForm.endDate) }}
             {{ form_row(petCareForm.foodType) }}
             {{ form_row(petCareForm.foodBrand) }}
