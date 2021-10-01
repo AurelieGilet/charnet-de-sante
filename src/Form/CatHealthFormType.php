@@ -74,7 +74,7 @@ class CatHealthFormType extends AbstractType
                 'required' => false,
             ])
             ->add('details', TextareaType::class, [
-                'label' => "Notes",
+                'label' => "Détails",
                 'attr' => ['rows' => 10],
                 'required' => false,
             ])
