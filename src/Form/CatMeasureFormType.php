@@ -17,7 +17,7 @@ class CatMeasureFormType extends AbstractType
     {
         $builder
             ->add('date', DateType::class, [
-                'label' => "Date",
+                'label' => "Date *",
                 'widget' => "choice",
                 'placeholder' => [
                     'day' => "Jour", 'month' => "Mois", 'year' => "Année"
@@ -27,7 +27,7 @@ class CatMeasureFormType extends AbstractType
                 'by_reference' => true,
             ])
             ->add('weight', NumberType::class, [
-                'label' => "Poids (Kg)",
+                'label' => "Poids (Kg) *",
                 'scale' => 2,
                 'attr' => [
                     'min' => 0,
@@ -36,7 +36,7 @@ class CatMeasureFormType extends AbstractType
                 'required' => false
             ])
             ->add('temperature', NumberType::class, [
-                'label' => "Température (°C)",
+                'label' => "Température (°C) *",
                 'attr' => [
                     'min' => 35,
                     'max' => 45,
