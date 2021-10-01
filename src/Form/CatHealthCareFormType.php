@@ -38,7 +38,7 @@ class CatHealthCareFormType extends AbstractType
                 'by_reference' => true,
             ])
             ->add('vaccine', ChoiceType::class, [
-                'label' => "Type de vaccin *",
+                'label' => "Type de vaccin (plusieurs choix possibles) *",
                 'choices' => [
                     'Typhus (Panleucopénie)' => 'typhus',
                     'Coryza' => 'coryza',
