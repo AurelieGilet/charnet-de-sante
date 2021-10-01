@@ -374,7 +374,7 @@ section {
     .add-data.desktop,.desktop-options {
         display: flex;
     }
-    .add-data.mobile, .mobile-options {
+    .add-data.mobile, .mobile-options, .mobile-options.data--variation {
         display: none;
     }
 }
