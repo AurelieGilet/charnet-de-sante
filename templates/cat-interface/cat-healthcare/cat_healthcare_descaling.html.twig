@@ -5,8 +5,8 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
     <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
     <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
     <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
     {{ encore_entry_link_tags('chart-css') }}
 {% endblock %}
@@ -69,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="entry-info data--notes">
+                    <div class="entry-info data--details">
                         <p>Détartrage : <em class="data">{% if healthCare.descaling == 'yes' %}R.A.S{% else %}{{ healthCare.descaling }}{% endif %}</em></p>
                     </div>
                 </div>
