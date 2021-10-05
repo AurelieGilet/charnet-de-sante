@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Chirurgie de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
+    {{ encore_entry_link_tags('chart-css') }}
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="{{ path('cat-health', {'id': cat.id}) }}" class="return">Retour aux soins</a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/allergies.png') }}" alt="Icône d'hôpital vétérinaire">
+                    </div>
+                    <h3>Chirurgie</h3>
+                </div>
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+            </div>
+            <div class="card-content card-template entries last-entries">
+                <h3>Dernières entrées :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>Pour que la convalescence du chat se passe au mieux après une opération, il est impératif de respecter à la lettre les consignes du vétérinaire.</p>
+                        <p>En fonction du type d’opération subie, le chat va ressentir des douleurs et avoir des zones sensibles pendant quelques jours. Cela peut expliquer une agressivité inhabituelle lorsqu’on le touche à ces endroits. Si vous avez des enfants, mettez-les en garde à ce sujet.En général, les chats sont fatigués après une anesthésie, mais si vous sentez que quelque chose ne va pas, contactez immédiatement votre vétérinaire.</p>
+                        <p>Le repos et la récupération sont de la plus haute importance après une chirurgie. Assurez-vous que votre chat ait un environnement calme et sécurisant durant sa convalescence.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for health in paginatedHealths %}                
+                <div class="entry entry--notes card-template">
+                    <div class="entry-info data--notes">
+                        <p class="date">
+                            <span>{{ health.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</span>
+                        </p>
+                        <div>
+                            <div class="mobile-options">
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ health.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ health.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
+                            </div>
+                            <div class="desktop-options">
+                                <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ health.id }}">Modifier</span>
+                                <span class="update-info desktop delete delete-data-btn" data-data-id="{{ health.id }}">Supprimer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="entry-info data--details">
+                        <p>Type de chirurgie : <em  class="data">{{ health.surgery|capitalize }}</em></p>
+                        <p>Détails : <em class="data">{{ health.details|capitalize }}</em></p>
+                    </div>
+                </div>
+                <div id="edit-{{ health.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthController::editSurgery',
+                        { 'catId': cat.id, 'healthId': health.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ health.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthController::deleteHealth',
+                        { 'catId': cat.id, 'healthId': health.id }
+                    ))}}
+                </div>
+                {% endfor %}
+                {{ knp_pagination_render(paginatedHealths) }}
+            </div>
+        </div>
+    </section>
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatHealthController::addSurgery',
+            { 'id': cat.id }
+        ))}}
+    </div>
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
+{{ encore_entry_script_tags('chart-js') }}
+{% endblock %}
