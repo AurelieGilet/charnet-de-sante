@@ -532,7 +532,7 @@ class CatPetCareController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->getData()->getGrooming() == null) {
-                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Les deux champs sont requis.");
+                $this->addFlash('danger', "L'entrée n'a pas été modifiée. Les deux champs sont requis.");
 
                 return $this->redirectToRoute('cat-grooming', ['id' => $cat->getId() ]);
             }
@@ -545,7 +545,7 @@ class CatPetCareController extends AbstractController
             return $this->redirectToRoute('cat-grooming', ['id' => $cat->getId() ]);
 
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Les deux champs sont requis.");
+            $this->addFlash('danger', "L'entrée n'a pas été modifiée. Les deux champs sont requis.");
 
             return $this->redirectToRoute('cat-grooming', ['id' => $cat->getId() ]);
         }
@@ -583,7 +583,7 @@ class CatPetCareController extends AbstractController
             return $this->redirectToRoute('cat-claws', ['id' => $cat->getId() ]);
 
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Veuillez saisir une date.");
+            $this->addFlash('danger', "L'entrée n'a pas été modifiée. Veuillez saisir une date.");
 
             return $this->redirectToRoute('cat-claws', ['id' => $cat->getId() ]);
         }
@@ -613,7 +613,7 @@ class CatPetCareController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->getData()->getEyesEars() == null) {
-                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date et au moins un des choix.");
+                $this->addFlash('danger', "L'entrée n'a pas été modifiée. Vous devez saisir une date et au moins un des choix.");
 
                 return $this->redirectToRoute('cat-eyesEars', ['id' => $cat->getId() ]);
             }
@@ -626,7 +626,7 @@ class CatPetCareController extends AbstractController
             return $this->redirectToRoute('cat-eyesEars', ['id' => $cat->getId() ]);
 
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date et au moins un des choix.");
+            $this->addFlash('danger', "L'entrée n'a pas été modifiée. Vous devez saisir une date et au moins un des choix.");
 
             return $this->redirectToRoute('cat-eyesEars', ['id' => $cat->getId() ]);
         }
@@ -656,7 +656,7 @@ class CatPetCareController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->getData()->getTeeth() == null) {
-                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Les deux champs sont requis.");
+                $this->addFlash('danger', "L'entrée n'a pas été modifiée. Les deux champs sont requis.");
 
                 return $this->redirectToRoute('cat-teeth', ['id' => $cat->getId() ]);
             }
@@ -669,7 +669,7 @@ class CatPetCareController extends AbstractController
             return $this->redirectToRoute('cat-teeth', ['id' => $cat->getId() ]);
 
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Les deux champs sont requis.");
+            $this->addFlash('danger', "L'entrée n'a pas été modifiée. Les deux champs sont requis.");
 
             return $this->redirectToRoute('cat-teeth', ['id' => $cat->getId() ]);
         }
@@ -707,7 +707,7 @@ class CatPetCareController extends AbstractController
             return $this->redirectToRoute('cat-litterbox', ['id' => $cat->getId() ]);
 
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date.");
+            $this->addFlash('danger', "L'entrée n'a pas été modifiée. Vous devez saisir une date.");
 
             return $this->redirectToRoute('cat-litterbox', ['id' => $cat->getId() ]);
         }
@@ -737,7 +737,7 @@ class CatPetCareController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->getData()->getNotes() == null) {
-                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Les deux champs sont requis.");
+                $this->addFlash('danger', "L'entrée n'a pas été modifiée. Les deux champs sont requis.");
 
                 return $this->redirectToRoute('cat-notes', ['id' => $cat->getId() ]);
             }
@@ -750,7 +750,7 @@ class CatPetCareController extends AbstractController
             return $this->redirectToRoute('cat-notes', ['id' => $cat->getId() ]);
 
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Les deux champs sont requis.");
+            $this->addFlash('danger', "L'entrée n'a pas été modifiée. Les deux champs sont requis.");
 
             return $this->redirectToRoute('cat-notes', ['id' => $cat->getId() ]);
         }
