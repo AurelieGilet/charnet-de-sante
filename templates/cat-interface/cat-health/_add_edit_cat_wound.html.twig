@@ -1,0 +1,21 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close add-edit-modal-close-btn">X</div>
+        {{ form_start(healthForm) }}
+            <span>Les champs suivis d'un * sont obligatoires</span>
+            {{ form_row(healthForm.date, { 'label': 'Date de début *' }) }}
+            {{ form_row(healthForm.endDate) }}
+            {{ form_row(healthForm.wound) }}
+            <div>
+                <div class="notes-label">
+                    {{ form_label(healthForm.details) }} 
+                    <span class="notes-counter"></span>
+                </div>
+                {{ form_widget(healthForm.details, { 'attr': {'class': 'notes-input', 'maxlength': "2000"} }) }}
+            </div>  
+            {{ form_row(healthForm._token) }}
+            {{ form_row(healthForm.submit) }}
+        {{ form_end(healthForm, {render_rest: false}) }}
+    </div>
+</div>
+    
