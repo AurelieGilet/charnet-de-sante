@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Le Charnet de Santé - Maladies de {{ cat.name }} {% endblock %}
+{% block title %}Le Charnet de Santé - Analyses de {{ cat.name }} {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
@@ -31,9 +31,9 @@
             <div class="card-content card-template">
                 <div class="card-title">
                     <div class="icon">
-                        <img src="{{ asset('img/site/virus.png') }}" alt="Icône de virus">
+                        <img src="{{ asset('img/site/analysis.png') }}" alt="Icône de microscope">
                     </div>
-                    <h3>Maladies</h3>
+                    <h3>Analyses</h3>
                 </div>
                 <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
                 <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
@@ -42,14 +42,8 @@
                 <h3>Dernières entrées :</h3>
                 <div class="tooltip">
                     <div id="help-content" class="hide">
-                        <p>Il est souvent difficile de déceler un problème chez son chat. Les premiers signes d’une maladie sont souvent peu perceptibles, d’autant que le chat a tendance à les cacher. Il faut donc être attentif et bien connaître son chat pour détecter les petits changements qui apparaissent quand celui-ci est malade. </p>
-                        <p>Ceux-ci peuvent se manifester de différentes façon :</p>
-                        <p>&bull; Changement de comportement : un changement subit dans ses habitudes doit vous alerter. Un chat habituellement câlin qui se cache, un chat actif qui devient léthargique, ... De manière générale, un chat prostré est un signal d’alarme.</p>
-                        <p>&bull; Changement alimentaire et déshydratation : il faut faire attention à la prise de nourriture et d’eau. Un chat qui refuse toute nourriture ou au contraire mange excessivement de façon subite sont deux attitudes à prendre en considération. Un chat qui ne boit plus depuis plus de 10 heures souffre de déshydratation et doit être rapidement emmené chez un vétérinaire. Pour détecter la déshydratation, faites un pli de peau avec vos doigts entre les omoplates de votre chat. Si, lorsque vous la lâchez, la peau ne revient pas immédiatement en place, votre chat est déshydraté.</p>
-                        <p>&bull; Changement d’attitude face à sa litière : un chat qui ne va plus à la litière ou qui y va trop ou qui n’a pas le temps d’y parvenir et fait ses besoins à côté sont autant de signes suspects. De même, une apparence anormale de ses selles et de son urine (texture, présence de sang, mucus, odeurs particulières, ...) doivent vous alerter. Un nettoyage quotidien de la litière permet de remarquer plus rapidement ces signes.</p>
-                        <p>&bull; Changement de température : La température d’un chat se situe entre 38°C et 39,2°C. Des températures supérieures à 40°C ou inférieures à 37.5°C sont alarmantes et doivent vous amener chez votre vétérinaire.</p>
-                        <p>&bull; Changement d’apparence : un chat malade peut avoir les poils emmêlés, secs ou huileux. Il peut perdre ses poils et ne plus faire sa toilette. Nez qui coule, toux, yeux rouges et/ou qui coulent, 3ème paupière visible, muqueuses pâles ou jaunes, vomissements, diarrhée, prise ou perte de poids sont autant de signes de maladie.</p>
-                        <p>Il est important de noter tout ce qui vous semble suspect afin de le rapporter à votre vétérinaire qui s’en servira pour son diagnostic. Au moindre doute, contactez-le pour lui demander conseil.</p>
+                        <p>Ici vous pourrez consigner tous les résultats d’analyses et d’examens médicaux de votre chat.</p>
+                        <p>Cela vous permettra de garder une trace de ses antécédents et de pouvoir rapidement les communiquer à votre vétérinaire.</p>
                     </div>
                     <div id="help-icon">
                         <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
@@ -59,10 +53,8 @@
                 {% for health in paginatedHealths %}                
                 <div class="entry entry--notes card-template">
                     <div class="entry-info data--notes">
-                        <p class="entry-info date data--variation">
-                            <span>Du : <em>{{ health.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
-                            <span>Au : <em>{% if health.endDate is not null %}{{ health.endDate|format_datetime(locale='fr', pattern="dd MMM Y")}}{% else %}
-                                ...{% endif %}</em></span>
+                        <p class="date">
+                            <span>{{ health.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</span>
                         </p>
                         <div>
                             <div class="mobile-options">
@@ -76,13 +68,13 @@
                         </div>
                     </div>
                     <div class="entry-info data--details">
-                        <p>Nom de la maladie : <em  class="data">{{ health.disease|capitalize }}</em></p>
-                        <p>Détails : <em class="data">{{ health.details|capitalize }}</em></p>
+                        <p>Motif de l'analyse : <em  class="data">{{ health.analysis|capitalize }}</em></p>
+                        <p>Résultats : <em class="data">{{ health.details|capitalize }}</em></p>
                     </div>
                 </div>
                 <div id="edit-{{ health.id }}"class="add-edit-data-form">
                     {{ render(controller(
-                        'App\\Controller\\CatHealthController::editDisease',
+                        'App\\Controller\\CatHealthController::editAnalysis',
                         { 'catId': cat.id, 'healthId': health.id }
                     ))}}
                 </div>
@@ -99,7 +91,7 @@
     </section>
     <div id="edit-new" class="add-edit-data-form">
         {{ render(controller(
-            'App\\Controller\\CatHealthController::addDisease',
+            'App\\Controller\\CatHealthController::addAnalysis',
             { 'id': cat.id }
         ))}}
     </div>
