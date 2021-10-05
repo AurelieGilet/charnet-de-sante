@@ -54,22 +54,22 @@ class CatHealthFormType extends AbstractType
                 'required' => false,
             ])
             ->add('disease', TextType::class, [
-                'label' => "Nom de la maladie",
+                'label' => "Nom de la maladie *",
                 'attr' => ['placeholder' => "Gastrite"],
                 'required' => false,
             ])
             ->add('wound', TextType::class, [
-                'label' => "Type de blessure",
+                'label' => "Type de blessure *",
                 'attr' => ['placeholder' => "Piqûre d'insecte"],
                 'required' => false,
             ])
             ->add('surgery', TextType::class, [
-                'label' => "Type de chirurgie",
+                'label' => "Type de chirurgie *",
                 'attr' => ['placeholder' => "Stérilisation"],
                 'required' => false,
             ])
             ->add('analysis', TextType::class, [
-                'label' => "Motif de l'analyse",
+                'label' => "Motif de l'analyse *",
                 'attr' => ['placeholder' => "Contrôle des reins"],
                 'required' => false,
             ])
@@ -79,7 +79,7 @@ class CatHealthFormType extends AbstractType
                 'required' => false,
             ])
             ->add('documentName', TextType::class, [
-                'label' => "Nom du document",
+                'label' => "Nom du document *",
                 'attr' => ['placeholder' => "Analyses de sang"],
                 'required' => false,
             ])
