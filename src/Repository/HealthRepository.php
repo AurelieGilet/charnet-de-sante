@@ -60,4 +60,18 @@ class HealthRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return Health[]
+     */
+    public function findCatWounds($cat)
+    {
+        return $this->createQueryBuilder('health')
+            ->andWhere('health.cat = :cat and health.wound IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('health.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

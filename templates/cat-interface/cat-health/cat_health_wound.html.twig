@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Blessures de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
+    {{ encore_entry_link_tags('chart-css') }}
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="{{ path('cat-health', {'id': cat.id}) }}" class="return">Retour aux soins</a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/allergies.png') }}" alt="Icône de pansements">
+                    </div>
+                    <h3>Blessures</h3>
+                </div>
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+            </div>
+            <div class="card-content card-template entries last-entries">
+                <h3>Dernières entrées :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>Malgré ses qualités d’acrobate et sa vitesse, le chat peut être victime d’accidents : traumatismes, hémorragies, brûlures, intoxication, noyade, piqûre d’insectes, ...</p>
+                        <p>Quelle que soit le type de blessure, il est important de garder son calme et de bien réagir afin de ne pas aggraver l’état de votre compagnon.</p>
+                        <p>Même si vous pensez que ce n’est pas grave, appelez votre vétérinaire. Il saura vous conseiller et vous dire s’il est nécessaire de lui apporter le chat ou non.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for health in paginatedHealths %}                
+                <div class="entry entry--notes card-template">
+                    <div class="entry-info data--notes">
+                        <p class="entry-info date data--variation">
+                            <span>Du : <em>{{ health.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
+                            <span>Au : <em>{% if health.endDate is not null %}{{ health.endDate|format_datetime(locale='fr', pattern="dd MMM Y")}}{% else %}
+                                ...{% endif %}</em></span>
+                        </p>
+                        <div>
+                            <div class="mobile-options">
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ health.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ health.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
+                            </div>
+                            <div class="desktop-options">
+                                <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ health.id }}">Modifier</span>
+                                <span class="update-info desktop delete delete-data-btn" data-data-id="{{ health.id }}">Supprimer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="entry-info data--details">
+                        <p>Nom de blessure : <em class="data">{{ health.wound|capitalize }}</em></p>
+                        <p>Détails : <em class="data">{{ health.details|capitalize }}</em></p>
+                    </div>
+                </div>
+                <div id="edit-{{ health.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthController::editWound',
+                        { 'catId': cat.id, 'healthId': health.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ health.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthController::deleteHealth',
+                        { 'catId': cat.id, 'healthId': health.id }
+                    ))}}
+                </div>
+                {% endfor %}
+                {{ knp_pagination_render(paginatedHealths) }}
+            </div>
+        </div>
+    </section>
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatHealthController::addWound',
+            { 'id': cat.id }
+        ))}}
+    </div>
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
+{{ encore_entry_script_tags('chart-js') }}
+{% endblock %}
