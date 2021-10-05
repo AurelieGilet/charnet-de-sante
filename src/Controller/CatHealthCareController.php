@@ -354,7 +354,7 @@ class CatHealthCareController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->getData()->getVaccine() == null) {
-                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date et au moins un type de vaccin.");
+                $this->addFlash('danger', "L'entrée n'a pas été modifiée. Vous devez saisir une date et au moins un type de vaccin.");
 
                 return $this->redirectToRoute('cat-vaccine', ['id' => $cat->getId() ]);
             }
@@ -367,7 +367,7 @@ class CatHealthCareController extends AbstractController
             return $this->redirectToRoute('cat-vaccine', ['id' => $cat->getId() ]);
 
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date et au moins un type de vaccin.");
+            $this->addFlash('danger', "L'entrée n'a pas été modifiée. Vous devez saisir une date et au moins un type de vaccin.");
 
             return $this->redirectToRoute('cat-vaccine', ['id' => $cat->getId() ]);
         }
@@ -405,7 +405,7 @@ class CatHealthCareController extends AbstractController
             return $this->redirectToRoute('cat-dewormer', ['id' => $cat->getId() ]);
 
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date.");
+            $this->addFlash('danger', "L'entrée n'a pas été modifiée. Vous devez saisir une date.");
 
             return $this->redirectToRoute('cat-dewormer', ['id' => $cat->getId() ]);
         }
@@ -435,7 +435,7 @@ class CatHealthCareController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->getData()->getParasite() == null) {
-                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date et un type de parasite.");
+                $this->addFlash('danger', "L'entrée n'a pas été modifiée. Vous devez saisir une date et un type de parasite.");
 
                 return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
             }
@@ -448,7 +448,7 @@ class CatHealthCareController extends AbstractController
             return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
 
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date et un type de parasite.");
+            $this->addFlash('danger', "L'entrée n'a pas été modifiée. Vous devez saisir une date et un type de parasite.");
 
             return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
         }
@@ -478,7 +478,7 @@ class CatHealthCareController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->getData()->getTreatment() == null) {
-                $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date de début et le motif du traitement.");
+                $this->addFlash('danger', "L'entrée n'a pas été modifiée. Vous devez saisir une date de début et le motif du traitement.");
 
                 return $this->redirectToRoute('cat-treatment', ['id' => $cat->getId() ]);
             }
@@ -491,7 +491,7 @@ class CatHealthCareController extends AbstractController
             return $this->redirectToRoute('cat-treatment', ['id' => $cat->getId() ]);
 
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date de début et le motif du traitement.");
+            $this->addFlash('danger', "L'entrée n'a pas été modifiée. Vous devez saisir une date de début et le motif du traitement.");
 
             return $this->redirectToRoute('cat-treatment', ['id' => $cat->getId() ]);
         }
@@ -532,7 +532,7 @@ class CatHealthCareController extends AbstractController
             return $this->redirectToRoute('cat-descaling', ['id' => $cat->getId() ]);
 
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'entrée n'a pas été ajoutée. Vous devez saisir une date.");
+            $this->addFlash('danger', "L'entrée n'a pas été modifiée. Vous devez saisir une date.");
 
             return $this->redirectToRoute('cat-descaling', ['id' => $cat->getId() ]);
         }
