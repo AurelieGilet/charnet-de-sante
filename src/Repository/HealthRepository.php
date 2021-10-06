@@ -102,4 +102,32 @@ class HealthRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return Health[]
+     */
+    public function findCatDocuments($cat)
+    {
+        return $this->createQueryBuilder('health')
+            ->andWhere('health.cat = :cat and health.document IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->addOrderBy('health.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Health[]
+     */
+    public function findCatFilenames($cat)
+    {
+        return $this->createQueryBuilder('health')
+            ->andWhere('health.cat = :cat and health.document IS NOT NULL')
+            ->setParameter('cat', $cat)
+            ->select('health.document')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
