@@ -21,7 +21,7 @@ main {
     justify-content: center;
 }
 
-label {
+.authenticator label {
     font-weight: bold;
     padding: 5px;
     text-align: center;
