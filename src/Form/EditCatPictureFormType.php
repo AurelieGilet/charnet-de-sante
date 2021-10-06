@@ -14,7 +14,8 @@ class EditCatPictureFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('picture', FileType::class, array('data_class' => null), [
+            ->add('picture', FileType::class, [
+                'data_class' => null,
                 'label' => 'Photo du chat',                
             ])
             ->add('submit', SubmitType::class, [
