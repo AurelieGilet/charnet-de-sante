@@ -475,6 +475,7 @@ class CatHealthController extends AbstractController
                     $this->addFlash('danger', "Le document n'a pas été ajouté. Il existe déjà.");
 
                     return $this->redirectToRoute('cat-document', ['id' => $cat->getId() ]);
+                    
                 } else {
                     $file->move(
                         $this->getParameter('files_directory'),
@@ -492,9 +493,6 @@ class CatHealthController extends AbstractController
     
                     return $this->redirectToRoute('cat-document', ['id' => $cat->getId() ]);
                 }
-
-                
-                    
             } else {
                 $this->addFlash('danger', "Le document n'a pas été ajouté. Il doit faire moins d'1Mo et avoir une des extensions autorisées : pdf, png, jpg ou jpeg.");
 
@@ -844,8 +842,6 @@ class CatHealthController extends AbstractController
 
             $manager->persist($health);
             $manager->flush();
-
-            
 
             $this->addFlash('success', "Le document a été modifié.");
 
