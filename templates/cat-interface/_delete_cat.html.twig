@@ -1,0 +1,11 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close">X</div>
+        <h2>Etes-vous sûr de vouloir supprimer ce chat ?</h2>
+        <p>Cette action est irréversible. En cas d'erreur, il ne vous sera pas possible de récupérer les données.</p>
+        {{ form_start(deleteCatForm, { 'attr': {'id': 'delete-cat-form'} }) }}
+            {{ form_row(deleteCatForm.password) }}
+            {{ form_row(deleteCatForm.submit, {'label': 'Supprimer'}) }}
+        {{ form_end(deleteCatForm) }}
+    </div>
+</div>

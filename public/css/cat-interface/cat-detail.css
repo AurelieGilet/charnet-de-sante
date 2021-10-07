@@ -222,10 +222,19 @@ section {
     margin: 10px 0;
 }
 
-/*PICTURE FORM*/
+/*PICTURE + DELETE FORM*/
 
-#edit-picture-form {
+#edit-picture-form, #delete-data-form  {
     display: none;
+}
+
+#delete-cat-form {
+    width: 90%;
+    max-width: 265px;
+}
+
+#delete-cat-form label {
+    text-align: center;
 }
 
 .form-overlay {
@@ -261,6 +270,12 @@ section {
     font-size: 1.2rem;
     margin: 40px 10px 20px 10px;
     text-align: center;
+}
+
+.form-wrapper p {
+    font-size: 1rem;
+    text-align: center;
+    margin: 15px 0 0 0;
 }
 
 .close {

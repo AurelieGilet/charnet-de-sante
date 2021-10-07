@@ -6,8 +6,10 @@ use App\Entity\Cat;
 use App\Entity\Address;
 use App\Form\CatFormType;
 use App\Form\AddressFormType;
+use App\Form\DeleteCatFormType;
 use App\Repository\CatRepository;
 use App\Form\EditCatPictureFormType;
+use App\Repository\HealthRepository;
 use App\Repository\AddressRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -61,6 +63,61 @@ class CatController extends AbstractController
         return $this->render('cat-interface/add_edit_cat_info.html.twig', [
             'controller_name' => 'CatController',
             'catForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("espace-utilisateur/chat/{catId}/supprimer-un-chat", name="delete-cat")
+     */
+    public function deleteCat(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, HealthRepository $healthRepository, Cat $cat = null): Response
+    {
+        $user = $this->getUser();
+        $userPassword = $user->getPassword();
+
+        $catId = $request->attributes->get('catId');
+        $cat = $catRepository->findOneBy(['id' => $catId]);
+        $catName = $cat->getName();
+        $picture = $cat->getPicture();
+        $documents = $healthRepository->findCatFilenames($cat);
+
+        $form = $this->createForm(DeleteCatFormType::class, $user, [
+            'action' => $this->generateUrl('delete-cat', ['catId' => $cat->getId() ]),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $enteredPassword = $form['password']->getData();
+
+            if (password_verify($enteredPassword, $userPassword)) {
+
+                $manager->remove($cat);
+                $manager->flush($cat);
+
+                $filesystem = new Filesystem();
+                $filesystem->remove($this->getParameter('images_directory') . '/' . $picture);
+                for ($i=0; $i < count($documents); $i++) { 
+                    $filesystem->remove($this->getParameter('files_directory') . '/' . $documents[$i]['document']);
+                }
+
+                $this->addFlash('success', "Le chat ". $catName . " a bien été supprimé");
+
+                return $this->redirectToRoute('cat-list');
+
+            } else {
+                $this->addFlash('danger', "Le chat ". $catName . " n'a pas été supprimé. Le mot de passe ne correspond pas.");
+
+                return $this->redirectToRoute('cat-list');
+            }
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "Le chat ". $catName . " n'a pas été supprimé. Vous devez confirmez par mot de passe.");
+
+            return $this->redirectToRoute('cat-list', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/_delete_cat.html.twig', [
+            'controller_name' => 'CatController',
+            'deleteCatForm' => $form->createView()
         ]);
     }
 
