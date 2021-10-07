@@ -80,13 +80,19 @@
                     </div>
                 </div>
             </div>
-            <span class="update-info delete">Supprimer le chat</span>
+            <span id="delete-data-btn" class="update-info delete">Supprimer le chat</span>
             <a href="{{ path('cat-list') }}" class="return-btn">Retour</a>
         </div>
     </section>
     <div id="edit-picture-form">
         {{ render(controller(
             'App\\Controller\\CatController::editCatPicture'
+        ))}}
+    </div>
+    <div id="delete-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatController::deleteCat',
+            { 'catId': cat.id }
         ))}}
     </div>
 </main>
