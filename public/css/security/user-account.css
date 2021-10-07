@@ -110,8 +110,17 @@ section p {
 
 /* FORMS */
 
-#edit-username-form, #edit-email-form, #edit-password-form, #edit-picture-form, #delete-picture-form {
+#edit-username-form, #edit-email-form, #edit-password-form, #edit-picture-form, #delete-picture-form, #delete-user-form  {
     display: none;
+}
+
+.delete-user-form  {
+    width: 90%;
+    max-width: 265px;
+}
+
+.delete-user-form  label {
+    text-align: center;
 }
 
 .form-overlay {
@@ -143,10 +152,16 @@ section p {
     color: white;
 }
 
-.form-wrapper h2{
+.form-wrapper h2 {
     font-size: 1.2rem;
     margin: 40px 10px 20px 10px;
     text-align: center;
+}
+
+.form-wrapper p {
+    font-size: 1rem;
+    text-align: center;
+    margin: 15px 0 0 0;
 }
 
 .close {
