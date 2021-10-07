@@ -23,6 +23,7 @@
                     <img {% if app.user.picture != null %} src="{{ asset('img/upload/' ~ app.user.picture) }}" alt="Photo de profil de {{ app.user.username }}" class="user-picture" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
                 </div>
                 <span id="edit-picture" class="update-info modify">Changer mon avatar</span>
+                <span id="delete-picture" class="update-info delete">Supprimer</span>
             </div>
             <div class="info-wrapper">
                 <div class="username">
@@ -70,6 +71,11 @@
     <div id="edit-picture-form">
         {{ render(controller(
             'App\\Controller\\SecurityController::editPicture'
+        ))}}
+    </div>
+    <div id="delete-picture-form">
+        {{ render(controller(
+            'App\\Controller\\SecurityController::deletePicture'
         ))}}
     </div>
 </main>
