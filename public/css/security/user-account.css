@@ -110,7 +110,7 @@ section p {
 
 /* FORMS */
 
-#edit-username-form, #edit-email-form, #edit-password-form, #edit-picture-form {
+#edit-username-form, #edit-email-form, #edit-password-form, #edit-picture-form, #delete-picture-form {
     display: none;
 }
 

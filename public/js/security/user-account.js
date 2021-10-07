@@ -7,6 +7,8 @@ const editPasswordBtn = document.getElementById("edit-password");
 const editPasswordForm = document.getElementById("edit-password-form");
 const editPictureBtn = document.getElementById("edit-picture");
 const editPictureForm = document.getElementById("edit-picture-form");
+const deletePictureBtn = document.getElementById("delete-picture");
+const deletePictureForm = document.getElementById("delete-picture-form");
 
 if (close != null) {
   for (let i = 0; i < close.length; i++) {
@@ -15,6 +17,7 @@ if (close != null) {
       editEmailForm.style.display = "none";
       editPasswordForm.style.display = "none";
       editPictureForm.style.display = "none";
+      deletePictureForm.style.display = "none";
       body[0].classList.remove("modal-open");
     });
   }
@@ -37,5 +40,10 @@ editPasswordBtn.addEventListener("click", function () {
 
 editPictureBtn.addEventListener("click", function () {
   editPictureForm.style.display = "block";
+  body[0].classList.add("modal-open");
+});
+
+deletePictureBtn.addEventListener("click", function () {
+  deletePictureForm.style.display = "block";
   body[0].classList.add("modal-open");
 });
