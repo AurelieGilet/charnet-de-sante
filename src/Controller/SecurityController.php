@@ -8,17 +8,19 @@ use App\Form\EditPictureFormType;
 use App\Form\EditPasswordFormType;
 use App\Form\EditUsernameFormType;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
+use App\Form\DeletePictureFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SecurityController extends AbstractController
 {
@@ -35,8 +37,9 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
+            'controller_name' => 'SecurityController',
             'last_username' => $lastUsername, 
-            'error' => $error
+            'error' => $error,
         ]);
     }
 
@@ -78,8 +81,8 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/registration.html.twig', [
-            'registrationForm' => $form->createView(),
             'controller_name' => 'SecurityController',
+            'registrationForm' => $form->createView(),
         ]);
     }
 
@@ -119,6 +122,7 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/_edit_username_form.html.twig', [
+            'controller_name' => 'SecurityController',
             'usernameForm' => $form->createView()
         ]);
     }
@@ -158,6 +162,7 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/_edit_email_form.html.twig', [
+            'controller_name' => 'SecurityController',
             'emailForm' => $form->createView()
         ]);
     }
@@ -200,6 +205,7 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/_edit_password_form.html.twig', [
+            'controller_name' => 'SecurityController',
             'passwordForm' => $form->createView()
         ]);
     }
@@ -250,7 +256,47 @@ class SecurityController extends AbstractController
         } 
 
         return $this->render('security/_edit_picture_form.html.twig', [
+            'controller_name' => 'SecurityController',
             'pictureForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/espace-utilisateur/compte/supprimer-photo", name="delete-picture")
+     */
+    public function deletePicture(Request $request, EntityManagerInterface $manager): Response
+    {
+        $user = $this->getUser();
+
+        $picture = $user->getPicture();
+
+        $form = $this->createForm(DeletePictureFormType::class, $user, [
+            'action' => $this->generateUrl('delete-picture'),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+                $user->setPicture(null);
+
+                $manager->persist($user);
+                $manager->flush($user);
+
+                $filesystem = new Filesystem();
+                $filesystem->remove($this->getParameter('images_directory') . '/' . $picture);
+
+                return $this->redirectToRoute('user-account');
+
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "L'avatar n'a pas été supprimé, veuillez confirmer votre choix");
+
+            return $this->redirectToRoute('user-account');
+        }
+
+        return $this->render('security/_delete_picture.html.twig', [
+            'controller_name' => 'SecurityController',
+            'deletePictureForm' => $form->createView(),
         ]);
     }
 }        
