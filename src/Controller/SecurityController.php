@@ -4,18 +4,21 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditEmailFormType;
+use App\Form\DeleteUserFormType;
 use App\Form\EditPictureFormType;
+use App\Repository\CatRepository;
 use App\Form\EditPasswordFormType;
 use App\Form\EditUsernameFormType;
 use App\Form\RegistrationFormType;
-use App\Repository\UserRepository;
 use App\Form\DeletePictureFormType;
+use App\Repository\HealthRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,6 +86,81 @@ class SecurityController extends AbstractController
         return $this->render('security/registration.html.twig', [
             'controller_name' => 'SecurityController',
             'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/espace-utilisateur/compte/supprimer", name="delete-user")
+     */
+    public function deleteUser(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, HealthRepository $healthRepository): Response
+    {
+        $user = $this->getUser();
+        $userPassword = $user->getPassword();
+        $userPicture = $user->getPicture();
+
+        $cats = $catRepository->findBy(['owner' => $user]);
+        dump($cats);
+        $catsPictures = [];
+        $documents = [];
+
+        for ($i = 0; $i < count($cats); $i++) { 
+            array_push($catsPictures, $cats[$i]->getPicture());
+        }
+
+        dump($catsPictures);
+
+        for ($i = 0; $i < count($cats); $i++) { 
+            array_push($documents, $healthRepository->findCatFilenames($cats[$i]));
+        }
+
+        dump($documents);
+
+
+        $form = $this->createForm(DeleteUserFormType::class, $user, [
+            'action' => $this->generateUrl('delete-user'),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $enteredPassword = $form['password']->getData();
+
+            if (password_verify($enteredPassword, $userPassword)) {
+
+                $session = $this->get('session');
+                $session = new Session();
+                $session->invalidate();
+
+                $manager->remove($user);
+                $manager->flush($user);
+
+                $filesystem = new Filesystem();
+                $filesystem->remove($this->getParameter('images_directory') . '/' . $userPicture);
+                for ($i = 0; $i < count($catsPictures); $i++) { 
+                    $filesystem->remove($this->getParameter('images_directory') . '/' . $catsPictures[$i]);
+                }
+                for ($i = 0; $i < count($documents); $i++) {
+                    for ($j = 0; $j < count($documents[$i]); $j++) { 
+                        $filesystem->remove($this->getParameter('files_directory') . '/' . $documents[$i][$j]['document']);
+                    } 
+                }
+
+                return $this->redirectToRoute('logout');
+
+            } else {
+                $this->addFlash('danger', "Votre compte n'a pas été supprimé. Le mot de passe ne correspond pas.");
+
+                return $this->redirectToRoute('user-account');
+            }
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "Votre compte n'a pas été supprimé. Vous devez confirmez par mot de passe.");
+
+            return $this->redirectToRoute('user-account');
+        }
+
+        return $this->render('security/_delete_user.html.twig', [
+            'controller_name' => 'SecurityController',
+            'deleteUserForm' => $form->createView()
         ]);
     }
 
