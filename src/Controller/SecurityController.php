@@ -99,7 +99,6 @@ class SecurityController extends AbstractController
         $userPicture = $user->getPicture();
 
         $cats = $catRepository->findBy(['owner' => $user]);
-        dump($cats);
         $catsPictures = [];
         $documents = [];
 
@@ -107,14 +106,9 @@ class SecurityController extends AbstractController
             array_push($catsPictures, $cats[$i]->getPicture());
         }
 
-        dump($catsPictures);
-
         for ($i = 0; $i < count($cats); $i++) { 
             array_push($documents, $healthRepository->findCatFilenames($cats[$i]));
         }
-
-        dump($documents);
-
 
         $form = $this->createForm(DeleteUserFormType::class, $user, [
             'action' => $this->generateUrl('delete-user'),
