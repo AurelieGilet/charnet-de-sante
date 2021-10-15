@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Espace administeur{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/user-interface/user-interface.css') }}" >
+{% endblock %}
+
+{% block body %}
+    <main>
+        <section>
+        <div class="item"> 
+                <a href="">
+                    <img src="{{ asset('img/site/cat-head.png') }}" alt="Illustration de tête de chat indiquant un accès à la liste des chats">
+                    <span>Mon compte</span>
+                </a>
+                <p>Gestion du compte administrateur</p>
+            </div>
+            <div class="item">
+                <a href="">
+                    <img src="{{ asset('img/site/cat-head.png') }}" alt="Illustration de tête de chat indiquant un accès au profil">
+                    <span>Utilisateurs</span>
+                </a>
+                <p>Gestion des utilisateurs et modification des rôles</p>
+            </div>
+            <div class="item"> 
+                <a href="">
+                    <img src="{{ asset('img/site/cat-head.png') }}" alt="Illustration de tête de chat indiquant un accès à la liste des chats">
+                    <span>F.A.Q</span>
+                </a>
+                <p>Gestion de la F.A.Q</p>
+            </div>
+        </section>
+    </main>
+{% endblock %}
