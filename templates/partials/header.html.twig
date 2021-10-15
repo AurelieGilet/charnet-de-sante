@@ -10,9 +10,22 @@
         </div>
         {% if is_granted("ROLE_USER") %}
         <div class="desktop-auth">
-            <a href="{{ path('user-interface') }}">
+            <a href="
+                {% if is_granted("ROLE_ADMIN")%}
+                    {{ path('admin-interface') }}
+                {% elseif is_granted("ROLE_USER") %}
+                    {{ path('user-interface') }}
+                {% endif %}">
                 <div class="user-avatar">
-                    <img {% if app.user.picture != null %} src="{{ asset('img/upload/' ~ app.user.picture) }}" alt="Photo de profil de {{ app.user.username }}" class="user-picture" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
+                    <img 
+                        {% if app.user.picture != null %} 
+                            src="{{ asset('img/upload/' ~ app.user.picture) }}" 
+                            alt="Photo de profil de {{ app.user.username }}" class="user-picture" 
+                        {% else %} 
+                            src="{{ asset('img/site/cat-portrait.png') }}" 
+                            alt="Illustration portrait de chat" 
+                        {% endif %}
+                    >
                 </div>
                 <h2>Bienvenue {{ app.user.username }}</h2>
             </a>
@@ -29,19 +42,57 @@
                 <ul class="burger-nav">
                     <div class="long-line"></div>
                     <li class="mobile-auth">
-                        <a href="{{ path('user-interface') }}">
+                        <a href="
+                            {% if is_granted("ROLE_ADMIN")%}
+                                {{ path('admin-interface') }}
+                            {% elseif is_granted("ROLE_USER") %}
+                                {{ path('user-interface') }}
+                            {% endif %}">
                             <div class="user-avatar">
-                                <img {% if app.user.picture != null %} src="{{ asset('img/upload/' ~ app.user.picture) }}" alt="Photo de profil de {{ app.user.username }}" class="user-picture" {% else %} src="{{ asset('img/site/cat-portrait.png') }}" alt="Illustration portrait de chat" {% endif %} >
+                                <img 
+                                    {% if app.user.picture != null %} 
+                                        src="{{ asset('img/upload/' ~ app.user.picture) }}" 
+                                        alt="Photo de profil de {{ app.user.username }}" 
+                                        class="user-picture" 
+                                    {% else %} 
+                                        src="{{ asset('img/site/cat-portrait.png') }}" 
+                                        alt="Illustration portrait de chat" 
+                                    {% endif %}
+                                >
                             </div>
                             <h2>Bienvenue {{ app.user.username }}</h2>
                         </a>
                     </li>
                     <div class="long-line"></div>
-                    <li {% if route_name == 'user-account' %} class="active" {% endif %}><a href="{{ path('user-account') }}">Mon Compte</a></li>
+                    <li {% if route_name == 'user-account' %} class="active" {% endif %}>
+                        <a href="{{ path('user-account') }}">Mon Compte</a>
+                    </li>
                     <div class="line"></div>
-                    <li {% if route_name == 'cat-list' %} class="active" {% endif %}><a href="{{ path('cat-list') }}">Mes Chats</a></li>
+                    <li {% if route_name == 'cat-list'%} class="active" {% endif %}>
+                        <a href="
+                            {% if is_granted("ROLE_ADMIN")%}
+                                
+                            ">Utilisateurs
+                        </a>
+                    </li>
+                            {% elseif is_granted("ROLE_USER") %}
+                                {{ path('cat-list') }}
+                            ">Mes Chats
+                        </a>
+                    </li>{% endif %}
                     <div class="line"></div>
-                    <li {% if route_name == 'help' %} class="active" {% endif %}><a href="{{ path('help') }}">Mode d'emploi</a></li>
+                    <li {% if route_name == 'help' %} class="active" {% endif %}>
+                        <a href="
+                            {% if is_granted("ROLE_ADMIN")%}
+                            
+                            ">F.A.Q
+                        </a>
+                    </li>
+                            {% elseif is_granted("ROLE_USER") %}
+                                {{ path('help') }}
+                            ">Mode d'emploi
+                        </a>
+                    </li>{% endif %}
                     <div class="line"></div>
                     <li {% if route_name == 'logout' %} class="active" {% endif %}><a href="{{ path('logout') }}">Déconnexion</a></li>
                     <div class="line"></div>
@@ -55,13 +106,39 @@
                 </div>
                 <ul class="custom-options">
                     <div class="long-line"></div>
-                    <li {% if route_name == 'user-account' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="{{ path('user-account') }}">Mon Compte</a></li>
+                    <li {% if route_name == 'user-account' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}>
+                        <a href="{{ path('user-account') }}">Mon Compte</a>
+                    </li>
                     <div class="long-line"></div>
-                    <li {% if route_name == 'cat-list' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="{{ path('cat-list') }}">Mes Chats</a></li>
+                    <li {% if route_name == 'cat-list' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}>
+                        <a href="
+                            {% if is_granted("ROLE_ADMIN")%}
+                                
+                            ">Utilisateurs
+                        </a>
+                    </li>
+                            {% elseif is_granted("ROLE_USER") %}
+                                {{ path('cat-list') }}
+                            ">Mes Chats
+                        </a>
+                    </li>{% endif %}
                     <div class="long-line"></div>
-                    <li {% if route_name == 'help' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="{{ path('help') }}">Mode d'emploi</a></li>
+                    <li {% if route_name == 'help' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}>
+                        <a href="
+                            {% if is_granted("ROLE_ADMIN")%}
+                            
+                            ">F.A.Q
+                        </a>
+                    </li>
+                            {% elseif is_granted("ROLE_USER") %}
+                                {{ path('help') }}
+                            ">Mode d'emploi
+                        </a>
+                    </li>{% endif %}
                     <div class="long-line"></div>
-                    <li {% if route_name == 'logout' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}><a href="{{ path('logout') }}">Déconnexion</a></li>
+                    <li {% if route_name == 'logout' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}>
+                        <a href="{{ path('logout') }}">Déconnexion</a>
+                    </li>
                     <div class="long-line"></div>
                 </ul>
             </div>
