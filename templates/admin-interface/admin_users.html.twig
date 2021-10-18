@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Gestion des utilisateurs{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin-interface/admin-interface-shared-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin-interface/admin-forms.css') }}">
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <h2>Gestion des utilisateurs</h2>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <h3>Chercher un utilisateur</h3>
+                </div>
+
+            </div>
+            <div class="card-content card-template entries">
+                <div class="card-title">
+                    <h3>Liste des utilisateurs :</h3>
+                    <a href="" class="show-data mobile-options modify"><img src="{{ asset('img/site/reset.png') }}" alt="Icône de réinitialisation" title="Afficher tous les utilisateurs"></a>
+                    <a href="" class="show-info desktop-options modify">Tout afficher</a>
+                </div>
+                {% for user in paginatedUsers %}                
+                <div class="entry card-template">
+                    <div class="entry-info">
+                        <p>Nom d'utilisateur : <span class="data">{{ user.username }}</span></p>
+                        <p>Adresse email : <span class="data">{{ user.email }}</span></p>
+                        <p>Nombre de chats : <span class="data">{{ user.cats|length }}</span></p>
+                        <p>Rôle : 
+                            <span class="data">
+                                {% if "ROLE_ADMIN" in user.roles %}
+                                    Administrateur
+                                {% elseif "ROLE_USER" in user.roles %}
+                                    Utilisateur
+                                {% endif %}
+                            </span>
+                        </p>                      
+                    </div>
+                    <div>
+                        <div class="mobile-options">
+                            <span class="edit-data add-edit-data-btn" data-data-id="{{ user.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Changer le Rôle de l'utilisateur"></span>
+                            <span class="delete-data delete-data-btn" data-data-id="{{ user.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'utilisateur"></span>
+                        </div>
+                        <div class="desktop-options">
+                            <span class="show-info desktop modify add-edit-data-btn" data-data-id="{{ user.id }}">Changer le Rôle</span>
+                            <span class="show-info desktop delete delete-data-btn" data-data-id="{{ user.id }}">Supprimer</span>
+                        </div>
+                    </div>
+                </div>
+                {# <div id="edit-{{ user.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\AdminController::adminEditUserRole',
+                        { 'userId': user.id }
+                    ))}}
+                </div> #}
+                <div id="delete-{{ user.id }}" class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\AdminController::adminDeleteUser',
+                        { 'userId': user.id }
+                    ))}}
+                </div>
+                {% endfor %}
+                {{ knp_pagination_render(paginatedUsers) }}
+            </div>
+        </div>
+    </section>
+</main>
+<script type="text/javascript" src="{{ asset('js/admin-interface/admin-interface.js') }}"></script>
+{% endblock %}

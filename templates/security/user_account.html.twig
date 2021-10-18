@@ -50,7 +50,14 @@
             </div>
         </div>
         <span id="delete-user" class="update-info delete">Supprimer le compte</span>
-        <a href="{{ path('user-interface') }}" class="return-btn">Retour</a>
+        <a href="
+            {% if is_granted("ROLE_ADMIN")%}
+                {{ path('admin-interface') }}
+            {% else %}
+                {{ path('user-interface') }}
+            {% endif %}"
+            class="return-btn">Retour
+        </a>
     </section>
 
     <div id="edit-username-form">
