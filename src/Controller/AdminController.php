@@ -161,7 +161,7 @@ class AdminController extends AbstractController
                 return $this->redirectToRoute('admin-users');
             }
         } else if($form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', "L'utilisateur ". $username . " n'a pas été supprimé. Vous devez confirmez par mot de passe.");
+            $this->addFlash('danger', "L'utilisateur ". $username . " n'a pas été supprimé. Vous devez confirmer par mot de passe.");
 
             return $this->redirectToRoute('admin-users');
         }
