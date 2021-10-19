@@ -1,0 +1,140 @@
+/* FORMS */
+
+.edit-data-form, .delete-data-form {
+    display: none;
+}
+
+.form-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background-color: #24004656;
+}
+
+.form-wrapper {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 5px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: var(--purple-navy);
+    color: white;
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin: 5px;
+    padding: 5px;
+    background-color: var(--medium-purple);
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.delete-btn {
+    font-weight: bold;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form div {
+    width: 90%;
+    max-width: 265px;
+    margin: 10px auto;
+}
+
+.form-wrapper h3 {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.form-wrapper p {
+    font-size: 1rem;
+    text-align: center;
+    line-height: 1.2rem;
+    margin: 15px 5px 0 5px;
+}
+
+.form-checkbox {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-checkbox input[type=checkbox] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -border-radius: 5px;
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    margin-right: 10px;
+}
+
+.form-checkbox input[type=checkbox]:checked {
+    background: var(--medium-purple);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-checkbox input[type=checkbox]:checked::before {
+    content: '\002713';
+    display: block;
+    color: white;
+}
+
+.form-label {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+.delete-user-form  label {
+    text-align: center;
+}
+
+/***** RESPONSIVE *****/
+
+@media screen and (min-width: 768px) {
+    form div {
+        width: 50%;
+        margin: 20px auto;
+    }
+    .form-wrapper h3 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+    .search-user-form {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+    .search-user-form div {
+        width: 35%;
+        margin: 10px 0;
+    }
+    .search-user-form div:last-of-type {
+        width: 25%;
+        margin: 0 0 2px 0;
+    } 
+}

@@ -1,0 +1,11 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close delete-modal-close-btn">X</div>
+        <h3>Etes-vous sûr de vouloir supprimer cet utilisateur ?</h3>
+        <p>Cette action est irréversible. Vous supprimerez toutes le données sur l'utilisateur et ses chats. En cas d'erreur, il ne vous sera pas possible de les récupérer.</p>
+        {{ form_start(deleteUserForm, {'attr': {'class': 'delete-user-form'}}) }}
+            {{ form_row(deleteUserForm.password) }}
+            {{ form_row(deleteUserForm.submit, {'label': 'Supprimer'}) }}
+        {{ form_end(deleteUserForm) }}
+    </div>
+</div>

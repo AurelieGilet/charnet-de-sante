@@ -68,10 +68,10 @@
                         <a href="{{ path('user-account') }}">Mon Compte</a>
                     </li>
                     <div class="line"></div>
-                    <li {% if route_name == 'cat-list'%} class="active" {% endif %}>
+                    <li {% if route_name == 'cat-list' or route_name == 'admin-users' %} class="active" {% endif %}>
                         <a href="
                             {% if is_granted("ROLE_ADMIN")%}
-                                
+                                {{ path('admin-users') }}
                             ">Utilisateurs
                         </a>
                     </li>
@@ -110,10 +110,10 @@
                         <a href="{{ path('user-account') }}">Mon Compte</a>
                     </li>
                     <div class="long-line"></div>
-                    <li {% if route_name == 'cat-list' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}>
+                    <li {% if route_name == 'cat-list' or route_name == 'admin-users' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}>
                         <a href="
                             {% if is_granted("ROLE_ADMIN")%}
-                                
+                                {{ path('admin-users') }}
                             ">Utilisateurs
                         </a>
                     </li>

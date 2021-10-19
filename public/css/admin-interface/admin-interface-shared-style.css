@@ -1,0 +1,221 @@
+/* PAGINATION */
+
+.pagination {
+    color: var(--medium-purple);
+    margin: 10px 5px;
+}
+
+.pagination span {
+    margin: 0 5px;
+}
+
+.current, .next, .last, .first, .previous {
+    font-weight: bold;
+}
+
+.current {
+    color: var(--purple-navy);
+}
+
+/* PAGES SHARED TEMPLATE */
+
+main {
+    min-height: 90vh;
+    background-color: var(--main-background-color);
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    min-height: 70vh;
+    border-radius: 0;
+    box-sizing: border-box;
+    background-color: var(--main-background-color);
+}
+
+.card {
+    width: 90%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-background-color);
+    border-radius: 5px;
+    margin: 10px 0 40px 0;
+}
+
+.card-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+}
+
+.card h2 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 10px;
+    width: 95%;
+}
+
+.card-template {
+    background-color: var(--list-background-color);
+    border: 1px solid var(--list-border-color);
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
+    padding: 15px 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+}
+
+.card-content {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+}
+
+.entries {
+    margin-bottom: 20px; 
+}
+
+.entry {
+    display: flex;
+    width: 95%;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.entry-info {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    line-height: 1.5rem;
+}
+
+.data {
+    font-weight: bold;
+    text-align: center;
+    width: 70%;
+    word-break: break-word;
+}
+
+.data span {
+    padding: 2px 0px;
+    margin: 0px 4px;
+}
+
+/* DATA ACTIONS */
+
+.show-data, .edit-data, .delete-data, .delete-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--medium-purple);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
+    cursor: pointer;
+    color: white;
+    white-space: nowrap;
+    margin: 10px;
+}
+
+.edit-data {
+    margin: 2px;
+}
+
+.delete-data {
+    background-color: var(--purple-navy);
+    margin: 2px;
+}
+
+.mobile-options img {
+    width: 15px;
+    height: auto;
+}
+
+.desktop-options {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.mobile-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.show-info {
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 3px;
+    white-space: nowrap;
+    margin: 0 10px;
+}
+
+.modify {
+    color: var(--medium-purple);
+}
+
+.delete {
+    color: #626364;
+}
+
+/***** RESPONSIVE *****/
+
+@media screen and (min-width: 768px) {
+    .card {
+        width: 90%;
+    }
+    .card h2 {
+        font-size: 1.6rem;
+    }
+    .card h3 {
+        font-size: 1.4rem;
+        width: 90%;
+    }
+    .card p {
+        font-size: 1.1rem;
+    }
+    .card-body {
+        width: 90%;
+    }
+    .desktop-options {
+        display: flex;
+    }
+    .mobile-options {
+        display: none;
+    }
+    .entry {
+        width: 90%;
+    }
+    .entries {
+        margin-bottom: 40px;
+    }
+}
