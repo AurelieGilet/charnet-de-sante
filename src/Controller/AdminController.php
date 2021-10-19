@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\AdminUsersFormType;
 use App\Form\DeleteUserFormType;
 use App\Repository\CatRepository;
 use App\Repository\UserRepository;
@@ -50,6 +51,47 @@ class AdminController extends AbstractController
     }
 
     /**
+     * @Route("/espace-administrateur/gestion-utilisateurs/{userId}/editer-role", name="admin-edit-user-role")
+     */
+    public function adminEditUserRole(Request $request, EntityManagerInterface $manager, UserRepository $userRepository): Response
+    {
+        $userId = $request->attributes->get('userId');
+        $user = $userRepository->findOneBy(['id' => $userId]);
+        $username = $user->getUsername();
+
+        $form = $this->createForm(AdminUsersFormType::class, $user, [
+            'action' => $this->generateUrl('admin-edit-user-role', ['userId' => $user->getId() ]),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getRoles() == null) {
+                $this->addFlash('danger', "Le rôle de l'utilisateur ". $username . " n'a pas été modifié. Vous devez choisir un rôle.");
+
+                return $this->redirectToRoute('admin-users');
+            }
+
+            $manager->persist($user);
+            $manager->flush($user);
+
+            $this->addFlash('success', "Le rôle de l'utilisateur ". $username . " a bien été modifié.");
+
+            return $this->redirectToRoute('admin-users');
+
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "Le rôle de l'utilisateur ". $username . " n'a pas été modifié. Vous devez choisir un rôle.");
+
+            return $this->redirectToRoute('admin-users');
+        }
+
+        return $this->render('admin-interface/_edit_roles_form.html.twig', [
+            'controller_name' => 'AdminController',
+            'adminUsersForm' => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/espace-administrateur/gestion-utilisateurs/{userId}/supprimer-utilisateur", name="admin-delete-user")
      */
     public function adminDeleteUser(Request $request, EntityManagerInterface $manager, UserRepository $userRepository, CatRepository $catRepository, HealthRepository $healthRepository): Response
@@ -60,7 +102,6 @@ class AdminController extends AbstractController
         $userId = $request->attributes->get('userId');
         $user = $userRepository->findOneBy(['id' => $userId]);
         $username = $user->getUsername();
-        dump($username);
         $userPicture = $user->getPicture();
 
         $userCats = $catRepository->findBy(['owner' => $user]);

@@ -1,24 +1,22 @@
 // MODALS
 
-// const addEditModalClose = document.getElementsByClassName(
-//   "add-edit-modal-close-btn"
-// );
+const editModalClose = document.getElementsByClassName("edit-modal-close-btn");
 const deleteModalClose = document.getElementsByClassName(
   "delete-modal-close-btn"
 );
-// const addEditDataBtn = document.getElementsByClassName("add-edit-data-btn");
-// const addEditDataForm = document.getElementsByClassName("add-edit-data-form");
+const editDataBtn = document.getElementsByClassName("edit-data-btn");
+const editDataForm = document.getElementsByClassName("edit-data-form");
 const deleteDataBtn = document.getElementsByClassName("delete-data-btn");
 const deleteDataForm = document.getElementsByClassName("delete-data-form");
 
-// if (addEditModalClose != null) {
-//   for (let i = 0; i < addEditModalClose.length; i++) {
-//     addEditModalClose[i].addEventListener("click", function () {
-//       addEditDataForm[i].style.display = "none";
-//       body[0].classList.remove("modal-open");
-//     });
-//   }
-// }
+if (editModalClose != null) {
+  for (let i = 0; i < editModalClose.length; i++) {
+    editModalClose[i].addEventListener("click", function () {
+      editDataForm[i].style.display = "none";
+      body[0].classList.remove("modal-open");
+    });
+  }
+}
 
 if (deleteModalClose != null) {
   for (let i = 0; i < deleteModalClose.length; i++) {
@@ -29,14 +27,14 @@ if (deleteModalClose != null) {
   }
 }
 
-// for (let i = 0; i < addEditDataBtn.length; i++) {
-//   addEditDataBtn[i].addEventListener("click", function () {
-//     let dataId = addEditDataBtn[i].dataset.dataId;
-//     let addEditDataForm = document.getElementById("edit-" + dataId);
-//     addEditDataForm.style.display = "block";
-//     body[0].classList.add("modal-open");
-//   });
-// }
+for (let i = 0; i < editDataBtn.length; i++) {
+  editDataBtn[i].addEventListener("click", function () {
+    let dataId = editDataBtn[i].dataset.dataId;
+    let editDataForm = document.getElementById("edit-" + dataId);
+    editDataForm.style.display = "block";
+    body[0].classList.add("modal-open");
+  });
+}
 
 for (let i = 0; i < deleteDataBtn.length; i++) {
   deleteDataBtn[i].addEventListener("click", function () {

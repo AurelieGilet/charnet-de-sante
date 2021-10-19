@@ -1,6 +1,6 @@
 /* FORMS */
 
-.add-edit-data-form, .delete-data-form {
+.edit-data-form, .delete-data-form {
     display: none;
 }
 
@@ -68,10 +68,40 @@ form div {
 .form-wrapper p {
     font-size: 1rem;
     text-align: center;
-    margin: 15px 0 0 0;
+    line-height: 1.2rem;
+    margin: 15px 5px 0 5px;
 }
 
-.notes-label {
+.form-checkbox {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-checkbox input[type=checkbox] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -border-radius: 5px;
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    margin-right: 10px;
+}
+
+.form-checkbox input[type=checkbox]:checked {
+    background: var(--medium-purple);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-checkbox input[type=checkbox]:checked::before {
+    content: '\002713';
+    display: block;
+    color: white;
+}
+
+.form-label {
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
