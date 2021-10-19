@@ -124,4 +124,17 @@ form div {
         font-size: 1.3rem;
         text-align: center;
     }
+    .search-user-form {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+    .search-user-form div {
+        width: 35%;
+        margin: 10px 0;
+    }
+    .search-user-form div:last-of-type {
+        width: 25%;
+        margin: 0 0 2px 0;
+    } 
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\AdminUsersFormType;
 use App\Form\DeleteUserFormType;
+use App\Form\SearchUserFormType;
 use App\Repository\CatRepository;
 use App\Repository\UserRepository;
 use App\Repository\HealthRepository;
@@ -44,8 +45,23 @@ class AdminController extends AbstractController
             5
         );
 
+        $form = $this->createForm(SearchUserFormType::class);
+
+        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
+            $criteria = $form->getData();
+
+            $users = $userRepository->findBySearch($criteria);
+
+            $paginatedUsers = $paginator->paginate(
+                $users,
+                $request->query->getInt('page', 1),
+                5
+            );
+        }
+
         return $this->render('admin-interface/admin_users.html.twig', [
             'controller_name' => 'AdminController',
+            'searchForm' => $form->createView(),
             'paginatedUsers' => $paginatedUsers,
         ]);
     }
@@ -66,11 +82,6 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()->getRoles() == null) {
-                $this->addFlash('danger', "Le rôle de l'utilisateur ". $username . " n'a pas été modifié. Vous devez choisir un rôle.");
-
-                return $this->redirectToRoute('admin-users');
-            }
 
             $manager->persist($user);
             $manager->flush($user);

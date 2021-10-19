@@ -21,7 +21,11 @@
                 <div class="card-title">
                     <h3>Chercher un utilisateur</h3>
                 </div>
-
+                {{ form_start(searchForm, {'attr': {'class': 'search-user-form'}}) }}
+                    {{ form_row(searchForm.username) }}
+                    {{ form_row(searchForm.email) }}
+                    {{ form_row(searchForm.submit) }}
+                {{ form_end(searchForm) }}
             </div>
             <div class="card-content card-template entries">
                 <div class="card-title">
