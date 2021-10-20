@@ -16,11 +16,11 @@ class FAQFormType extends AbstractType
         $builder
             ->add('question', TextType::class, [
                 'label' => "Question *",
-                'required' => true,
+                'required' => false,
             ])
             ->add('answer', TextareaType::class, [
                 'label' => "Réponse *",
-                'required' => true,
+                'required' => false,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "Enregistrer"
