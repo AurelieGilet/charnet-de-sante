@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\FAQRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BaseController extends AbstractController
 {
@@ -21,10 +24,21 @@ class BaseController extends AbstractController
     /**
      * @Route("/aide", name="help")
      */
-    public function help(): Response
+    public function help(Request $request,FAQRepository $faqRepository, PaginatorInterface $paginator): Response
     {
+        $faqs = $faqRepository->findBy(array(),
+                                       array('id'=>'DESC') 
+                                );
+
+        $paginatedFAQ = $paginator->paginate(
+            $faqs,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('homepage/help.html.twig', [
             'controller_name' => 'BaseController',
+            'paginatedFAQ' => $paginatedFAQ,
         ]);
     }
 

@@ -11,11 +11,11 @@
         <section>
             <h2>MODE D'EMPLOI</h2>
             <div class="articles">
-                <article id="chart" >
+                <article>
                     <div class="article-header">
                         <div class="functionnality">
                             <div class="icon">
-                                <img src="{{ asset('img/site/chart.png') }}" alt="Icône de graphique">
+                                <img src="{{ asset('img/site/measure.png') }}" alt="Icône de mètre ruban">
                             </div>
                             <h3>Lorem ipsum dolor sit amet</h3>
                         </div>
@@ -23,11 +23,11 @@
                     </div>
                     <p class="article-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto beatae velit non omnis molestiae eaque saepe possimus, provident repellendus mollitia culpa aspernatur quos enim minus a facere tenetur aperiam pariatur.</p>
                 </article>
-                <article id="heart">
+                <article>
                     <div class="article-header">
                         <div class="functionnality">
                             <div class="icon">
-                                <img src="{{ asset('img/site/heart.png') }}" alt="Icône de graphique">
+                                <img src="{{ asset('img/site/heart.png') }}" alt="Icône de coeur">
                             </div>
                             <h3>Lorem ipsum dolor sit amet</h3>
                         </div>
@@ -35,11 +35,11 @@
                     </div>
                     <p class="article-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto beatae velit non omnis molestiae eaque saepe possimus, provident repellendus mollitia culpa aspernatur quos enim minus a facere tenetur aperiam pariatur.</p>
                 </article>
-                <article id="food">
+                <article>
                     <div class="article-header">
                         <div class="functionnality">
                             <div class="icon">
-                                <img src="{{ asset('img/site/food.png') }}" alt="Icône de graphique">
+                                <img src="{{ asset('img/site/food.png') }}" alt="Icône de gamelle pour animaux">
                             </div>
                             <h3>Lorem ipsum dolor sit amet</h3>
                         </div>
@@ -47,11 +47,11 @@
                     </div>
                     <p class="article-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto beatae velit non omnis molestiae eaque saepe possimus, provident repellendus mollitia culpa aspernatur quos enim minus a facere tenetur aperiam pariatur.</p>
                 </article>
-                <article id="files">
+                <article>
                     <div class="article-header">
                         <div class="functionnality">
                             <div class="icon">
-                                <img src="{{ asset('img/site/files.png') }}" alt="Icône de graphique">
+                                <img src="{{ asset('img/site/medicine.png') }}" alt="Icône de médicaments">
                             </div>
                             <h3>Lorem ipsum dolor sit amet</h3>
                         </div>
@@ -59,11 +59,11 @@
                     </div>
                     <p class="article-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto beatae velit non omnis molestiae eaque saepe possimus, provident repellendus mollitia culpa aspernatur quos enim minus a facere tenetur aperiam pariatur.</p>
                 </article>
-                <article id="notification">
+                <article>
                     <div class="article-header">
                         <div class="functionnality">
                             <div class="icon">
-                                <img src="{{ asset('img/site/notification.png') }}" alt="Icône de graphique">
+                                <img src="{{ asset('img/site/files.png') }}" alt="Icône de documents">
                             </div>
                             <h3>Lorem ipsum dolor sit amet</h3>
                         </div>
@@ -71,11 +71,11 @@
                     </div>
                     <p class="article-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto beatae velit non omnis molestiae eaque saepe possimus, provident repellendus mollitia culpa aspernatur quos enim minus a facere tenetur aperiam pariatur.</p>
                 </article>
-                <article id="share">
+                <article>
                     <div class="article-header">
                         <div class="functionnality">
                             <div class="icon">
-                                <img src="{{ asset('img/site/share.png') }}" alt="Icône de graphique">
+                                <img src="{{ asset('img/site/share.png') }}" alt="Icône de personnages">
                             </div>
                             <h3>Lorem ipsum dolor sit amet</h3>
                         </div>
@@ -88,42 +88,18 @@
         <section>
             <h2>F.A.Q</h2>
             <div class="articles">
+                {% for faq in paginatedFAQ %}  
                 <article>
                     <div class="article-header">
                         <div >
-                            <h3>Lorem ipsum dolor sit amet ?</h3>
+                            <h3>{{ faq.question }}</h3>
                         </div>
                         <div class="arrow"></div>
                     </div>
-                    <p class="article-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto beatae velit non omnis molestiae eaque saepe possimus, provident repellendus mollitia culpa aspernatur quos enim minus a facere tenetur aperiam pariatur.</p>
+                    <p class="article-content">{{ faq.answer }}</p>
                 </article>
-                <article>
-                    <div class="article-header">
-                        <div >
-                            <h3>Lorem ipsum dolor sit amet ?</h3>
-                        </div>
-                        <div class="arrow"></div>
-                    </div>
-                    <p class="article-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto beatae velit non omnis molestiae eaque saepe possimus, provident repellendus mollitia culpa aspernatur quos enim minus a facere tenetur aperiam pariatur.</p>
-                </article>
-                <article>
-                    <div class="article-header">
-                        <div >
-                            <h3>Lorem ipsum dolor sit amet ?</h3>
-                        </div>
-                        <div class="arrow"></div>
-                    </div>
-                    <p class="article-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto beatae velit non omnis molestiae eaque saepe possimus, provident repellendus mollitia culpa aspernatur quos enim minus a facere tenetur aperiam pariatur.</p>
-                </article>
-                <article>
-                    <div class="article-header">
-                        <div >
-                            <h3>Lorem ipsum dolor sit amet ?</h3>
-                        </div>
-                        <div class="arrow"></div>
-                    </div>
-                    <p class="article-content">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto beatae velit non omnis molestiae eaque saepe possimus, provident repellendus mollitia culpa aspernatur quos enim minus a facere tenetur aperiam pariatur.</p>
-                </article>
+                {% endfor %}
+                {{ knp_pagination_render(paginatedFAQ) }}
             </div>
         </section>
     </main>

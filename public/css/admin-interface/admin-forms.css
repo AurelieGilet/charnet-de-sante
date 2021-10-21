@@ -1,6 +1,6 @@
 /* FORMS */
 
-.edit-data-form, .delete-data-form {
+.add-edit-data-form, .delete-data-form {
     display: none;
 }
 
@@ -57,6 +57,11 @@ form div {
     width: 90%;
     max-width: 265px;
     margin: 10px auto;
+}
+
+.admin-faq-form div {
+    width: 90%;
+    max-width: 90%;
 }
 
 .form-wrapper h3 {
@@ -124,7 +129,7 @@ form div {
         font-size: 1.3rem;
         text-align: center;
     }
-    .search-user-form {
+    .search-user-form, .search-faq-form {
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
@@ -133,7 +138,12 @@ form div {
         width: 35%;
         margin: 10px 0;
     }
-    .search-user-form div:last-of-type {
+    .search-faq-form div {
+        width: 70%;
+        max-width: 70%;
+        margin: 10px 0;
+    }
+    .search-user-form div:last-of-type, .search-faq-form div:last-of-type {
         width: 25%;
         margin: 0 0 2px 0;
     } 
