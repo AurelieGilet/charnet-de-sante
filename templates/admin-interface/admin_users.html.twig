@@ -19,7 +19,7 @@
             </div>
             <div class="card-content card-template">
                 <div class="card-title">
-                    <h3>Chercher un utilisateur</h3>
+                    <h3>Chercher un utilisateur :</h3>
                 </div>
                 {{ form_start(searchForm, {'attr': {'class': 'search-user-form'}}) }}
                     {{ form_row(searchForm.username) }}
@@ -30,8 +30,8 @@
             <div class="card-content card-template entries">
                 <div class="card-title">
                     <h3>Liste des utilisateurs :</h3>
-                    <a href="" class="show-data mobile-options modify"><img src="{{ asset('img/site/reset.png') }}" alt="Icône de réinitialisation" title="Afficher tous les utilisateurs"></a>
-                    <a href="" class="show-info desktop-options modify">Tout afficher</a>
+                    <a href="{{ path('admin-users') }}" class="show-data-mobile mobile-options"><img src="{{ asset('img/site/reset.png') }}" alt="Icône de réinitialisation" title="Afficher tous les utilisateurs"></a>
+                    <a href="{{ path('admin-users') }}" class="show-data desktop-options">Tout afficher</a>
                 </div>
                 {% for user in paginatedUsers %}                
                 <div class="entry card-template">
@@ -51,16 +51,16 @@
                     </div>
                     <div>
                         <div class="mobile-options">
-                            <span class="edit-data edit-data-btn" data-data-id="{{ user.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Changer le Rôle de l'utilisateur"></span>
-                            <span class="delete-data delete-data-btn" data-data-id="{{ user.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'utilisateur"></span>
+                            <span class="edit-data-mobile add-edit-data-btn" data-data-id="{{ user.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Changer le Rôle de l'utilisateur"></span>
+                            <span class="delete-data-mobile delete-data-btn" data-data-id="{{ user.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'utilisateur"></span>
                         </div>
                         <div class="desktop-options">
-                            <span class="show-info desktop modify edit-data-btn" data-data-id="{{ user.id }}">Changer le Rôle</span>
-                            <span class="show-info desktop delete delete-data-btn" data-data-id="{{ user.id }}">Supprimer</span>
+                            <span class="edit-data add-edit-data-btn" data-data-id="{{ user.id }}">Changer le Rôle</span>
+                            <span class="delete-data delete delete-data-btn" data-data-id="{{ user.id }}">Supprimer</span>
                         </div>
                     </div>
                 </div>
-                <div id="edit-{{ user.id }}" class="edit-data-form">
+                <div id="edit-{{ user.id }}" class="add-edit-data-form">
                     {{ render(controller(
                         'App\\Controller\\AdminController::adminEditUserRole',
                         { 'userId': user.id }
