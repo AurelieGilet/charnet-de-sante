@@ -19,32 +19,26 @@ class FAQRepository extends ServiceEntityRepository
         parent::__construct($registry, FAQ::class);
     }
 
-    // /**
-    //  * @return FAQ[] Returns an array of FAQ objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return FAQ[]
+     */
+    public function findFAQBySearch($criteria)
     {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $query = $this
+                ->createQueryBuilder('faq');
 
-    /*
-    public function findOneBySomeField($value): ?FAQ
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if (!empty($criteria)) {
+            for ($i = 0; $i < count($criteria); $i++) {
+                $query = $query
+                    ->orWhere('faq.question LIKE :word'.$i)
+                    ->setParameter('word'.$i , "%" . $criteria[$i] . "%");
+            }
+        }
+
+        $query = $query->orderBy('faq.id', 'DESC');
+
+        $query = $query->getQuery();
+
+        return $query->getResult();
     }
-    */
 }

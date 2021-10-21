@@ -85,23 +85,24 @@ class AdminController extends AbstractController
             10
         );
 
-        // $form = $this->createForm(SearchFAQFormType::class);
+        $form = $this->createForm(SearchFAQFormType::class);
 
-        // if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
-        //     $criteria = $form->getData();
+        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
+            $criteria = $form->getData();
+            $criteria = explode(" ", $criteria['question']);
 
-        //     $faqs = $faqRepository->findFAQBySearch($criteria);
+            $faqs = $faqRepository->findFAQBySearch($criteria);
 
-        //     $paginatedFAQ = $paginator->paginate(
-        //         $faqs,
-        //         $request->query->getInt('page', 1),
-        //         10
-        //     );
-        // }
+            $paginatedFAQ = $paginator->paginate(
+                $faqs,
+                $request->query->getInt('page', 1),
+                10
+            );
+        }
 
         return $this->render('admin-interface/admin_faq.html.twig', [
             'controller_name' => 'AdminController',
-            // 'searchForm' => $form->createView(),
+            'searchForm' => $form->createView(),
             'paginatedFAQ' => $paginatedFAQ,
         ]);
     }
