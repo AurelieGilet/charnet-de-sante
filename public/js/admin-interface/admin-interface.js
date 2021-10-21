@@ -54,6 +54,7 @@ for (let i = 0; i < faqQuestion.length; i++) {
   faqQuestion[i].addEventListener("click", function () {
     const entryInfo = this.parentElement.parentElement;
     const faqAnswer = this.parentElement.parentElement.getElementsByClassName("faq-answer");
+    
     entryInfo.classList.toggle("open");
     faqAnswer[0].classList.toggle("open");
   });
