@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\FAQ;
+use App\Form\AdminFAQFormType;
+use App\Form\SearchFAQFormType;
 use App\Form\AdminUsersFormType;
 use App\Form\DeleteUserFormType;
 use App\Form\SearchUserFormType;
 use App\Repository\CatRepository;
+use App\Repository\FAQRepository;
 use App\Repository\UserRepository;
 use App\Repository\HealthRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,7 +54,7 @@ class AdminController extends AbstractController
         if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $criteria = $form->getData();
 
-            $users = $userRepository->findBySearch($criteria);
+            $users = $userRepository->findUserBySearch($criteria);
 
             $paginatedUsers = $paginator->paginate(
                 $users,
@@ -63,6 +67,80 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
             'searchForm' => $form->createView(),
             'paginatedUsers' => $paginatedUsers,
+        ]);
+    }
+
+    /**
+     * @Route("/espace-administrateur/gestion-faq", name="admin-faq")
+     */
+    public function adminFAQ(Request $request, FAQRepository $faqRepository, PaginatorInterface $paginator): Response
+    {
+        $faqs = $faqRepository->findBy(array(),
+                                       array('id'=>'DESC') 
+                                );
+
+        $paginatedFAQ = $paginator->paginate(
+            $faqs,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        // $form = $this->createForm(SearchFAQFormType::class);
+
+        // if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
+        //     $criteria = $form->getData();
+
+        //     $faqs = $faqRepository->findFAQBySearch($criteria);
+
+        //     $paginatedFAQ = $paginator->paginate(
+        //         $faqs,
+        //         $request->query->getInt('page', 1),
+        //         10
+        //     );
+        // }
+
+        return $this->render('admin-interface/admin_faq.html.twig', [
+            'controller_name' => 'AdminController',
+            // 'searchForm' => $form->createView(),
+            'paginatedFAQ' => $paginatedFAQ,
+        ]);
+    }
+
+    /**
+     * @Route("/espace-administrateur/gestion-faq/ajouter", name="admin-add-faq")
+     */
+    public function adminAddFAQ(Request $request, EntityManagerInterface $manager): Response
+    {
+        $faq = new FAQ();
+
+        $form = $this->createForm(AdminFAQFormType::class, $faq, [
+            'action' => $this->generateUrl('admin-add-faq'
+            ),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getQuestion() == null || $form->getData()->getAnswer() == null) {
+                $this->addFlash('danger', "La question n'a pas été ajoutée. Vous devez remplir tous les champs.");
+
+                return $this->redirectToRoute('admin-faq');
+            }
+
+            $manager->persist($faq);
+            $manager->flush();
+
+            $this->addFlash('success', "La question a été ajoutée");
+
+            return $this->redirectToRoute('admin-faq');
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "La question n'a pas été ajoutée. Vous devez remplir tous les champs.");
+
+            return $this->redirectToRoute('admin-faq');
+        }
+
+        return $this->render('admin-interface/_add_edit_faq_form.html.twig', [
+            'controller_name' => 'AdminController',
+            'adminFAQForm' => $form->createView(),
         ]);
     }
 
@@ -99,6 +177,45 @@ class AdminController extends AbstractController
         return $this->render('admin-interface/_edit_roles_form.html.twig', [
             'controller_name' => 'AdminController',
             'adminUsersForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/espace-administrateur/gestion-faq/{faqId}/editer", name="admin-edit-faq")
+     */
+    public function adminEditFAQ(Request $request, EntityManagerInterface $manager, FAQRepository $faqRepository): Response
+    {
+        $faqId = $request->attributes->get('faqId');
+        $faq = $faqRepository->findOneBy(['id' => $faqId]);
+
+        $form = $this->createForm(AdminFAQFormType::class, $faq, [
+            'action' => $this->generateUrl('admin-edit-faq', ['faqId' => $faq->getId()
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getData()->getQuestion() == null || $form->getData()->getAnswer() == null) {
+                $this->addFlash('danger', "La question n'a pas été modifiée. Vous devez remplir tous les champs.");
+
+                return $this->redirectToRoute('admin-faq');
+            }
+
+            $manager->persist($faq);
+            $manager->flush();
+
+            $this->addFlash('success', "La question a été modifiée");
+
+            return $this->redirectToRoute('admin-faq');
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "La question n'a pas été modifiée. Vous devez remplir tous les champs.");
+
+            return $this->redirectToRoute('admin-faq');
+        }
+
+        return $this->render('admin-interface/_add_edit_faq_form.html.twig', [
+            'controller_name' => 'AdminController',
+            'adminFAQForm' => $form->createView(),
         ]);
     }
 
@@ -169,6 +286,39 @@ class AdminController extends AbstractController
         return $this->render('admin-interface/_delete_user_form.html.twig', [
             'controller_name' => 'AdminController',
             'deleteUserForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/espace-administrateur/gestion-faq/{faqId}/supprimer-faq", name="admin-delete-faq")
+     */
+    public function adminDeleteFAQ(Request $request, EntityManagerInterface $manager, FAQRepository $faqRepository): Response
+    {
+        $faqId = $request->attributes->get('faqId');
+        $faq = $faqRepository->findOneBy(['id' => $faqId]);
+
+        $form = $this->createForm(AdminFAQFormType::class, $faq, [
+            'action' => $this->generateUrl('admin-delete-faq', ['faqId' => $faq->getId()
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->remove($faq);
+            $manager->flush();
+
+            $this->addFlash('success', "La question a été supprimée");
+
+            return $this->redirectToRoute('admin-faq');
+        } else if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "La question n'a pas été supprimée.");
+
+            return $this->redirectToRoute('admin-faq');
+        }
+
+        return $this->render('admin-interface/_delete_faq_form.html.twig', [
+            'controller_name' => 'AdminController',
+            'adminFAQForm' => $form->createView()
         ]);
     }
 }

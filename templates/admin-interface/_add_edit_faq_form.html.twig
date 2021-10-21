@@ -1,0 +1,10 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close add-edit-modal-close-btn">X</div>
+        {{ form_start(adminFAQForm, {'attr': {'class': 'admin-faq-form'}}) }}
+            <span>Les champs suivis d'un * sont obligatoires</span>
+            {{ form_row(adminFAQForm.question) }}
+            {{ form_row(adminFAQForm.answer) }}
+        {{ form_end(adminFAQForm) }}
+    </div>
+</div>

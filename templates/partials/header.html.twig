@@ -81,10 +81,10 @@
                         </a>
                     </li>{% endif %}
                     <div class="line"></div>
-                    <li {% if route_name == 'help' %} class="active" {% endif %}>
+                    <li {% if route_name == 'help' or route_name == 'admin-faq' %} class="active" {% endif %}>
                         <a href="
                             {% if is_granted("ROLE_ADMIN")%}
-                            
+                                {{ path('admin-faq') }}
                             ">F.A.Q
                         </a>
                     </li>
@@ -123,10 +123,10 @@
                         </a>
                     </li>{% endif %}
                     <div class="long-line"></div>
-                    <li {% if route_name == 'help' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}>
+                    <li {% if route_name == 'help' or route_name == 'admin-faq' %} class="selected custom-option" {% else %} class="custom-option" {% endif %}>
                         <a href="
                             {% if is_granted("ROLE_ADMIN")%}
-                            
+                                {{ path('admin-faq') }}
                             ">F.A.Q
                         </a>
                     </li>
