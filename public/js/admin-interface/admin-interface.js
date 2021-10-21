@@ -48,13 +48,12 @@ for (let i = 0; i < deleteDataBtn.length; i++) {
 
 // FAQ ARROW FUNCTION
 const arrows = document.querySelectorAll(".arrow");
-const faqQuestion = document.querySelectorAll(".card-title.card-title--variation");
+const faqQuestion = document.querySelectorAll(".faq-question");
 
 for (let i = 0; i < faqQuestion.length; i++) {
   faqQuestion[i].addEventListener("click", function () {
-    const entryInfo = this.parentElement;
-    const faqAnswer = this.parentElement.getElementsByClassName("faq-answer");
-
+    const entryInfo = this.parentElement.parentElement;
+    const faqAnswer = this.parentElement.parentElement.getElementsByClassName("faq-answer");
     entryInfo.classList.toggle("open");
     faqAnswer[0].classList.toggle("open");
   });
