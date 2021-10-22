@@ -34,7 +34,7 @@
                     </div>
                     <h3>Litière</h3>
                 </div>
-                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une entrée"></span>
                 <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
             </div>
             <div class="card-content card-template entries last-entries">
@@ -48,8 +48,8 @@
                         <p>Enfin, sachez qu’il vous faudra autant de bac à litière que vous avez de chats. En effet, la litière est une zone de conflit territorial pour nos félins. Limitez les risques de mésentente entre eux en leur fournissant à chacun leur propre litière.</p>
                     </div>
                     <div id="help-icon">
-                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
-                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" Title="Astuces" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" Title="Astuces" id="help-white" class="hide">
                     </div>
                 </div> 
                 {% for petCare in paginatedPetCares %}                
@@ -64,8 +64,8 @@
                     </div>
                     <div>
                         <div class="mobile-options">
-                            <span class="edit-data add-edit-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
-                            <span class="delete-data delete-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
+                            <span class="edit-data add-edit-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier l'entrée"></span>
+                            <span class="delete-data delete-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'entrée"></span>
                         </div>
                         <div class="desktop-options">
                             <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ petCare.id }}">Modifier</span>
