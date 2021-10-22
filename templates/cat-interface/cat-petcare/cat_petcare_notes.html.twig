@@ -32,9 +32,9 @@
                     <div class="icon">
                         <img src="{{ asset('img/site/notes.png') }}" alt="Icône de carnet de notes">
                     </div>
-                    <h3>Dents</h3>
+                    <h3>Notes</h3>
                 </div>
-                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus"></span>
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une entrée"></span>
                 <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
             </div>
             <div class="card-content card-template entries last-entries">
@@ -44,8 +44,8 @@
                         <p>Ici vous pouvez prendre toute sorte de notes sur l’entretien et les soins apportés à votre chat, ainsi que des évènements particuliers le concernant, comme par exemple noter s’il a des vomissements, des diarrhée, s’il a mangé quelque chose qu’il n’aurait pas dû et qu’il faut le surveiller, etc ...</p>
                     </div>
                     <div id="help-icon">
-                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" id="help-purple" class="show">
-                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" id="help-white" class="hide">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" Title="Astuces" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" Title="Astuces" id="help-white" class="hide">
                     </div>
                 </div> 
                 {% for petCare in paginatedPetCares %}                
@@ -56,8 +56,8 @@
                         </p>
                         <div>
                             <div class="mobile-options">
-                                <span class="edit-data add-edit-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon"></span>
-                                <span class="delete-data delete-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle"></span>
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier l'entrée"></span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'entrée"></span>
                             </div>
                             <div class="desktop-options">
                                 <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ petCare.id }}">Modifier</span>
