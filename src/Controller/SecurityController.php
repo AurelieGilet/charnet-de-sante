@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Guest;
 use App\Entity\User;
 use App\Form\EditEmailFormType;
 use App\Form\DeleteUserFormType;
@@ -64,18 +65,29 @@ class SecurityController extends AbstractController
         }
 
         $user = new User;
+        $guest = new Guest;
 
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            
             $hash = $hasher->hashPassword($user, $user->getPassword());
-            $roles = ["ROLE_USER"];
+            $userRoles = ["ROLE_USER"];
+            $guestRoles = ["ROLE_GUEST"];
 
             $user->setPassword($hash);
-            $user->setRoles($roles);
+            $user->setRoles($userRoles);
 
             $manager->persist($user);
+            $manager->flush();
+
+            $guest->setUser($user);
+            $guest->setPassword('000000000');
+            $guest->setUsername('user-'.$user->getId().'-guest');
+            $guest->setRoles($guestRoles);
+            
+            $manager->persist($guest);
             $manager->flush();
 
             $this->addFlash('success', "Votre compte a bien été créé");
