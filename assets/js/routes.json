@@ -13,6 +13,18 @@
       "methods": ["POST"],
       "schemes": []
     },
+    "code-generator": {
+      "tokens": [
+        ["text", "/nouveau-code"],
+        ["variable", "/", "[^/]++", "catId", true],
+        ["text", "/espace-utilisateur/chat"]
+      ],
+      "defaults": [],
+      "requirements": [],
+      "hosttokens": [],
+      "methods": ["POST"],
+      "schemes": []
+    },
     "edit-picture": {
       "tokens": [["text", "/espace-utilisateur/compte/editer-photo"]],
       "defaults": [],

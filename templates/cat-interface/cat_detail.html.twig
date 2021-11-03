@@ -14,14 +14,13 @@
 
     {% include 'partials/message-modal.html.twig' %}
 
-    <div class="authenticator">
-        <form action="">
-            <label for="code">Partager la fiche avec un vétérinaire :</label>
-            <button type="button">Générer un code</button>
-            <input type="text" name="code" id="code" placeholder="164832">
-            <span>Ce code est valable 10 min</span>
-        </form>
-    </div>  
+    <div>
+        {{ render(controller(
+            'App\\Controller\\GuestSecurityController::codeGenerator',
+            { 'catId': cat.id }
+        ))}}
+    </div>
+ 
     {% include 'partials/cat-menu.html.twig' %} 
     <section>
         <div class="cat-card">
@@ -97,9 +96,10 @@
     </div>
 </main>
 <script>
-    const catID = {{ cat.id }};
+    const catId = {{ cat.id }};
 </script>
 <script type="text/javascript" src="{{ asset('js/cat-interface/cat-detail.js') }}"></script>
 {{ encore_entry_script_tags('cat-cropper') }}
+{{ encore_entry_script_tags('authenticator') }}
 
 {% endblock %}

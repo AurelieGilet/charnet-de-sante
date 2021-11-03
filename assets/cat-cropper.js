@@ -58,7 +58,7 @@ form.addEventListener("submit", function (event) {
 });
 
 function ajaxRequestEditPicture(blob) {
-  let url = Routing.generate("edit-cat-picture", { id: catID });
+  let url = Routing.generate("edit-cat-picture", { id: catId });
   let formData = new FormData(form);
   formData.append("file", blob);
   
@@ -69,9 +69,9 @@ function ajaxRequestEditPicture(blob) {
     headers: { "X-Requested-With": "XMLHttpRequest" },
   })
     .then((response) => {
-      window.location.href = "/espace-utilisateur/chat/"+ catID;
+      window.location.href = "/espace-utilisateur/chat/"+ catId;
     })
     .catch((error) => {
-      window.location.href = "/espace-utilisateur/chat/"+ catID;
+      window.location.href = "/espace-utilisateur/chat/"+ catId;
     });
 }
