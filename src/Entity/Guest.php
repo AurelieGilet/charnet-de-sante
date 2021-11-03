@@ -54,10 +54,10 @@ class Guest implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="guest", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $User;
+    private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity=GuestCode::class, mappedBy="Guest", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=GuestCode::class, mappedBy="guest", cascade={"persist", "remove"})
      */
     private $guestCode;
 
@@ -147,12 +147,12 @@ class Guest implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
-    public function setUser(User $User): self
+    public function setUser(User $user): self
     {
-        $this->User = $User;
+        $this->user = $user;
 
         return $this;
     }

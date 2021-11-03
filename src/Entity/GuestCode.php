@@ -21,24 +21,24 @@ class GuestCode
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="guestCode", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $User;
+    private $user;
 
     /**
      * @ORM\OneToOne(targetEntity=Guest::class, inversedBy="guestCode", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Guest;
+    private $guest;
 
     /**
      * @ORM\OneToOne(targetEntity=Cat::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Cat;
+    private $cat;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Code;
+    private $code;
 
     /**
      * @ORM\Column(type="datetime")
@@ -57,48 +57,48 @@ class GuestCode
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
-    public function setUser(User $User): self
+    public function setUser(User $user): self
     {
-        $this->User = $User;
+        $this->user = $user;
 
         return $this;
     }
 
     public function getGuest(): ?Guest
     {
-        return $this->Guest;
+        return $this->guest;
     }
 
-    public function setGuest(Guest $Guest): self
+    public function setGuest(Guest $guest): self
     {
-        $this->Guest = $Guest;
+        $this->guest = $guest;
 
         return $this;
     }
 
     public function getCat(): ?Cat
     {
-        return $this->Cat;
+        return $this->cat;
     }
 
-    public function setCat(Cat $Cat): self
+    public function setCat(Cat $cat): self
     {
-        $this->Cat = $Cat;
+        $this->cat = $cat;
 
         return $this;
     }
 
     public function getCode(): ?string
     {
-        return $this->Code;
+        return $this->code;
     }
 
-    public function setCode(string $Code): self
+    public function setCode(string $code): self
     {
-        $this->Code = $Code;
+        $this->code = $code;
 
         return $this;
     }

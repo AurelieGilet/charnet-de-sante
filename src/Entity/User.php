@@ -91,12 +91,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $cats;
 
     /**
-     * @ORM\OneToOne(targetEntity=Guest::class, mappedBy="User", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Guest::class, mappedBy="user", cascade={"persist", "remove"})
      */
     private $guest;
 
     /**
-     * @ORM\OneToOne(targetEntity=GuestCode::class, mappedBy="User", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=GuestCode::class, mappedBy="user", cascade={"persist", "remove"})
      */
     private $guestCode;
 

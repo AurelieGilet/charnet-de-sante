@@ -126,6 +126,8 @@ class CatController extends AbstractController
      */
     public function catDetail(Cat $cat, AddressRepository $addressRepository): Response
     {
+        $userId = $this->getUser()->getId();
+
         $microchip = $cat->getMicrochip();
         $regex = '/([0-9]{3})([0-9]{2})([0-9]{2})([0-9]{8})/';
         $replacement = "$1-$2-$3-$4";  
@@ -148,6 +150,7 @@ class CatController extends AbstractController
 
         return $this->render('cat-interface/cat_detail.html.twig', [
             'controller_name' => 'CatController',
+            'userId' => $userId,
             'cat' => $cat,
             'microchip' => $microchip,
             'ownerPhone' => $ownerPhone,
@@ -188,8 +191,8 @@ class CatController extends AbstractController
         $oldCat = $this->container->get('session')->get('cat');
         $oldPicture = $oldCat->getPicture();
 
-        $catID = $request->attributes->get('_route_params');
-        $cat = $catRepository->findOneBy(['id' => $catID]);
+        $catId = $request->attributes->get('_route_params');
+        $cat = $catRepository->findOneBy(['id' => $catId]);
 
         $form = $this->createForm(EditCatPictureFormType::class, $cat);
         $form->handleRequest($request);
