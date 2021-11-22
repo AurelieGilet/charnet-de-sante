@@ -14,13 +14,15 @@
 
     {% include 'partials/message-modal.html.twig' %}
 
+    {% if is_granted('ROLE_USER') %}
     <div>
         {{ render(controller(
             'App\\Controller\\GuestSecurityController::codeGenerator',
             { 'catId': cat.id }
         ))}}
     </div>
- 
+    {% endif %}
+
     {% include 'partials/cat-menu.html.twig' %} 
     <section>
         <div class="cat-card">
@@ -31,12 +33,16 @@
                         <div class="avatar">
                             <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
                         </div>
-                        <span id="edit-picture">Changer la photo</span>
+                        {% if is_granted('ROLE_USER') %}
+                            <span id="edit-picture">Changer la photo</span>
+                        {% endif %}
                     </div>
                     <div class="cat-info card-template">
                         <div class="info-label">
                             <h3>Infos :</h3>
-                            <a href="{{ path('edit-cat-info', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
+                            {% if is_granted('ROLE_USER') %}
+                                <a href="{{ path('edit-cat-info', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
+                            {% endif %}
                         </div>
                         <p>Date de naissance : {% if cat.dateOfBirth is not null %}<span class="data">{{ cat.dateOfBirth|date('d-m-Y') }}{% endif %}</span></p>
                         <p>Date de décès : <span class="data">{% if cat.dateOfDeath is not null %}{{ cat.dateOfDeath|date('d-m-Y') }}{% endif %}</span></p>
@@ -52,7 +58,9 @@
                     <div class="human-info card-template">
                         <div class="info-label">
                             <h3>Propriétaire :</h3>
-                            <a href="{{ path('edit-cat-owner-address', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
+                            {% if is_granted('ROLE_USER') %}
+                                <a href="{{ path('edit-cat-owner-address', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
+                            {% endif %}
                         </div>
                         <p {% if cat.ownerName is null %} class="hidden" {% endif %}>{{ cat.ownerName }}</p>
                         {% if cat.ownerAddress[0]|default %}
@@ -66,7 +74,9 @@
                     <div class="human-info card-template">
                         <div class="info-label">
                             <h3>Vétérinaire :</h3>
-                            <a href="{{ path('edit-cat-veterinary-address', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
+                            {% if is_granted('ROLE_USER') %}
+                                <a href="{{ path('edit-cat-veterinary-address', {'id': cat.id}) }}" class="update-info modify">Modifier</a>
+                            {% endif %}
                         </div>
                         <p {% if cat.veterinaryName is null %} class="hidden" {% endif %}>{{ cat.veterinaryName }}</p>
                         {% if cat.veterinaryAddress[0]|default %}
@@ -79,21 +89,25 @@
                     </div>
                 </div>
             </div>
-            <span id="delete-data-btn" class="update-info delete">Supprimer le chat</span>
-            <a href="{{ path('cat-list') }}" class="return-btn">Retour</a>
+            {% if is_granted('ROLE_USER') %}
+                <span id="delete-data-btn" class="update-info delete">Supprimer le chat</span>
+                <a href="{{ path('cat-list') }}" class="return-btn">Retour</a>
+            {% endif %}
         </div>
     </section>
-    <div id="edit-picture-form">
-        {{ render(controller(
-            'App\\Controller\\CatController::editCatPicture'
-        ))}}
-    </div>
-    <div id="delete-data-form">
-        {{ render(controller(
-            'App\\Controller\\CatController::deleteCat',
-            { 'catId': cat.id }
-        ))}}
-    </div>
+    {% if is_granted('ROLE_USER') %}
+        <div id="edit-picture-form">
+            {{ render(controller(
+                'App\\Controller\\CatController::editCatPicture'
+            ))}}
+        </div>
+        <div id="delete-data-form">
+            {{ render(controller(
+                'App\\Controller\\CatController::deleteCat',
+                { 'catId': cat.id }
+            ))}}
+        </div>
+    {% endif %}
 </main>
 <script>
     const catId = {{ cat.id }};

@@ -123,11 +123,15 @@ class CatController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}", name="cat-detail")
+     * @Route("/espace-veterinaire/chat/{id}", name="veterinary-cat-detail")
      */
     public function catDetail(Cat $cat, AddressRepository $addressRepository): Response
     {
-        $userId = $this->getUser()->getId();
-
+        $userId = '';
+        if ($this->getUser()) {
+            $userId = $this->getUser()->getId();
+        }
+        
         $microchip = $cat->getMicrochip();
         $regex = '/([0-9]{3})([0-9]{2})([0-9]{2})([0-9]{8})/';
         $replacement = "$1-$2-$3-$4";  
