@@ -11,13 +11,22 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class GuestSecurityController extends AbstractController
 {
+    /**
+     * @Route("/connexion-veterinaire", name="guest-login")
+     */
+    public function guestLogin(): Response
+    {
+        return $this->render('security/_guest_login.html.twig', [
+            'controller_name' => 'GuestSecurityController',
+        ]);
+    }
+
     /**
      * @Route("/espace-utilisateur/chat/{catId}/nouveau-code", name="code-generator", methods={"POST"}, options={"expose"=true})
      */
@@ -26,13 +35,12 @@ class GuestSecurityController extends AbstractController
         $user = $this->getUser();
 
         $guest = $user->getGuest();
-        
 
         if ($request->isXmlHttpRequest()) {
             $catId = $request->attributes->get('_route_params');
             $cat = $catRepository->findOneBy(['id' => $catId]);
 
-            $code = '';
+            $code = $user->getId().'-';
             for ($k = 0; $k < 3; $k++) {
                 $code .= mt_rand(1,9);
             }
@@ -61,12 +69,17 @@ class GuestSecurityController extends AbstractController
             $guestCode->setValidity($validity);
             $guestCode->setIsUsed(false);
 
+            $guest->setPassword($hash);
+
             $manager->persist($guestCode);
+            $manager->persist($guest);
             $manager->flush();
 
             return new JsonResponse($code);
         };
 
-        return $this->render('security/_guest_code_generator.html.twig');
+        return $this->render('security/_guest_code_generator.html.twig', [
+            'controller_name' => 'GuestSecurityController',
+        ]);
     }
 }
