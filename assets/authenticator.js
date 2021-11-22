@@ -8,11 +8,12 @@ const CodeGeneratorForm = document.getElementById("code-generator-form");
 const codeDisplay = document.getElementById("code-display");
 const accessCode = document.getElementById("access-code");
 
-
-CodeGeneratorForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-  ajaxRequestCodeGenerator();
-});
+if (CodeGeneratorForm) {
+  CodeGeneratorForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    ajaxRequestCodeGenerator();
+  });
+}
 
 function ajaxRequestCodeGenerator() {
     let url = Routing.generate("code-generator", { catId: catId});
