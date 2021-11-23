@@ -19,11 +19,24 @@
                 </div>
                 <div class="cat-name">
                     <h2>{{ cat.name }}</h2>
-                    <a href="{{ path('cat-detail', {'id': cat.id}) }}" class="return">Retour à la fiche</a>
+                    <a href="
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-detail', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-detail', {'id': cat.id}) }}
+                        {% endif %}
+                        " class="return">Retour à la fiche
+                    </a>
                 </div>
             </div>
             <div class="card-body">
-                <a href="{{ path('cat-vetVisit', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-vetVisit', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-vetVisit', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
@@ -36,7 +49,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('cat-allergy', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-allergy', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-allergy', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
@@ -49,7 +68,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('cat-disease', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-disease', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-disease', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
@@ -62,7 +87,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('cat-wound', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-wound', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-wound', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
@@ -75,7 +106,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('cat-surgery', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-surgery', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-surgery', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
@@ -88,7 +125,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('cat-analysis', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-analysis', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-analysis', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
@@ -101,7 +144,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('cat-document', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-document', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-document', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">

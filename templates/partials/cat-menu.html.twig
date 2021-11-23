@@ -10,9 +10,13 @@
             </div>
             <ul class="cat-custom-options">
                 <div class="long-line"></div>
-                <li {% if route_name == 'cat-health' %} class="selected cat-custom-option" {% else %} class="cat-custom-option" {% endif %}>
+                <li {% if route_name == 'cat-health' or route_name == 'veterinary-cat-health'  %} class="selected cat-custom-option" {% else %} class="cat-custom-option" {% endif %}>
                     <a href="
-                        {{ path('cat-health', {'id': cat.id}) }}
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-health', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-health', {'id': cat.id}) }}
+                        {% endif %}
                         ">SANTE
                     </a>
                 </li>
@@ -54,9 +58,13 @@
         </div>
         <div id="desktop-cat-menu">
             <ul class="cat-desktop-options">
-                <li {% if route_name == 'cat-health' %} class="selected cat-custom-option" {% else %} class="cat-custom-option" {% endif %}>
+                <li {% if route_name == 'cat-health' or route_name == 'veterinary-cat-health' %} class="selected cat-custom-option" {% else %} class="cat-custom-option" {% endif %}>
                     <a href="
-                        {{ path('cat-health', {'id': cat.id}) }}
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-health', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-health', {'id': cat.id}) }}
+                        {% endif %}
                         ">SANTE
                     </a>
                 </li>
