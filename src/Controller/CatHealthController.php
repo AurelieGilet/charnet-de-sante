@@ -20,6 +20,7 @@ class CatHealthController extends AbstractController
 {
     /**
      * @Route("/espace-utilisateur/chat/{id}/sante", name="cat-health")
+     * @Route("/espace-veterinaire/chat/{id}/sante", name="veterinary-cat-health")
      */
     public function catHealth(Cat $cat): Response
     {
@@ -31,6 +32,7 @@ class CatHealthController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/sante/visite-veterinaire", name="cat-vetVisit")
+     * @Route("/espace-veterinaire/chat/{id}/sante/visite-veterinaire", name="veterinary-cat-vetVisit")
      */
     public function catVetVisit(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
@@ -51,6 +53,7 @@ class CatHealthController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/sante/allergies", name="cat-allergy")
+     * @Route("/espace-veterinaire/chat/{id}/sante/allergies", name="veterinary-cat-allergy")
      */
     public function catAllergy(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
@@ -71,6 +74,7 @@ class CatHealthController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/sante/maladies", name="cat-disease")
+     * @Route("/espace-veterinaire/chat/{id}/sante/maladies", name="veterinary-cat-disease")
      */
     public function catDisease(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
@@ -91,6 +95,7 @@ class CatHealthController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/sante/blessures", name="cat-wound")
+     * @Route("/espace-veterinaire/chat/{id}/sante/blessures", name="veterinary-cat-wound")
      */
     public function catWound(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
@@ -111,6 +116,7 @@ class CatHealthController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/sante/chirurgie", name="cat-surgery")
+     * @Route("/espace-veterinaire/chat/{id}/sante/chirurgie", name="veterinary-cat-surgery")
      */
     public function catSurgery(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
@@ -131,6 +137,7 @@ class CatHealthController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/sante/analyses", name="cat-analysis")
+     * @Route("/espace-veterinaire/chat/{id}/sante/analyses", name="veterinary-cat-analysis")
      */
     public function catAnalysis(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
@@ -151,6 +158,7 @@ class CatHealthController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/sante/documents", name="cat-document")
+     * @Route("/espace-veterinaire/chat/{id}/sante/documents", name="veterinary-cat-document")
      */
     public function catDocument(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
