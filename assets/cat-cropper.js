@@ -10,9 +10,11 @@ const fileInput = document.getElementById("edit_cat_picture_form_picture");
 const previewPicture = document.getElementById("preview-picture");
 const form = document.getElementById("picture-form");
 
-fileInput.addEventListener("change", () => {
-  previewFile();
-});
+if (fileInput) {
+  fileInput.addEventListener("change", () => {
+    previewFile();
+  });
+}
 
 function previewFile() {
   let file = fileInput.files[0];
@@ -32,33 +34,37 @@ function previewFile() {
   }
 }
 
-previewPicture.addEventListener("load", function (event) {
-  if (cropper) {
-    cropper.destroy();
-  }
-  cropper = new Cropper(previewPicture, {
-    aspectRatio: 1 / 1,
+if (previewPicture) {
+  previewPicture.addEventListener("load", function (event) {
+    if (cropper) {
+      cropper.destroy();
+    }
+    cropper = new Cropper(previewPicture, {
+      aspectRatio: 1 / 1,
+    });
   });
-});
+}
 
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
-  cropper
-    .getCroppedCanvas({
-      maxHeight: 500,
-      maxWidth: 500,
-    })
-    .toBlob(
-      function (blob) {
-        ajaxRequestEditPicture(blob);
-      },
-      "image/jpeg",
-      0.95
-    );
-});
+if (form) {
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    cropper
+      .getCroppedCanvas({
+        maxHeight: 500,
+        maxWidth: 500,
+      })
+      .toBlob(
+        function (blob) {
+          ajaxRequestEditPicture(blob);
+        },
+        "image/jpeg",
+        0.95
+      );
+  });
+}
 
 function ajaxRequestEditPicture(blob) {
-  let url = Routing.generate("edit-cat-picture", { id: catID });
+  let url = Routing.generate("edit-cat-picture", { id: catId });
   let formData = new FormData(form);
   formData.append("file", blob);
   
@@ -69,9 +75,9 @@ function ajaxRequestEditPicture(blob) {
     headers: { "X-Requested-With": "XMLHttpRequest" },
   })
     .then((response) => {
-      window.location.href = "/espace-utilisateur/chat/"+ catID;
+      window.location.href = "/espace-utilisateur/chat/"+ catId;
     })
     .catch((error) => {
-      window.location.href = "/espace-utilisateur/chat/"+ catID;
+      window.location.href = "/espace-utilisateur/chat/"+ catId;
     });
 }

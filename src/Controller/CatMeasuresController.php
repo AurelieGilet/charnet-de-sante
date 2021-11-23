@@ -20,6 +20,7 @@ class CatMeasuresController extends AbstractController
 {
     /**
      * @Route("/espace-utilisateur/chat/{id}/mesures", name="cat-measures")
+     * @Route("/espace-veterinaire/chat/{id}/mesures", name="veterinary-cat-measures")
      */
     public function catMeasures(Cat $cat): Response
     {
@@ -31,6 +32,7 @@ class CatMeasuresController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/mesures/poids", name="cat-weight")
+     * @Route("/espace-veterinaire/chat/{id}/mesures/poids", name="veterinary-cat-weight")
      */
     public function catWeight(Request $request, Cat $cat, MeasureRepository $measureRepository, PaginatorInterface $paginator, ChartBuilderInterface $chartBuilder): Response
     {
@@ -96,6 +98,7 @@ class CatMeasuresController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/mesures/temperature", name="cat-temperature")
+     * @Route("/espace-veterinaire/chat/{id}/mesures/temperature", name="veterinary-cat-temperature")
      */
     public function catTemperature(Request $request, Cat $cat, MeasureRepository $measureRepository, PaginatorInterface $paginator, ChartBuilderInterface $chartBuilder): Response
     {
@@ -161,6 +164,7 @@ class CatMeasuresController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/mesures/chaleurs", name="cat-heat")
+     * @Route("/espace-veterinaire/chat/{id}/mesures/chaleurs", name="veterinary-cat-heat")
      */
     public function catHeat(Request $request, Cat $cat, MeasureRepository $measureRepository, PaginatorInterface $paginator): Response
     {

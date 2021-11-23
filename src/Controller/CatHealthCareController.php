@@ -18,6 +18,7 @@ class CatHealthCareController extends AbstractController
 {
     /**
      * @Route("/espace-utilisateur/chat/{id}/soins", name="cat-healthCare")
+     * @Route("/espace-veterinaire/chat/{id}/soins", name="veterinary-cat-healthCare")
      */
     public function catHealthCare(Cat $cat): Response
     {
@@ -29,6 +30,7 @@ class CatHealthCareController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/soins/vaccin", name="cat-vaccine")
+     * @Route("/espace-veterinaire/chat/{id}/soins/vaccin", name="veterinary-cat-vaccine")
      */
     public function catVaccine(Request $request, Cat $cat, HealthCareRepository $healthCareRepository, PaginatorInterface $paginator): Response
     {
@@ -49,6 +51,7 @@ class CatHealthCareController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/soins/vermifuge", name="cat-dewormer")
+     * @Route("/espace-veterinaire/chat/{id}/soins/vermifuge", name="veterinary-cat-dewormer")
      */
     public function catDewormer(Request $request, Cat $cat, HealthCareRepository $healthCareRepository, PaginatorInterface $paginator): Response
     {
@@ -69,6 +72,7 @@ class CatHealthCareController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/soins/antiparasitaire", name="cat-antiparasite")
+     * @Route("/espace-veterinaire/chat/{id}/soins/antiparasitaire", name="veterinary-cat-antiparasite")
      */
     public function catAntiparasite(Request $request, Cat $cat, HealthCareRepository $healthCareRepository, PaginatorInterface $paginator): Response
     {
@@ -89,6 +93,7 @@ class CatHealthCareController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/soins/traitements", name="cat-treatment")
+     * @Route("/espace-veterinaire/chat/{id}/soins/traitements", name="veterinary-cat-treatment")
      */
     public function catTreatments(Request $request, Cat $cat, HealthCareRepository $healthCareRepository, PaginatorInterface $paginator): Response
     {
@@ -109,6 +114,7 @@ class CatHealthCareController extends AbstractController
     
     /**
      * @Route("/espace-utilisateur/chat/{id}/soins/detartrage", name="cat-descaling")
+     * @Route("/espace-veterinaire/chat/{id}/soins/detartrage", name="veterinary-cat-descaling")
      */
     public function catDescaling(Request $request, Cat $cat, HealthCareRepository $healthCareRepository, PaginatorInterface $paginator): Response
     {

@@ -8,14 +8,10 @@
 
 {% block body %}
 <main>
-    <div class="authenticator">
-        <form action="">
-            <label for="code">Accès vétérinaire :</label>
-            <div class="form-group">
-                <input type="text" name="code" id="code">
-                <button type="button">Voir la fiche</button>
-            </div>
-        </form>
+    <div>
+        {{ render(controller(
+            'App\\Controller\\GuestSecurityController::guestLogin'
+        ))}}
     </div>
     <div class="main-content">
         <div class="picture">

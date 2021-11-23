@@ -233,6 +233,9 @@ class AdminController extends AbstractController
         $username = $user->getUsername();
         $userPicture = $user->getPicture();
 
+        $guest = $user->getGuest();
+        $guestCode = $user->getGuestCode();
+
         $userCats = $catRepository->findBy(['owner' => $user]);
         $catsPictures = [];
         $catsDocuments = [];
@@ -256,7 +259,9 @@ class AdminController extends AbstractController
 
             if (password_verify($enteredPassword, $adminPassword)) {
                 $manager->remove($user);
-                $manager->flush($user);
+                $manager->remove($guest);
+                $manager->remove($guestCode);
+                $manager->flush();
 
                 $filesystem = new Filesystem();
                 $filesystem->remove($this->getParameter('images_directory') . '/' . $userPicture);

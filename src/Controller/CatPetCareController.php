@@ -18,6 +18,7 @@ class CatPetCareController extends AbstractController
 {
     /**
      * @Route("/espace-utilisateur/chat/{id}/entretien", name="cat-petCare")
+     * @Route("/espace-veterinaire/chat/{id}/entretien", name="veterinary-cat-petCare")
      */
     public function catPetcare(Cat $cat): Response
     {
@@ -29,6 +30,7 @@ class CatPetCareController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/entretien/alimentation", name="cat-feeding")
+     * @Route("/espace-veterinaire/chat/{id}/entretien/alimentation", name="veterinary-cat-feeding")
      */
     public function catFeeding(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
@@ -59,6 +61,7 @@ class CatPetCareController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/entretien/toilettage", name="cat-grooming")
+     * @Route("/espace-veterinaire/chat/{id}/entretien/toilettage", name="veterinary-cat-grooming")
      */
     public function catGrooming(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
@@ -79,6 +82,7 @@ class CatPetCareController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/entretien/griffes", name="cat-claws")
+     * @Route("/espace-veterinaire/chat/{id}/entretien/griffes", name="veterinary-cat-claws")
      */
     public function catClaws(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
@@ -99,6 +103,7 @@ class CatPetCareController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/entretien/yeux-et-oreilles", name="cat-eyesEars")
+     * @Route("/espace-veterinaire/chat/{id}/entretien/yeux-et-oreilles", name="veterinary-cat-eyesEars")
      */
     public function catEyesEars(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
@@ -119,6 +124,7 @@ class CatPetCareController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/entretien/dents", name="cat-teeth")
+     * @Route("/espace-veterinaire/chat/{id}/entretien/dents", name="veterinary-cat-teeth")
      */
     public function catTeeth(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
@@ -139,6 +145,7 @@ class CatPetCareController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/entretien/litière", name="cat-litterbox")
+     * @Route("/espace-veterinaire/chat/{id}/entretien/litière", name="veterinary-cat-litterbox")
      */
     public function catLitterbox(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
@@ -159,6 +166,7 @@ class CatPetCareController extends AbstractController
 
     /**
      * @Route("/espace-utilisateur/chat/{id}/entretien/notes", name="cat-notes")
+     * @Route("/espace-veterinaire/chat/{id}/entretien/notes", name="veterinary-cat-notes")
      */
     public function catNotes(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {

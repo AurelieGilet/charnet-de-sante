@@ -14,12 +14,16 @@ if (close != null) {
   }
 }
 
-editPictureBtn.addEventListener("click", function () {
-  editPictureForm.style.display = "block";
-  body[0].classList.add("modal-open");
-});
-
-deleteDataBtn.addEventListener("click", function () {
-  deleteDataForm.style.display = "block";
-  body[0].classList.add("modal-open");
-});
+if (editPictureBtn) {
+  editPictureBtn.addEventListener("click", function () {
+    editPictureForm.style.display = "block";
+    body[0].classList.add("modal-open");
+  });
+}
+  
+if (deleteDataBtn) {
+  deleteDataBtn.addEventListener("click", function () {
+    deleteDataForm.style.display = "block";
+    body[0].classList.add("modal-open");
+  });
+}

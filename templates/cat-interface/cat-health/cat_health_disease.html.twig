@@ -24,7 +24,14 @@
                 </div>
                 <div class="cat-name">
                     <h2>{{ cat.name }}</h2>
-                    <a href="{{ path('cat-health', {'id': cat.id}) }}" class="return">Retour à la santé</a>
+                    <a href="
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-health', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-health', {'id': cat.id}) }}
+                        {% endif %}
+                        " class="return">Retour à la santé
+                    </a>
                 </div>
             </div>
             <div class="card-content card-template">
@@ -34,8 +41,10 @@
                     </div>
                     <h3>Maladies</h3>
                 </div>
+                {% if is_granted('ROLE_USER') %}
                 <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une entrée"></span>
                 <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+                {% endif %}
             </div>
             <div class="card-content card-template entries last-entries">
                 <h3>Dernières entrées :</h3>
@@ -63,6 +72,7 @@
                             <span>Au : <em>{% if health.endDate is not null %}{{ health.endDate|format_datetime(locale='fr', pattern="dd MMM Y")}}{% else %}
                                 ...{% endif %}</em></span>
                         </p>
+                        {% if is_granted('ROLE_USER') %}
                         <div>
                             <div class="mobile-options">
                                 <span class="edit-data add-edit-data-btn" data-data-id="{{ health.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier l'entrée"></span>
@@ -73,12 +83,14 @@
                                 <span class="update-info desktop delete delete-data-btn" data-data-id="{{ health.id }}">Supprimer</span>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                     <div class="entry-info data--details">
                         <p>Nom de la maladie : <em  class="data">{{ health.disease|capitalize }}</em></p>
                         <p>Détails : <em class="data">{{ health.details|capitalize }}</em></p>
                     </div>
                 </div>
+                {% if is_granted('ROLE_USER') %}
                 <div id="edit-{{ health.id }}"class="add-edit-data-form">
                     {{ render(controller(
                         'App\\Controller\\CatHealthController::editDisease',
@@ -91,17 +103,20 @@
                         { 'catId': cat.id, 'healthId': health.id }
                     ))}}
                 </div>
+                {% endif %}
                 {% endfor %}
                 {{ knp_pagination_render(paginatedHealths) }}
             </div>
         </div>
     </section>
+    {% if is_granted('ROLE_USER') %}
     <div id="edit-new" class="add-edit-data-form">
         {{ render(controller(
             'App\\Controller\\CatHealthController::addDisease',
             { 'id': cat.id }
         ))}}
     </div>
+    {% endif %}
 </main>
 <script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
 {% endblock %}

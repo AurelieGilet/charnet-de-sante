@@ -19,11 +19,24 @@
                 </div>
                 <div class="cat-name">
                     <h2>{{ cat.name }}</h2>
-                    <a href="{{ path('cat-detail', {'id': cat.id}) }}" class="return">Retour à la fiche</a>
+                    <a href="
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-detail', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-detail', {'id': cat.id}) }}
+                        {% endif %}
+                        " class="return">Retour à la fiche
+                    </a>
                 </div>
             </div>
             <div class="card-body">
-                <a href="{{ path('cat-vaccine', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-vaccine', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-vaccine', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
@@ -36,7 +49,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('cat-dewormer', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-dewormer', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-dewormer', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
@@ -49,7 +68,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('cat-antiparasite', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-antiparasite', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-antiparasite', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
@@ -62,7 +87,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('cat-treatment', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-treatment', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-treatment', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
@@ -75,7 +106,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('cat-descaling', {'id': cat.id}) }}" class="shaker">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-descaling', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-descaling', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">

@@ -90,6 +90,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $cats;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Guest::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $guest;
+
+    /**
+     * @ORM\OneToOne(targetEntity=GuestCode::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $guestCode;
+
     public function __construct()
     {
         $this->cats = new ArrayCollection();
@@ -229,6 +239,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $cat->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGuest(): ?Guest
+    {
+        return $this->guest;
+    }
+
+    public function setGuest(Guest $guest): self
+    {
+        // set the owning side of the relation if necessary
+        if ($guest->getUser() !== $this) {
+            $guest->setUser($this);
+        }
+
+        $this->guest = $guest;
+
+        return $this;
+    }
+
+    public function getGuestCode(): ?GuestCode
+    {
+        return $this->guestCode;
+    }
+
+    public function setGuestCode(GuestCode $guestCode): self
+    {
+        // set the owning side of the relation if necessary
+        if ($guestCode->getUser() !== $this) {
+            $guestCode->setUser($this);
+        }
+
+        $this->guestCode = $guestCode;
 
         return $this;
     }

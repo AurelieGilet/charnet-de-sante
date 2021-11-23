@@ -191,7 +191,7 @@ nav ul {
 }
 
 .long-line, .line {
-    height: 0.1px;
+    height: 1px;
     margin: 0 auto;
     background-color: white;
     margin: 10px 0;
