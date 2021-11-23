@@ -24,7 +24,14 @@
                 </div>
                 <div class="cat-name">
                     <h2>{{ cat.name }}</h2>
-                    <a href="{{ path('cat-measures', {'id': cat.id}) }}" class="return">Retour aux mesures</a>
+                    <a href="
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-measures', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-measures', {'id': cat.id}) }}
+                        {% endif %}
+                        " class="return">Retour aux mesures
+                    </a>
                 </div>
             </div>
             <div class="card-content card-template">
@@ -34,8 +41,10 @@
                     </div>
                     <h3>Chaleurs</h3>
                 </div>
+                {% if is_granted('ROLE_USER') %}
                 <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une mesure"></span>
                 <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une mesure</span>
+                {% endif %}
             </div>
             {% if currentMeasures is not empty %}
             <div class="card-content card-template entries current-entries">
@@ -53,6 +62,7 @@
                             <span>Fécondation : {% if measure.isPregnant is null %}...{% elseif measure.isPregnant == true %}<em>Oui</em>{% else %}<em>Non</em>{% endif %}</span>
                         </p>
                     </div>
+                    {% if is_granted('ROLE_USER') %}
                     <div>
                         <div class="mobile-options data--variation">
                             <span class="edit-data add-edit-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier la mesure"></span>
@@ -63,7 +73,9 @@
                             <span class="update-info desktop delete delete-data-btn" data-data-id="{{ measure.id }}">Supprimer</span>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
+                {% if is_granted('ROLE_USER') %}
                 <div id="edit-{{ measure.id }}"class="add-edit-data-form">
                     {{ render(controller(
                         'App\\Controller\\CatMeasuresController::editHeat',
@@ -76,6 +88,7 @@
                         { 'catId': cat.id, 'measureId': measure.id }
                     ))}}
                 </div>
+                {% endif %}
                 {% endfor %}
                 {{ knp_pagination_render(paginatedCurrentMeasures) }}
             </div>
@@ -110,6 +123,7 @@
                             <span>Fécondation : {% if measure.isPregnant is null %} {% elseif measure.isPregnant == true %} <em>Oui</em> {% else %} <em>Non</em> {% endif %}</span>
                         </p>
                     </div>
+                    {% if is_granted('ROLE_USER') %}
                     <div>
                         <div class="mobile-options data--variation">
                             <span class="edit-data add-edit-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier la mesure"></span>
@@ -120,7 +134,9 @@
                             <span class="update-info desktop delete delete-data-btn" data-data-id="{{ measure.id }}">Supprimer</span>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
+                {% if is_granted('ROLE_USER') %}
                 <div id="edit-{{ measure.id }}"class="add-edit-data-form">
                     {{ render(controller(
                         'App\\Controller\\CatMeasuresController::editHeat',
@@ -133,17 +149,20 @@
                         { 'catId': cat.id, 'measureId': measure.id }
                     ))}}
                 </div>
+                {% endif %}
                 {% endfor %}
                 {{ knp_pagination_render(paginatedMeasures) }}
             </div>
         </div>
     </section>
+    {% if is_granted('ROLE_USER') %}
     <div id="edit-new" class="add-edit-data-form">
         {{ render(controller(
             'App\\Controller\\CatMeasuresController::addHeat',
             { 'id': cat.id }
         ))}}
     </div>
+    {% endif %}
 </main>
 <script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
 {% endblock %}
