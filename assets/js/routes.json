@@ -26,7 +26,7 @@
       "schemes": []
     },
     "edit-picture": {
-      "tokens": [["text", "/espace-utilisateur/compte/editer-photo"]],
+      "tokens": ["text", "/espace-utilisateur/compte/editer-photo"],
       "defaults": [],
       "requirements": [],
       "hosttokens": [],
