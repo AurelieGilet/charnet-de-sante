@@ -110,6 +110,9 @@ class SecurityController extends AbstractController
         $userPassword = $user->getPassword();
         $userPicture = $user->getPicture();
 
+        $guest = $user->getGuest();
+        $guestCode = $user->getGuestCode();
+
         $cats = $catRepository->findBy(['owner' => $user]);
         $catsPictures = [];
         $documents = [];
@@ -138,7 +141,9 @@ class SecurityController extends AbstractController
                 $session->invalidate();
 
                 $manager->remove($user);
-                $manager->flush($user);
+                $manager->remove($guest);
+                $manager->remove($guestCode);
+                $manager->flush();
 
                 $filesystem = new Filesystem();
                 $filesystem->remove($this->getParameter('images_directory') . '/' . $userPicture);
@@ -365,7 +370,7 @@ class SecurityController extends AbstractController
                 $user->setPicture(null);
 
                 $manager->persist($user);
-                $manager->flush($user);
+                $manager->flush();
 
                 $filesystem = new Filesystem();
                 $filesystem->remove($this->getParameter('images_directory') . '/' . $picture);
