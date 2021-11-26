@@ -25,6 +25,12 @@
                 </div>
                 {{ form_row(contactForm.email) }}
                 {{ form_row(contactForm.message) }}
+                <div>
+                    {{ form_label(contactForm.captcha)}}
+                    <div class="captcha">
+                        {{ form_widget(contactForm.captcha) }}
+                    </div>
+                </div>
                 {{ form_row(contactForm.send) }}
             {{ form_end(contactForm) }}
         </section>    

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
@@ -54,6 +55,12 @@ class ContactFormType extends AbstractType
                         'minMessage' => "Votre message doit faire au moins 10 caractères", 
                         'maxMessage' => "Votre message ne doit pas faire plus de 2000 caractères"]),
                 ],
+            ])
+            ->add('captcha', CaptchaType::class, [
+                'attr' => ['class' => 'feedback-captcha'],
+                'width' => 200,
+                'height' => 50,
+                'length' => 6,
             ])
             ->add('send', SubmitType::class, [
                 'label' => "Envoyer"
