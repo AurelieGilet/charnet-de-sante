@@ -57,6 +57,7 @@ class ContactFormType extends AbstractType
                 ],
             ])
             ->add('captcha', CaptchaType::class, [
+                'label' => "Saisissez le Captcha *",
                 'attr' => ['class' => 'feedback-captcha'],
                 'width' => 200,
                 'height' => 50,
