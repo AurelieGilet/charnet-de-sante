@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La Charnet de santé - Réinitialiser mot de passe{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}" >
+{% endblock %}
+{% block body %}
+    <main class="container">
+
+        {% include 'partials/message-modal.html.twig' %}
+        
+        <section>
+            <h2>RÉINITIALISER VOTRE MOT DE PASSE</h2>
+
+            {{ form_start(resetForm) }}
+                <span>Les champs suivis d'un * sont obligatoires</span>
+                {{ form_row(resetForm.plainPassword) }}
+                {{ form_row(resetForm.submit) }}
+            {{ form_end(resetForm) }}
+        </section>    
+    </main>           
+{% endblock %}
