@@ -150,8 +150,6 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('check-email');
         }
 
-        dump($user->getEmail());
-
         $email = (new TemplatedEmail())
             ->from(new Address('charnetdesante@gmail.com', 'Chadmin'))
             ->to($user->getEmail())
@@ -162,11 +160,7 @@ class ResetPasswordController extends AbstractController
             ])
         ;
 
-        dump($email);
-
         $mailer->send($email);
-
-        dump("email sent");
 
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
