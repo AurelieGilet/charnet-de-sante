@@ -25,6 +25,9 @@ html {
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     font-family: Do Hyeon, sans-serif;
     min-width: 360px;
     transition: all 1s;
@@ -32,6 +35,12 @@ body {
 
 h1, h2, h3 {
     font-family: Cute Font, cursive;
+}
+
+main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 /***** SCROLLBAR  ******/
@@ -50,6 +59,7 @@ h1, h2, h3 {
 /***** FOOTER *****/
 
 footer {
+    flex: 0 1 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,6 +68,7 @@ footer {
     background-color: var(--purple-navy);
     color: white;
     font-size: 0.8rem;
+    margin-top: auto;
 }
 
 footer ul {
