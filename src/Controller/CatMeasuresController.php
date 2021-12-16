@@ -173,15 +173,25 @@ class CatMeasuresController extends AbstractController
         $paginatedMeasures = $paginator->paginate(
             $measures,
             $request->query->getInt('page', 1),
-            5
+            5,
+            [
+                'pageParameterName' => 'page',
+                'sortFieldParameterName' => 'sort1',
+                'sortDirectionParameterName' => 'direction1',
+            ]
         );
 
         $currentMeasures = $measureRepository->findCatCurrentHeat($cat);
 
         $paginatedCurrentMeasures = $paginator->paginate(
             $currentMeasures,
-            $request->query->getInt('page', 1),
-            5
+            $request->query->getInt('page2', 1),
+            5,
+            [
+                'pageParameterName' => 'page2',
+                'sortFieldParameterName' => 'sort2',
+                'sortDirectionParameterName' => 'direction2',
+            ]
         );
 
         return $this->render('cat-interface/cat-measures/cat_measures_heat.html.twig', [
