@@ -78,6 +78,20 @@ class HealthCareRepository extends ServiceEntityRepository
     /**
      * @return HealthCare[]
      */
+    public function findCatCurrentTreatments($cat, $currentDate)
+    {
+        return $this->createQueryBuilder('healthcare')
+            ->andWhere('healthcare.cat = :cat and healthcare.treatment IS NOT NULL and (healthcare.endDate IS NULL or healthcare.endDate > :currentDate)')
+            ->setParameters(array('cat' => $cat, 'currentDate' => $currentDate))
+            ->addOrderBy('healthcare.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return HealthCare[]
+     */
     public function findCatDescaling($cat)
     {
         return $this->createQueryBuilder('healthcare')

@@ -7,6 +7,7 @@ use App\Entity\HealthCare;
 use App\Repository\CatRepository;
 use App\Form\CatHealthCareFormType;
 use App\Repository\HealthCareRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -102,13 +103,35 @@ class CatHealthCareController extends AbstractController
         $paginatedHealthCares = $paginator->paginate(
             $healthCares,
             $request->query->getInt('page', 1),
-            5
+            5,
+            [
+                'pageParameterName' => 'page',
+                'sortFieldParameterName' => 'sort1',
+                'sortDirectionParameterName' => 'direction1',
+            ]
+        );
+
+        $currentDate = new DateTime();
+
+        $currentHealthCares = $healthCareRepository->findCatCurrentTreatments($cat, $currentDate);
+
+        $paginatedCurrentHealthCares = $paginator->paginate(
+            $currentHealthCares,
+            $request->query->getInt('page2', 1),
+            5,
+            [
+                'pageParameterName' => 'page2',
+                'sortFieldParameterName' => 'sort2',
+                'sortDirectionParameterName' => 'direction2',
+            ]
         );
 
         return $this->render('cat-interface/cat-healthcare/cat_healthcare_treatment.html.twig', [
             'controller_name' => 'CatHealthCareController',
             'cat' => $cat,
             'paginatedHealthCares' => $paginatedHealthCares,
+            'paginatedCurrentHealthCares' => $paginatedCurrentHealthCares,
+            'currentHealthCares' => $currentHealthCares,
         ]);
     }
     

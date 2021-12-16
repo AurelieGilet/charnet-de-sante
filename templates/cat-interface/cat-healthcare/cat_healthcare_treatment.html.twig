@@ -46,6 +46,54 @@
                 <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
                 {% endif %}
             </div>
+            {% if currentHealthCares is not empty %}
+            <div class="card-content card-template entries current-entries">
+                <h3>Traitements en cours :</h3>
+                {% for healthCare in paginatedCurrentHealthCares %}                
+                <div class="entry entry--notes card-template">
+                    <div class="entry-info data--notes">
+                        <p class="entry-info date data--variation">
+                            <span>Du : <em>{{ healthCare.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
+                            <span>Au : <em>{% if healthCare.endDate is not null %}{{ healthCare.endDate|format_datetime(locale='fr', pattern="dd MMM Y")}}{% else %}
+                                ...{% endif %}</em></span>
+                        </p>
+                        {% if is_granted('ROLE_USER') %}
+                        <div>
+                            <div class="mobile-options">
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier l'entrée"></span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'entrée"></span>
+                            </div>
+                            <div class="desktop-options">
+                                <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ healthCare.id }}">Modifier</span>
+                                <span class="update-info desktop delete delete-data-btn" data-data-id="{{ healthCare.id }}">Supprimer</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="entry-info data--details">
+                        <p>Motif du traitement : <em  class="data">{{ healthCare.treatment }}</em></p>
+                        <p>Médicament : <em class="data">{{ healthCare.productName }}</em></p>
+                        <p>Posologie : <em class="data">{{ healthCare.dosage }}</em></p>
+                    </div>
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <div id="edit-{{ healthCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::editTreatment',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ healthCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::deleteHealthCare',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {{ knp_pagination_render(paginatedCurrentHealthCares) }}
+            </div>
+            {% endif %}
             <div class="card-content card-template entries last-entries">
                 <h3>Dernières entrées :</h3>
                 <div class="tooltip">
