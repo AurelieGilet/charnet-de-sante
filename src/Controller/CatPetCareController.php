@@ -39,15 +39,25 @@ class CatPetCareController extends AbstractController
         $paginatedPetCares = $paginator->paginate(
             $petCares,
             $request->query->getInt('page', 1),
-            5
+            5,
+            [
+                'pageParameterName' => 'page',
+                'sortFieldParameterName' => 'sort1',
+                'sortDirectionParameterName' => 'direction1',
+            ]
         );
 
         $currentPetCares = $petCareRepository->findCatCurrentFeedings($cat);
 
         $paginatedCurrentPetCares = $paginator->paginate(
             $currentPetCares,
-            $request->query->getInt('page', 1),
-            5
+            $request->query->getInt('page2', 1),
+            5,
+            [
+                'pageParameterName' => 'page2',
+                'sortFieldParameterName' => 'sort2',
+                'sortDirectionParameterName' => 'direction2',
+            ]
         );
 
         return $this->render('cat-interface/cat-petcare/cat_petcare_feeding.html.twig', [
