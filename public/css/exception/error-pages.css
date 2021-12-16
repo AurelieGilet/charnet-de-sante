@@ -29,7 +29,7 @@ p {
     text-align: center;
 }
 
-a {
+section a {
     color: var(--medium-purple);
     text-decoration: underline;
     cursor: pointer;
