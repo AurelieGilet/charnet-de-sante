@@ -189,6 +189,17 @@ class CatController extends AbstractController
      */
     public function editCatInfos(Request $request, EntityManagerInterface $manager, Cat $cat): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        if (!$this->isRouteSecure($className, $user, $cat) ) {
+            if ($className == "App\Entity\User") {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('cat-list', ['id' => $user->getId() ]);
+            }
+        }
+        
         $form = $this->createForm(CatFormType::class, $cat);
         $form->handleRequest($request);
 
@@ -267,6 +278,17 @@ class CatController extends AbstractController
      */
     public function editCatOwnerAddress(Request $request, EntityManagerInterface $manager, AddressRepository $addressRepository, Cat $cat): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        if (!$this->isRouteSecure($className, $user, $cat) ) {
+            if ($className == "App\Entity\User") {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('cat-list', ['id' => $user->getId() ]);
+            }
+        }
+
         $address = new Address;
 
         if ($addressRepository->findOneBy(['ownerAddressCat' => $cat]) != null) {
@@ -300,6 +322,17 @@ class CatController extends AbstractController
      */
     public function editCatVeterinaryAddress(Request $request, EntityManagerInterface $manager, AddressRepository $addressRepository, Cat $cat): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        if (!$this->isRouteSecure($className, $user, $cat) ) {
+            if ($className == "App\Entity\User") {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('cat-list', ['id' => $user->getId() ]);
+            }
+        }
+        
         $address = new Address;
 
         if ($addressRepository->findOneBy(['veterinaryAddressCat' => $cat]) != null) {
