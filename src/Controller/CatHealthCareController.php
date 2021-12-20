@@ -237,6 +237,8 @@ class CatHealthCareController extends AbstractController
      */
     public function addVaccine(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
         $user = $this->getUser();
 
         $className = get_class($user);
@@ -246,8 +248,6 @@ class CatHealthCareController extends AbstractController
         if ($secureRoute != null) {
             return $secureRoute;
         }
-
-        $cat = $catRepository->findOneBy(['id' => $cat]);
 
         $healthCare = new HealthCare;
 
@@ -290,6 +290,8 @@ class CatHealthCareController extends AbstractController
      */
     public function addDewormer(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
         $user = $this->getUser();
 
         $className = get_class($user);
@@ -299,8 +301,6 @@ class CatHealthCareController extends AbstractController
         if ($secureRoute != null) {
             return $secureRoute;
         }
-
-        $cat = $catRepository->findOneBy(['id' => $cat]);
 
         $healthCare = new HealthCare;
 
@@ -390,7 +390,9 @@ class CatHealthCareController extends AbstractController
      * @Route("/espace-utilisateur/chat/{id}/soins/traitements/ajouter", name="add-treatment")
      */
     public function addTreatment(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
-    {
+    {        
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
         $user = $this->getUser();
 
         $className = get_class($user);
@@ -400,8 +402,6 @@ class CatHealthCareController extends AbstractController
         if ($secureRoute != null) {
             return $secureRoute;
         }
-        
-        $cat = $catRepository->findOneBy(['id' => $cat]);
 
         $healthCare = new HealthCare;
 
@@ -444,6 +444,8 @@ class CatHealthCareController extends AbstractController
      */
     public function addDescaling(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
         $user = $this->getUser();
 
         $className = get_class($user);
@@ -454,8 +456,6 @@ class CatHealthCareController extends AbstractController
             return $secureRoute;
         }
         
-        $cat = $catRepository->findOneBy(['id' => $cat]);
-
         $healthCare = new HealthCare;
 
         $form = $this->createForm(CatHealthCareFormType::class, $healthCare, [
