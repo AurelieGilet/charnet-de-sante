@@ -296,6 +296,8 @@ class CatPetCareController extends AbstractController
      */
     public function addFeeding(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
         $user = $this->getUser();
 
         $className = get_class($user);
@@ -306,8 +308,6 @@ class CatPetCareController extends AbstractController
             return $secureRoute;
         }
         
-        $cat = $catRepository->findOneBy(['id' => $cat]);
-
         $petCare = new PetCare;
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
@@ -349,6 +349,8 @@ class CatPetCareController extends AbstractController
      */
     public function addGrooming(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
         $user = $this->getUser();
 
         $className = get_class($user);
@@ -359,8 +361,6 @@ class CatPetCareController extends AbstractController
             return $secureRoute;
         }
         
-        $cat = $catRepository->findOneBy(['id' => $cat]);
-
         $petCare = new PetCare;
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
@@ -402,6 +402,8 @@ class CatPetCareController extends AbstractController
      */
     public function addClaws(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
         $user = $this->getUser();
 
         $className = get_class($user);
@@ -412,8 +414,6 @@ class CatPetCareController extends AbstractController
             return $secureRoute;
         }
         
-        $cat = $catRepository->findOneBy(['id' => $cat]);
-
         $petCare = new PetCare;
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
@@ -451,6 +451,8 @@ class CatPetCareController extends AbstractController
      */
     public function addEyesEars(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
+        $cat = $catRepository->findOneBy(['id' => $cat]);
+
         $user = $this->getUser();
 
         $className = get_class($user);
@@ -461,8 +463,6 @@ class CatPetCareController extends AbstractController
             return $secureRoute;
         }
         
-        $cat = $catRepository->findOneBy(['id' => $cat]);
-
         $petCare = new PetCare;
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
