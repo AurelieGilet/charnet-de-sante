@@ -18,12 +18,38 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatMeasuresController extends AbstractController
 {
+    private function isRouteSecure($className, $user, $cat) {
+        if ($className == "App\Entity\User") {
+            if ($cat->getOwner() != $user) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('cat-list');
+            }
+        } elseif ($className == "App\Entity\Guest") {
+            if ($cat->getId() != $user->getGuestCode()->getCat()->getId()) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('homepage');
+            }
+        } 
+
+        return null;
+    }
+
     /**
      * @Route("/espace-utilisateur/chat/{id}/mesures", name="cat-measures")
      * @Route("/espace-veterinaire/chat/{id}/mesures", name="veterinary-cat-measures")
      */
     public function catMeasures(Cat $cat): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         return $this->render('cat-interface/cat-measures/cat_measures.html.twig', [
             'controller_name' => 'CatMeasuresController',
             'cat' => $cat
@@ -36,6 +62,16 @@ class CatMeasuresController extends AbstractController
      */
     public function catWeight(Request $request, Cat $cat, MeasureRepository $measureRepository, PaginatorInterface $paginator, ChartBuilderInterface $chartBuilder): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $measures = $measureRepository->findCatWeights($cat);
 
         $paginatedMeasures = $paginator->paginate(
@@ -102,6 +138,16 @@ class CatMeasuresController extends AbstractController
      */
     public function catTemperature(Request $request, Cat $cat, MeasureRepository $measureRepository, PaginatorInterface $paginator, ChartBuilderInterface $chartBuilder): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $measures = $measureRepository->findCatTemperatures($cat);
 
         $paginatedMeasures = $paginator->paginate(
@@ -168,6 +214,16 @@ class CatMeasuresController extends AbstractController
      */
     public function catHeat(Request $request, Cat $cat, MeasureRepository $measureRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $measures = $measureRepository->findCatHeat($cat);
 
         $paginatedMeasures = $paginator->paginate(
@@ -210,6 +266,16 @@ class CatMeasuresController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $measure = new Measure;
 
         $form = $this->createForm(CatMeasureFormType::class, $measure, [
@@ -253,6 +319,16 @@ class CatMeasuresController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $measure = new Measure;
 
         $form = $this->createForm(CatMeasureFormType::class, $measure, [
@@ -296,6 +372,16 @@ class CatMeasuresController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $measure = new Measure;
 
         $form = $this->createForm(CatMeasureFormType::class, $measure, [
@@ -341,6 +427,16 @@ class CatMeasuresController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $measureId = $request->attributes->get('measureId');
         $measure = $measureRepository->findOneBy(['id' => $measureId]);
 
@@ -384,6 +480,16 @@ class CatMeasuresController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $measureId = $request->attributes->get('measureId');
         $measure = $measureRepository->findOneBy(['id' => $measureId]);
 
@@ -427,6 +533,16 @@ class CatMeasuresController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $measureId = $request->attributes->get('measureId');
         $measure = $measureRepository->findOneBy(['id' => $measureId]);
 
@@ -474,6 +590,16 @@ class CatMeasuresController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $measureId = $request->attributes->get('measureId');
         $measure = $measureRepository->findOneBy(['id' => $measureId]);
 

@@ -23,6 +23,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatController extends AbstractController
 {
+    private function isRouteSecure($className, $user, $cat) {
+        if ($className == "App\Entity\User") {
+            if ($cat->getOwner() != $user) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('cat-list');
+            }
+        } elseif ($className == "App\Entity\Guest") {
+            if ($cat->getId() != $user->getGuestCode()->getCat()->getId()) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('homepage');
+            }
+        } 
+
+        return null;
+    }
+
     /**
      * @Route("/espace-utilisateur/liste-chats", name="cat-list")
      */
@@ -73,12 +89,20 @@ class CatController extends AbstractController
     {
         $user = $this->getUser();
         $userPassword = $user->getPassword();
-
+       
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
         $catName = $cat->getName();
         $picture = $cat->getPicture();
         $documents = $healthRepository->findCatFilenames($cat);
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
 
         $form = $this->createForm(DeleteCatFormType::class, $user, [
             'action' => $this->generateUrl('delete-cat', ['catId' => $cat->getId() ]),
@@ -127,9 +151,14 @@ class CatController extends AbstractController
      */
     public function catDetail(Cat $cat, AddressRepository $addressRepository): Response
     {
-        $userId = '';
-        if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
         }
         
         $microchip = $cat->getMicrochip();
@@ -154,7 +183,6 @@ class CatController extends AbstractController
 
         return $this->render('cat-interface/cat_detail.html.twig', [
             'controller_name' => 'CatController',
-            'userId' => $userId,
             'cat' => $cat,
             'microchip' => $microchip,
             'ownerPhone' => $ownerPhone,
@@ -167,6 +195,16 @@ class CatController extends AbstractController
      */
     public function editCatInfos(Request $request, EntityManagerInterface $manager, Cat $cat): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $form = $this->createForm(CatFormType::class, $cat);
         $form->handleRequest($request);
 
@@ -245,6 +283,16 @@ class CatController extends AbstractController
      */
     public function editCatOwnerAddress(Request $request, EntityManagerInterface $manager, AddressRepository $addressRepository, Cat $cat): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+
         $address = new Address;
 
         if ($addressRepository->findOneBy(['ownerAddressCat' => $cat]) != null) {
@@ -278,6 +326,16 @@ class CatController extends AbstractController
      */
     public function editCatVeterinaryAddress(Request $request, EntityManagerInterface $manager, AddressRepository $addressRepository, Cat $cat): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $address = new Address;
 
         if ($addressRepository->findOneBy(['veterinaryAddressCat' => $cat]) != null) {

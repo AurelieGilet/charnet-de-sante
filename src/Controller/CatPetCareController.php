@@ -16,12 +16,38 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatPetCareController extends AbstractController
 {
+    private function isRouteSecure($className, $user, $cat) {
+        if ($className == "App\Entity\User") {
+            if ($cat->getOwner() != $user) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('cat-list');
+            }
+        } elseif ($className == "App\Entity\Guest") {
+            if ($cat->getId() != $user->getGuestCode()->getCat()->getId()) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('homepage');
+            }
+        } 
+
+        return null;
+    }
+
     /**
      * @Route("/espace-utilisateur/chat/{id}/entretien", name="cat-petCare")
      * @Route("/espace-veterinaire/chat/{id}/entretien", name="veterinary-cat-petCare")
      */
     public function catPetcare(Cat $cat): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         return $this->render('cat-interface/cat-petcare/cat_petcare.html.twig', [
             'controller_name' => 'CatPetCareController',
             'cat' => $cat
@@ -34,6 +60,16 @@ class CatPetCareController extends AbstractController
      */
     public function catFeeding(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCares = $petCareRepository->findCatFeedings($cat);
 
         $paginatedPetCares = $paginator->paginate(
@@ -75,6 +111,16 @@ class CatPetCareController extends AbstractController
      */
     public function catGrooming(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCares = $petCareRepository->findCatGroomings($cat);
 
         $paginatedPetCares = $paginator->paginate(
@@ -96,6 +142,16 @@ class CatPetCareController extends AbstractController
      */
     public function catClaws(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCares = $petCareRepository->findCatClaws($cat);
 
         $paginatedPetCares = $paginator->paginate(
@@ -117,6 +173,16 @@ class CatPetCareController extends AbstractController
      */
     public function catEyesEars(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCares = $petCareRepository->findCatEyesEars($cat);
 
         $paginatedPetCares = $paginator->paginate(
@@ -138,6 +204,16 @@ class CatPetCareController extends AbstractController
      */
     public function catTeeth(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCares = $petCareRepository->findCatTeeth($cat);
 
         $paginatedPetCares = $paginator->paginate(
@@ -159,6 +235,16 @@ class CatPetCareController extends AbstractController
      */
     public function catLitterbox(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCares = $petCareRepository->findCatLitterbox($cat);
 
         $paginatedPetCares = $paginator->paginate(
@@ -180,6 +266,16 @@ class CatPetCareController extends AbstractController
      */
     public function catNotes(Request $request, Cat $cat, PetCareRepository $petCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCares = $petCareRepository->findCatNotes($cat);
 
         $paginatedPetCares = $paginator->paginate(
@@ -202,6 +298,16 @@ class CatPetCareController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCare = new PetCare;
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
@@ -245,6 +351,16 @@ class CatPetCareController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCare = new PetCare;
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
@@ -288,6 +404,16 @@ class CatPetCareController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCare = new PetCare;
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
@@ -327,6 +453,16 @@ class CatPetCareController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCare = new PetCare;
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
@@ -370,6 +506,16 @@ class CatPetCareController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCare = new PetCare;
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
@@ -413,6 +559,16 @@ class CatPetCareController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCare = new PetCare;
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
@@ -452,6 +608,16 @@ class CatPetCareController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCare = new PetCare;
 
         $form = $this->createForm(CatPetCareFormType::class, $petCare, [
@@ -496,6 +662,16 @@ class CatPetCareController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCareId = $request->attributes->get('petCareId');
         $petCare = $petCareRepository->findOneBy(['id' => $petCareId]);
 
@@ -539,6 +715,16 @@ class CatPetCareController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCareId = $request->attributes->get('petCareId');
         $petCare = $petCareRepository->findOneBy(['id' => $petCareId]);
 
@@ -582,6 +768,16 @@ class CatPetCareController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCareId = $request->attributes->get('petCareId');
         $petCare = $petCareRepository->findOneBy(['id' => $petCareId]);
 
@@ -620,6 +816,16 @@ class CatPetCareController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCareId = $request->attributes->get('petCareId');
         $petCare = $petCareRepository->findOneBy(['id' => $petCareId]);
 
@@ -663,6 +869,16 @@ class CatPetCareController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCareId = $request->attributes->get('petCareId');
         $petCare = $petCareRepository->findOneBy(['id' => $petCareId]);
 
@@ -706,6 +922,16 @@ class CatPetCareController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCareId = $request->attributes->get('petCareId');
         $petCare = $petCareRepository->findOneBy(['id' => $petCareId]);
 
@@ -744,6 +970,16 @@ class CatPetCareController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCareId = $request->attributes->get('petCareId');
         $petCare = $petCareRepository->findOneBy(['id' => $petCareId]);
 
@@ -799,6 +1035,16 @@ class CatPetCareController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $petCareId = $request->attributes->get('petCareId');
         $petCare = $petCareRepository->findOneBy(['id' => $petCareId]);
 

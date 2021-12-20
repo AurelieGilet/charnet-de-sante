@@ -18,12 +18,38 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatHealthController extends AbstractController
 {
+    private function isRouteSecure($className, $user, $cat) {
+        if ($className == "App\Entity\User") {
+            if ($cat->getOwner() != $user) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('cat-list');
+            }
+        } elseif ($className == "App\Entity\Guest") {
+            if ($cat->getId() != $user->getGuestCode()->getCat()->getId()) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('homepage');
+            }
+        } 
+
+        return null;
+    }
+
     /**
      * @Route("/espace-utilisateur/chat/{id}/sante", name="cat-health")
      * @Route("/espace-veterinaire/chat/{id}/sante", name="veterinary-cat-health")
      */
     public function catHealth(Cat $cat): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+
         return $this->render('cat-interface/cat-health/cat_health.html.twig', [
             'controller_name' => 'CatHealthController',
             'cat' => $cat
@@ -36,6 +62,16 @@ class CatHealthController extends AbstractController
      */
     public function catVetVisit(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healths = $healthRepository->findCatVetVisits($cat);
 
         $paginatedHealths = $paginator->paginate(
@@ -57,6 +93,16 @@ class CatHealthController extends AbstractController
      */
     public function catAllergy(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healths = $healthRepository->findCatAllergies($cat);
 
         $paginatedHealths = $paginator->paginate(
@@ -78,6 +124,16 @@ class CatHealthController extends AbstractController
      */
     public function catDisease(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healths = $healthRepository->findCatDiseases($cat);
 
         $paginatedHealths = $paginator->paginate(
@@ -99,6 +155,16 @@ class CatHealthController extends AbstractController
      */
     public function catWound(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healths = $healthRepository->findCatWounds($cat);
 
         $paginatedHealths = $paginator->paginate(
@@ -120,6 +186,16 @@ class CatHealthController extends AbstractController
      */
     public function catSurgery(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healths = $healthRepository->findCatSurgeries($cat);
 
         $paginatedHealths = $paginator->paginate(
@@ -141,6 +217,16 @@ class CatHealthController extends AbstractController
      */
     public function catAnalysis(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healths = $healthRepository->findCatAnalysis($cat);
 
         $paginatedHealths = $paginator->paginate(
@@ -162,6 +248,16 @@ class CatHealthController extends AbstractController
      */
     public function catDocument(Request $request, Cat $cat, HealthRepository $healthRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healths = $healthRepository->findCatDocuments($cat);
 
         $paginatedHealths = $paginator->paginate(
@@ -184,6 +280,16 @@ class CatHealthController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $health = new Health;
 
         $form = $this->createForm(CatHealthFormType::class, $health, [
@@ -227,6 +333,16 @@ class CatHealthController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $health = new Health;
 
         $form = $this->createForm(CatHealthFormType::class, $health, [
@@ -270,6 +386,16 @@ class CatHealthController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $health = new Health;
 
         $form = $this->createForm(CatHealthFormType::class, $health, [
@@ -313,6 +439,16 @@ class CatHealthController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $health = new Health;
 
         $form = $this->createForm(CatHealthFormType::class, $health, [
@@ -356,6 +492,16 @@ class CatHealthController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $health = new Health;
 
         $form = $this->createForm(CatHealthFormType::class, $health, [
@@ -399,6 +545,16 @@ class CatHealthController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $health = new Health;
 
         $form = $this->createForm(CatHealthFormType::class, $health, [
@@ -442,6 +598,16 @@ class CatHealthController extends AbstractController
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $documents = $healthRepository->findCatFilenames($cat);
 
         $mimeTypes = ['application/pdf', 'image/png', 'image/jpg', 'image/jpeg'];
@@ -526,6 +692,16 @@ class CatHealthController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healthId = $request->attributes->get('healthId');
         $health = $healthRepository->findOneBy(['id' => $healthId]);
 
@@ -569,6 +745,16 @@ class CatHealthController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healthId = $request->attributes->get('healthId');
         $health = $healthRepository->findOneBy(['id' => $healthId]);
 
@@ -612,6 +798,16 @@ class CatHealthController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healthId = $request->attributes->get('healthId');
         $health = $healthRepository->findOneBy(['id' => $healthId]);
 
@@ -655,6 +851,16 @@ class CatHealthController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healthId = $request->attributes->get('healthId');
         $health = $healthRepository->findOneBy(['id' => $healthId]);
 
@@ -698,6 +904,16 @@ class CatHealthController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healthId = $request->attributes->get('healthId');
         $health = $healthRepository->findOneBy(['id' => $healthId]);
 
@@ -741,6 +957,16 @@ class CatHealthController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healthId = $request->attributes->get('healthId');
         $health = $healthRepository->findOneBy(['id' => $healthId]);
 
@@ -784,6 +1010,16 @@ class CatHealthController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healthId = $request->attributes->get('healthId');
         $health = $healthRepository->findOneBy(['id' => $healthId]);
 
@@ -887,6 +1123,16 @@ class CatHealthController extends AbstractController
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
 
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $healthId = $request->attributes->get('healthId');
         $health = $healthRepository->findOneBy(['id' => $healthId]);
 
