@@ -89,12 +89,20 @@ class CatController extends AbstractController
     {
         $user = $this->getUser();
         $userPassword = $user->getPassword();
-
+       
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
         $catName = $cat->getName();
         $picture = $cat->getPicture();
         $documents = $healthRepository->findCatFilenames($cat);
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
 
         $form = $this->createForm(DeleteCatFormType::class, $user, [
             'action' => $this->generateUrl('delete-cat', ['catId' => $cat->getId() ]),
