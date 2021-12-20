@@ -25,14 +25,18 @@ class CatController extends AbstractController
 {
     private function isRouteSecure($className, $user, $cat) {
         if ($className == "App\Entity\User") {
-            if ($cat->getOwner() == $user) {
-                return true;
+            if ($cat->getOwner() != $user) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('cat-list');
             }
         } elseif ($className == "App\Entity\Guest") {
-            if ($cat->getId() == $user->getGuestCode()->getCat()->getId()) {
-                return true;
+            if ($cat->getId() != $user->getGuestCode()->getCat()->getId()) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('homepage');
             }
-        }
+        } 
+
+        return null;
     }
 
     /**
@@ -139,20 +143,14 @@ class CatController extends AbstractController
      */
     public function catDetail(Cat $cat, AddressRepository $addressRepository): Response
     {
-        if ($this->getUser()) {
-            $user = $this->getUser();
+        $user = $this->getUser();
 
-            $className = get_class($user);
+        $className = get_class($user);
 
-            if (!$this->isRouteSecure($className, $user, $cat) ) {
-                if ($className == "App\Entity\User") {
-                    $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
-                    return $this->redirectToRoute('cat-list', ['id' => $user->getId() ]);
-                } elseif ($className == "App\Entity\Guest") {
-                    $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
-                    return $this->redirectToRoute('homepage');
-                } 
-            }
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
         }
         
         $microchip = $cat->getMicrochip();
@@ -193,11 +191,10 @@ class CatController extends AbstractController
 
         $className = get_class($user);
 
-        if (!$this->isRouteSecure($className, $user, $cat) ) {
-            if ($className == "App\Entity\User") {
-                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
-                return $this->redirectToRoute('cat-list', ['id' => $user->getId() ]);
-            }
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
         }
         
         $form = $this->createForm(CatFormType::class, $cat);
@@ -282,11 +279,10 @@ class CatController extends AbstractController
 
         $className = get_class($user);
 
-        if (!$this->isRouteSecure($className, $user, $cat) ) {
-            if ($className == "App\Entity\User") {
-                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
-                return $this->redirectToRoute('cat-list', ['id' => $user->getId() ]);
-            }
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
         }
 
         $address = new Address;
@@ -326,11 +322,10 @@ class CatController extends AbstractController
 
         $className = get_class($user);
 
-        if (!$this->isRouteSecure($className, $user, $cat) ) {
-            if ($className == "App\Entity\User") {
-                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
-                return $this->redirectToRoute('cat-list', ['id' => $user->getId() ]);
-            }
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
         }
         
         $address = new Address;
