@@ -17,12 +17,38 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatHealthCareController extends AbstractController
 {
+    private function isRouteSecure($className, $user, $cat) {
+        if ($className == "App\Entity\User") {
+            if ($cat->getOwner() != $user) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('cat-list');
+            }
+        } elseif ($className == "App\Entity\Guest") {
+            if ($cat->getId() != $user->getGuestCode()->getCat()->getId()) {
+                $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                return $this->redirectToRoute('homepage');
+            }
+        } 
+
+        return null;
+    }
+
     /**
      * @Route("/espace-utilisateur/chat/{id}/soins", name="cat-healthCare")
      * @Route("/espace-veterinaire/chat/{id}/soins", name="veterinary-cat-healthCare")
      */
     public function catHealthCare(Cat $cat): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         return $this->render('cat-interface/cat-healthcare/cat_healthCare.html.twig', [
             'controller_name' => 'CatHealthCareController',
             'cat' => $cat
@@ -35,6 +61,16 @@ class CatHealthCareController extends AbstractController
      */
     public function catVaccine(Request $request, Cat $cat, HealthCareRepository $healthCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+
         $healthCares = $healthCareRepository->findCatVaccines($cat);
 
         $paginatedHealthCares = $paginator->paginate(
@@ -56,6 +92,16 @@ class CatHealthCareController extends AbstractController
      */
     public function catDewormer(Request $request, Cat $cat, HealthCareRepository $healthCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+
         $healthCares = $healthCareRepository->findCatDewormers($cat);
 
         $paginatedHealthCares = $paginator->paginate(
@@ -77,6 +123,16 @@ class CatHealthCareController extends AbstractController
      */
     public function catAntiparasite(Request $request, Cat $cat, HealthCareRepository $healthCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+
         $healthCares = $healthCareRepository->findCatAntiparasites($cat);
 
         $paginatedHealthCares = $paginator->paginate(
@@ -98,6 +154,16 @@ class CatHealthCareController extends AbstractController
      */
     public function catTreatments(Request $request, Cat $cat, HealthCareRepository $healthCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+
         $healthCares = $healthCareRepository->findCatTreatments($cat);
 
         $paginatedHealthCares = $paginator->paginate(
@@ -141,6 +207,16 @@ class CatHealthCareController extends AbstractController
      */
     public function catDescaling(Request $request, Cat $cat, HealthCareRepository $healthCareRepository, PaginatorInterface $paginator): Response
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+
         $healthCares = $healthCareRepository->findCatDescaling($cat);
 
         $paginatedHealthCares = $paginator->paginate(
@@ -161,6 +237,16 @@ class CatHealthCareController extends AbstractController
      */
     public function addVaccine(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
         $healthCare = new HealthCare;
@@ -204,6 +290,16 @@ class CatHealthCareController extends AbstractController
      */
     public function addDewormer(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
         $healthCare = new HealthCare;
@@ -243,6 +339,16 @@ class CatHealthCareController extends AbstractController
     public function addAntiparasite(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
         $cat = $catRepository->findOneBy(['id' => $cat]);
+
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
 
         $healthCare = new HealthCare;
 
@@ -285,6 +391,16 @@ class CatHealthCareController extends AbstractController
      */
     public function addTreatment(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
         $healthCare = new HealthCare;
@@ -328,6 +444,16 @@ class CatHealthCareController extends AbstractController
      */
     public function addDescaling(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat): Response 
     {
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+        
         $cat = $catRepository->findOneBy(['id' => $cat]);
 
         $healthCare = new HealthCare;
@@ -368,9 +494,19 @@ class CatHealthCareController extends AbstractController
      * @Route("/espace-utilisateur/chat/{catId}/soins/vaccin/{healthCareId}/editer", name="edit-vaccine")
      */
     public function editVaccine(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, HealthCareRepository $healthCareRepository, Cat $cat = null, HealthCare $healthCare = null): Response 
-    {
+    {       
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
+
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
 
         $healthCareId = $request->attributes->get('healthCareId');
         $healthCare = $healthCareRepository->findOneBy(['id' => $healthCareId]);
@@ -411,9 +547,19 @@ class CatHealthCareController extends AbstractController
      * @Route("/espace-utilisateur/chat/{catId}/soins/vermifuge/{healthCareId}/editer", name="edit-dewormer")
      */
     public function editDewormer(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, HealthCareRepository $healthCareRepository, Cat $cat = null, HealthCare $healthCare = null): Response 
-    {
+    {        
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
+
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
 
         $healthCareId = $request->attributes->get('healthCareId');
         $healthCare = $healthCareRepository->findOneBy(['id' => $healthCareId]);
@@ -449,9 +595,19 @@ class CatHealthCareController extends AbstractController
      * @Route("/espace-utilisateur/chat/{catId}/soins/antiparasitaire/{healthCareId}/editer", name="edit-antiparasite")
      */
     public function editAntiparasite(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, HealthCareRepository $healthCareRepository, Cat $cat = null, HealthCare $healthCare = null): Response 
-    {
+    {        
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
+
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
 
         $healthCareId = $request->attributes->get('healthCareId');
         $healthCare = $healthCareRepository->findOneBy(['id' => $healthCareId]);
@@ -492,9 +648,19 @@ class CatHealthCareController extends AbstractController
      * @Route("/espace-utilisateur/chat/{catId}/soins/traitements/{healthCareId}/editer", name="edit-treatment")
      */
     public function editTreatment(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, HealthCareRepository $healthCareRepository, Cat $cat = null, HealthCare $healthCare = null): Response 
-    {
+    {        
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
+
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
 
         $healthCareId = $request->attributes->get('healthCareId');
         $healthCare = $healthCareRepository->findOneBy(['id' => $healthCareId]);
@@ -535,9 +701,19 @@ class CatHealthCareController extends AbstractController
      * @Route("/espace-utilisateur/chat/{catId}/soins/detartrage/{healthCareId}/editer", name="edit-descaling")
      */
     public function editDescaling(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, HealthCareRepository $healthCareRepository, Cat $cat = null, HealthCare $healthCare = null): Response 
-    {
+    {        
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
+
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
 
         $healthCareId = $request->attributes->get('healthCareId');
         $healthCare = $healthCareRepository->findOneBy(['id' => $healthCareId]);
@@ -584,9 +760,19 @@ class CatHealthCareController extends AbstractController
      * @Route("/espace-utilisateur/chat/{catId}/soins/detartrage/{healthCareId}/supprimer", name="delete-healthCare")
      */
     public function deleteHealthCare(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, HealthCareRepository $healthCareRepository, Cat $cat = null, HealthCare $healthCare = null): Response 
-    {
+    {               
         $catId = $request->attributes->get('catId');
         $cat = $catRepository->findOneBy(['id' => $catId]);
+
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
 
         $healthCareId = $request->attributes->get('healthCareId');
         $healthCare = $healthCareRepository->findOneBy(['id' => $healthCareId]);
