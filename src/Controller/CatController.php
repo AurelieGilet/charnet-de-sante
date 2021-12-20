@@ -23,6 +23,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatController extends AbstractController
 {
+    private function isRouteSecure($className, $user, $cat) {
+        if ($className == "App\Entity\User") {
+            if ($cat->getOwner() == $user) {
+                return true;
+            }
+        } elseif ($className == "App\Entity\Guest") {
+            if ($cat->getId() == $user->getGuestCode()->getCat()->getId()) {
+                return true;
+            }
+        }
+    }
+
     /**
      * @Route("/espace-utilisateur/liste-chats", name="cat-list")
      */
@@ -127,9 +139,20 @@ class CatController extends AbstractController
      */
     public function catDetail(Cat $cat, AddressRepository $addressRepository): Response
     {
-        $userId = '';
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
+            $user = $this->getUser();
+
+            $className = get_class($user);
+
+            if (!$this->isRouteSecure($className, $user, $cat) ) {
+                if ($className == "App\Entity\User") {
+                    $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                    return $this->redirectToRoute('cat-list', ['id' => $user->getId() ]);
+                } elseif ($className == "App\Entity\Guest") {
+                    $this->addFlash('danger', "Vous n'avez pas accès à cette fiche");
+                    return $this->redirectToRoute('homepage');
+                } 
+            }
         }
         
         $microchip = $cat->getMicrochip();
@@ -154,7 +177,6 @@ class CatController extends AbstractController
 
         return $this->render('cat-interface/cat_detail.html.twig', [
             'controller_name' => 'CatController',
-            'userId' => $userId,
             'cat' => $cat,
             'microchip' => $microchip,
             'ownerPhone' => $ownerPhone,
