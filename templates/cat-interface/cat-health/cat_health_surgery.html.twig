@@ -3,11 +3,11 @@
 {% block title %}Le Charnet de Santé - Chirurgie de {{ cat.name }} {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form-type.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.min.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -111,5 +111,5 @@
     </div>
     {% endif %}
 </main>
-<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.min.js') }}"></script>
 {% endblock %}
