@@ -8,9 +8,9 @@
         <meta name="keywords" content="carnet de santé pour chat, carnet de santé en ligne, carnet de santé pour chat gratuit, santé du chat, suivi et soins du chat">
         <title>{% block title %}Bienvenue sur le Charnet de Santé{% endblock %}</title>
         <link rel="icon" type="image/png" href="{{asset('img/site/icon.png')}}"/>
-        <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/base.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/partials/header.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/reset.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/base.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/partials/header.min.css') }}">
         {% block stylesheets %}
         {% endblock %}
     </head>
@@ -20,7 +20,7 @@
         {% include 'partials/footer.html.twig' %}
 
         {% block javascripts %}
-        <script type="text/javascript" src="{{ asset('js/partials/header.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/partials/header.min.js') }}"></script>
         {% endblock %}
     </body>
 </html>

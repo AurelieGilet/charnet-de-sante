@@ -3,9 +3,9 @@
 {% block title %}Le Charnet de Santé - Fiche de {{ cat.name }} {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-detail.css') }}" >
-    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/form-type.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-detail.min.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.min.css') }}" >
     <link rel="stylesheet" href="{{ asset('css/cropper.min.css') }}">
 {% endblock %}
 
@@ -112,7 +112,7 @@
 <script>
     const catId = {{ cat.id }};
 </script>
-<script type="text/javascript" src="{{ asset('js/cat-interface/cat-detail.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-detail.min.js') }}"></script>
 {{ encore_entry_script_tags('cat-cropper') }}
 {{ encore_entry_script_tags('authenticator') }}
 
