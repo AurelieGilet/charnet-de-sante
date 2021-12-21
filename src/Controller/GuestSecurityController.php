@@ -32,6 +32,7 @@ class GuestSecurityController extends AbstractController
      */
     public function codeGenerator(Request $request, CatRepository $catRepository, GuestCodeRepository $guestCodeRepository, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher): Response
     {
+        // This method is used by an authenticated user to generate an access code. This code will then be used in the homepage to access the cat's data.
         $user = $this->getUser();
 
         $guest = $user->getGuest();
@@ -40,6 +41,7 @@ class GuestSecurityController extends AbstractController
             $catId = $request->attributes->get('_route_params');
             $cat = $catRepository->findOneBy(['id' => $catId]);
 
+            // The code is composed with the id of the user, followed by 3 numbers, 3 letters, and 3 numbers again. 
             $code = $user->getId().'-';
             for ($k = 0; $k < 3; $k++) {
                 $code .= mt_rand(1,9);
@@ -51,6 +53,7 @@ class GuestSecurityController extends AbstractController
                 $code .= mt_rand(1,9);
             }
 
+            // The code has a validity of 10 minutes and can only be used once.
             $validity = new DateTime();
             $validity->add(new DateInterval('PT10M'));
 

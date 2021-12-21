@@ -64,6 +64,7 @@ if (form) {
 }
 
 function ajaxRequestEditPicture(blob) {
+  // The catId variable is defined directly in a script in the template (=>cat_detail.html.twig).
   let url = Routing.generate("edit-cat-picture", { id: catId });
   let formData = new FormData(form);
   formData.append("file", blob);

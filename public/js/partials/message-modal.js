@@ -1,3 +1,5 @@
+// MODALS
+
 const modalClose = document.querySelector(".close");
 const modalButton = document.querySelector(".modal-button");
 const body = document.getElementsByTagName("body");

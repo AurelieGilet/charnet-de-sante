@@ -16,6 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatPetCareController extends AbstractController
 {
+    // This method is used in the different routes with ID in the URL to secure them and prevent users to access routes they don't have permission to.
+    // There is 2 kind of users : the normal users and the guests. Users are limited to the pages concerning their own cats. Guests are limited to the pages concerning THE cat the users gave them access to. 
     private function isRouteSecure($className, $user, $cat) {
         if ($className == "App\Entity\User") {
             if ($cat->getOwner() != $user) {
@@ -70,6 +72,7 @@ class CatPetCareController extends AbstractController
             return $secureRoute;
         }
         
+        // We create 2 sets of data : those that are finished (with end date) and those that are ongoing.
         $petCares = $petCareRepository->findCatFeedings($cat);
 
         $paginatedPetCares = $paginator->paginate(
@@ -1048,6 +1051,8 @@ class CatPetCareController extends AbstractController
         $petCareId = $request->attributes->get('petCareId');
         $petCare = $petCareRepository->findOneBy(['id' => $petCareId]);
 
+        // To avoir having to create a delete method for each kind of petCare data, we create variables that will store the corresponding data. 
+        // The one we are deleting is the only variable that is not empty. We then use this variable to determine the redirection route.
         $feeding = $petCare->getFoodQuantity();
         $grooming = $petCare->getgrooming();
         $claws = $petCare->getClaws();
@@ -1069,6 +1074,7 @@ class CatPetCareController extends AbstractController
 
             $this->addFlash('success', "L'entrée a été supprimée");
 
+            // Here we check each variable to find the one that is not empty and will determine the redirection route in case of success or failure.
             if ($feeding != null) {
                 return $this->redirectToRoute('cat-feeding', ['id' => $cat->getId() ]);
             } else if ($grooming != null) {

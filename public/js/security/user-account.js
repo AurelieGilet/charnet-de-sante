@@ -1,3 +1,5 @@
+// FORMS MODALS
+
 const close = document.querySelectorAll(".close");
 const editUsernameBtn = document.getElementById("edit-username");
 const editUsernameForm = document.getElementById("edit-username-form");

@@ -17,6 +17,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatHealthCareController extends AbstractController
 {
+    // This method is used in the different routes with ID in the URL to secure them and prevent users to access routes they don't have permission to.
+    // There is 2 kind of users : the normal users and the guests. Users are limited to the pages concerning their own cats. Guests are limited to the pages concerning THE cat the users gave them access to. 
     private function isRouteSecure($className, $user, $cat) {
         if ($className == "App\Entity\User") {
             if ($cat->getOwner() != $user) {
@@ -164,6 +166,7 @@ class CatHealthCareController extends AbstractController
             return $secureRoute;
         }
 
+        // We create 2 sets of data : those that are finished (with end date) and those that are ongoing.
         $healthCares = $healthCareRepository->findCatTreatments($cat);
 
         $paginatedHealthCares = $paginator->paginate(
@@ -777,6 +780,8 @@ class CatHealthCareController extends AbstractController
         $healthCareId = $request->attributes->get('healthCareId');
         $healthCare = $healthCareRepository->findOneBy(['id' => $healthCareId]);
 
+        // To avoir having to create a delete method for each kind of healthCare data, we create variables that will store the corresponding data. 
+        // The one we are deleting is the only variable that is not empty. We then use this variable to determine the redirection route.
         $vaccine = $healthCare->getVaccine();
         $dewormer = $healthCare->getDewormer();
         $parasite = $healthCare->getParasite();
@@ -796,6 +801,7 @@ class CatHealthCareController extends AbstractController
 
             $this->addFlash('success', "L'entrée a été supprimée");
 
+            // Here we check each variable to find the one that is not empty and will determine the redirection route in case of success or failure.
             if ($vaccine != null) {
                 return $this->redirectToRoute('cat-vaccine', ['id' => $cat->getId() ]);
             } else if ($dewormer != null) {

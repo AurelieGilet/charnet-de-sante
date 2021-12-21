@@ -23,6 +23,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatController extends AbstractController
 {
+    // This method is used in the different routes with ID in the URL to secure them and prevent users to access routes they don't have permission to.
+    // There is 2 kind of users : the normal users and the guests. Users are limited to the pages concerning their own cats. Guests are limited to the pages concerning THE cat the users gave them access to. 
     private function isRouteSecure($className, $user, $cat) {
         if ($className == "App\Entity\User") {
             if ($cat->getOwner() != $user) {
@@ -118,6 +120,7 @@ class CatController extends AbstractController
                 $manager->remove($cat);
                 $manager->flush($cat);
 
+                // Don't forget to remove the picture and documents linked to the cat.
                 $filesystem = new Filesystem();
                 $filesystem->remove($this->getParameter('images_directory') . '/' . $picture);
                 for ($i=0; $i < count($documents); $i++) { 
@@ -161,11 +164,13 @@ class CatController extends AbstractController
             return $secureRoute;
         }
         
+        // This is used to format the display of the microchip number.
         $microchip = $cat->getMicrochip();
         $regex = '/([0-9]{3})([0-9]{2})([0-9]{2})([0-9]{8})/';
         $replacement = "$1-$2-$3-$4";  
         $microchip = preg_replace($regex, $replacement, $microchip);
 
+        // This is used to format the display of the phone numbers.
         $replacement2 = "$1.$2.$3.$4.$5";
         $regex2 = '/([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/';
         $ownerPhone = '';
@@ -179,6 +184,7 @@ class CatController extends AbstractController
             $veterinaryPhone = preg_replace($regex2, $replacement2, $veterinaryPhone);
         }
         
+        // We set the cat object in session so that we can use it in the editCatPicture method.
         $this->container->get('session')->set('cat', $cat);
 
         return $this->render('cat-interface/cat_detail.html.twig', [
@@ -239,11 +245,13 @@ class CatController extends AbstractController
         $form = $this->createForm(EditCatPictureFormType::class, $cat);
         $form->handleRequest($request);
 
+        // We use fengyuanchen/cropperjs (https://github.com/fengyuanchen/cropperjs) to crop the picture with Ajax (=>cat-cropper.js).
         if ($request->isXmlHttpRequest()) {
             $file = $_FILES['file'];
             $file = new UploadedFile($file['tmp_name'], $file['name'], $file['type']);
 
             if (filesize($file) <= 2000000) {
+                // If there is already a picture for this cat, don't forget to delete it.
                 if ($oldPicture) {
                     $filesystem = new Filesystem();
                     $filesystem->remove($this->getParameter('images_directory') . '/' . $oldPicture);
@@ -295,6 +303,7 @@ class CatController extends AbstractController
 
         $address = new Address;
 
+        // If the cat already has an owner address, we don't create a new one, but edit the existing.
         if ($addressRepository->findOneBy(['ownerAddressCat' => $cat]) != null) {
             $address = $addressRepository->findOneBy(['ownerAddressCat' => $cat]);
         }
