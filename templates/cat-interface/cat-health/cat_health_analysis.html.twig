@@ -79,7 +79,7 @@
                     </div>
                     <div class="entry-info data--details">
                         <p>Motif de l'analyse : <em  class="data">{{ health.analysis|capitalize }}</em></p>
-                        <p>Résultats : <em class="data">{{ health.details|capitalize }}</em></p>
+                        <p>Résultats : <em class="data">{{ health.details|nl2br }}</em></p>
                     </div>
                 </div>
                 {% if is_granted('ROLE_USER') %}

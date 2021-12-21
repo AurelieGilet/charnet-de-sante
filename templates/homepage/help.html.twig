@@ -96,7 +96,7 @@
                         </div>
                         <div class="arrow"></div>
                     </div>
-                    <p class="article-content">{{ faq.answer }}</p>
+                    <p class="article-content">{{ faq.answer|nl2br }}</p>
                 </article>
                 {% endfor %}
                 {{ knp_pagination_render(paginatedFAQ) }}

@@ -77,7 +77,7 @@
                         {% endif %}
                     </div>
                     <div class="entry-info data--notes">
-                        <p class="data data--notes">{{ petCare.notes|capitalize }}</p>
+                        <p class="data data--notes">{{ petCare.notes|nl2br }}</p>
                     </div>
                 </div>
                 {% if is_granted('ROLE_USER') %}
