@@ -81,7 +81,7 @@ class PetCareRepository extends ServiceEntityRepository
     public function findCatEyesEars($cat)
     {
         return $this->createQueryBuilder('petcare')
-            ->andWhere('petcare.cat = :cat and petcare.eyesEars IS NOT NULL')
+            ->andWhere("petcare.cat = :cat and petcare.eyesEars != ' '")
             ->setParameter('cat', $cat)
             ->addOrderBy('petcare.date', 'DESC')
             ->getQuery()
