@@ -1,4 +1,5 @@
-// MODALS
+// FORMS MODALS
+
 const addEditModalClose = document.getElementsByClassName(
   "add-edit-modal-close-btn"
 );
@@ -45,8 +46,8 @@ for (let i = 0; i < deleteDataBtn.length; i++) {
     body[0].classList.add("modal-open");
   });
 }
+// FAQ ARROW DISPLAY
 
-// FAQ ARROW FUNCTION
 const arrows = document.querySelectorAll(".arrow");
 const faqQuestion = document.querySelectorAll(".faq-question");
 

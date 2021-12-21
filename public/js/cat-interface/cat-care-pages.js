@@ -1,4 +1,4 @@
-// MODALS
+// FORMS MODALS
 
 const addEditModalClose = document.getElementsByClassName(
   "add-edit-modal-close-btn"

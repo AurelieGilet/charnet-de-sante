@@ -1,4 +1,5 @@
-// ARROW FUNCTION
+// ARROW DISPLAY
+
 const arrows = document.querySelectorAll(".arrow");
 const articleHeader = document.querySelectorAll(".article-header");
 

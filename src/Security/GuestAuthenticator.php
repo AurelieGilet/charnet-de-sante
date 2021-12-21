@@ -47,8 +47,10 @@ class GuestAuthenticator extends AbstractLoginFormAuthenticator
         $code = $request->request->all();
 
         if ($code) {
+            // We extract the user Id from the code entered by the guest
             $userId = strtok($code['password'], '-');
 
+            // We check the Id extracted is a number and nothing else
             if (is_numeric($userId)) {
                 $user =  $this->userRepository->findOneBy(['id' => $userId]);
 
@@ -60,15 +62,19 @@ class GuestAuthenticator extends AbstractLoginFormAuthenticator
                 
                 $validity = new DateTime();
 
+                // We check the validity (10min) of the code and if it has already been used
                 if ($guestCode->getValidity() > $validity && $guestCode->getIsUsed() == false) {
+                    // We check if it is the right code
                     if (password_verify($code['password'], $guestCode->getCode())) {
                         $guest = $guestCode->getGuest();
                         $username = $guest->getUserIdentifier();
                         $cat = $guestCode->getCat();
 
+                        // We store the cat Id in session to use it in the onAuthenticationSuccess method for redirection
                         $session = $this->requestStack->getSession();
                         $session->set('catId', $cat->getId());
 
+                        // We indicate the code is used
                         $guestCode->setIsUsed(true);
 
                         $this->manager->persist($guestCode);
@@ -108,6 +114,7 @@ class GuestAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
+        // Intelephense indicate getFlashBag as an undefined method but she exists and works perfectly
         $request->getSession()->getFlashBag()->add('danger', "Ce code n'est pas valide");
 
         return new RedirectResponse($this->urlGenerator->generate('homepage'));

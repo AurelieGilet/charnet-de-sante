@@ -1,4 +1,5 @@
 // MOBILE CAT MENU
+
 if (document.querySelector("#mobile-cat-menu")) {
   document
     .querySelector("#mobile-cat-menu")

@@ -18,6 +18,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CatHealthController extends AbstractController
 {
+    // This method is used in the different routes with ID in the URL to secure them and prevent users to access routes they don't have permission to.
+    // There is 2 kind of users : the normal users and the guests. Users are limited to the pages concerning their own cats. Guests are limited to the pages concerning THE cat the users gave them access to. 
     private function isRouteSecure($className, $user, $cat) {
         if ($className == "App\Entity\User") {
             if ($cat->getOwner() != $user) {
@@ -610,6 +612,7 @@ class CatHealthController extends AbstractController
         
         $documents = $healthRepository->findCatFilenames($cat);
 
+        // Those are the authorized document extensions.
         $mimeTypes = ['application/pdf', 'image/png', 'image/jpg', 'image/jpeg'];
 
         $health = new Health;
@@ -636,6 +639,7 @@ class CatHealthController extends AbstractController
                 return $this->redirectToRoute('cat-document', ['id' => $cat->getId() ]);
             }
 
+            // We check the size and extension of the document.
             if (filesize($file) <= 1000000 && in_array($fileExtension, $mimeTypes)) {
                 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 
@@ -643,6 +647,7 @@ class CatHealthController extends AbstractController
 
                 $filename = $safeFilename . '.' . $file->guessExtension();
 
+                // We have to check if this document has already been dowloaded to prevent duplicates.
                 $fileExists = array_search($filename, array_column($documents, 'document'));
 
                 if ($fileExists !== false) {
@@ -1136,6 +1141,8 @@ class CatHealthController extends AbstractController
         $healthId = $request->attributes->get('healthId');
         $health = $healthRepository->findOneBy(['id' => $healthId]);
 
+        // To avoir having to create a delete method for each kind of health data, we create variables that will store the corresponding data. 
+        // The one we are deleting is the only variable that is not empty. We then use this variable to determine the redirection route.
         $vetVisit = $health->getVetVisitMotif();
         $allergy = $health->getAllergy();
         $disease = $health->getDisease();
@@ -1160,6 +1167,7 @@ class CatHealthController extends AbstractController
 
             $this->addFlash('success', "L'entrée a été supprimée");
 
+            // Here we check each variable to find the one that is not empty and will determine the redirection route in case of success or failure.
             if ($vetVisit != null) {
                 return $this->redirectToRoute('cat-vetVisit', ['id' => $cat->getId() ]);
             } else if ($allergy != null) {

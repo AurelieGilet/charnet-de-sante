@@ -1,3 +1,5 @@
+// FORMS MODALS
+
 const close = document.querySelectorAll(".close");
 const editPictureBtn = document.getElementById("edit-picture");
 const editPictureForm = document.getElementById("edit-picture-form");

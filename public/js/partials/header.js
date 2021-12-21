@@ -1,4 +1,5 @@
 // MOBILE-MENU
+
 const burgerButton = document.getElementById("burger-btn");
 const burgerNav = document.querySelector(".burger-nav");
 
@@ -36,6 +37,7 @@ function menuDisplay() {
 }
 
 // DESKTOP-MENU
+
 if (document.querySelector("#desktop-menu")) {
   document
     .querySelector("#desktop-menu")

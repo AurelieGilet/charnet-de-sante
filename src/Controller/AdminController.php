@@ -51,6 +51,7 @@ class AdminController extends AbstractController
 
         $form = $this->createForm(SearchUserFormType::class);
 
+        // the search user method allow to search a user with a username or an email.
         if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $criteria = $form->getData();
 
@@ -87,6 +88,7 @@ class AdminController extends AbstractController
 
         $form = $this->createForm(SearchFAQFormType::class);
 
+        // the search FAQ method allow to search a question with multiple key-words.
         if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $criteria = $form->getData();
             $criteria = explode(" ", $criteria['question']);
@@ -228,6 +230,7 @@ class AdminController extends AbstractController
         $admin = $this->getUser();
         $adminPassword = $admin->getPassword();
 
+        // When deleting a user, we have to delete all that is related to them of their cats, including, the guest, the codes, the pictures, the documents ...
         $userId = $request->attributes->get('userId');
         $user = $userRepository->findOneBy(['id' => $userId]);
         $username = $user->getUsername();
@@ -237,6 +240,8 @@ class AdminController extends AbstractController
         $guestCode = $user->getGuestCode();
 
         $userCats = $catRepository->findBy(['owner' => $user]);
+
+        // Here we have to get the references of the pictures and documents for all the user's cats, so that we can delete them from the server.
         $catsPictures = [];
         $catsDocuments = [];
 
@@ -263,6 +268,7 @@ class AdminController extends AbstractController
                 $manager->remove($guestCode);
                 $manager->flush();
 
+                // Don't forget to delete pictures and documents
                 $filesystem = new Filesystem();
                 $filesystem->remove($this->getParameter('images_directory') . '/' . $userPicture);
                 for ($i = 0; $i < count($catsPictures); $i++) { 
