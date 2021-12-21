@@ -29,7 +29,6 @@ article {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     background-color: var(--list-background-color);
     border: 1px solid var(--list-border-color);
     border-radius: 5px;
