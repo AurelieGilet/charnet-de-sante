@@ -56,6 +56,7 @@ class ContactFormType extends AbstractType
                         'maxMessage' => "Votre message ne doit pas faire plus de 2000 caractères"]),
                 ],
             ])
+            // Here we use gregwar/captcha-bundle (https://github.com/Gregwar/CaptchaBundle)
             ->add('captcha', CaptchaType::class, [
                 'label' => "Saisissez le Captcha *",
                 'attr' => ['class' => 'feedback-captcha'],
