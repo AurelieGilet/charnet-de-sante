@@ -5,8 +5,8 @@
 {% block title %}Le Charnet de Santé - Votre compte{% endblock %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/form-type.css') }}">
-<link rel="stylesheet" href="{{ asset('css/security/user-account.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form-type.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/security/user-account.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/cropper.min.css') }}">
 {% endblock %}
 
@@ -91,6 +91,6 @@
         ))}}
     </div>
 </main>
-<script type="text/javascript" src="{{ asset('js/security/user-account.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/security/user-account.min.js') }}"></script>
 {{ encore_entry_script_tags('user-cropper') }}
 {% endblock %}
