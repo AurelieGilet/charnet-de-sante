@@ -51,7 +51,7 @@ class CatHealthCareController extends AbstractController
             return $secureRoute;
         }
         
-        return $this->render('cat-interface/cat-healthcare/cat_healthCare.html.twig', [
+        return $this->render('cat-interface/cat-healthcare/cat_healthcare.html.twig', [
             'controller_name' => 'CatHealthCareController',
             'cat' => $cat
         ]);
@@ -540,7 +540,7 @@ class CatHealthCareController extends AbstractController
             return $this->redirectToRoute('cat-vaccine', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-healthCare/_add_edit_cat_vaccine.html.twig', [
+        return $this->render('cat-interface/cat-healthcare/_add_edit_cat_vaccine.html.twig', [
             'controller_name' => 'CatHealthCareController',
             'healthCareForm' => $form->createView()
         ]);
@@ -588,7 +588,7 @@ class CatHealthCareController extends AbstractController
             return $this->redirectToRoute('cat-dewormer', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-healthCare/_add_edit_cat_dewormer.html.twig', [
+        return $this->render('cat-interface/cat-healthcare/_add_edit_cat_dewormer.html.twig', [
             'controller_name' => 'CatHealthCareController',
             'healthCareForm' => $form->createView()
         ]);
@@ -641,7 +641,7 @@ class CatHealthCareController extends AbstractController
             return $this->redirectToRoute('cat-antiparasite', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-healthCare/_add_edit_cat_antiparasite.html.twig', [
+        return $this->render('cat-interface/cat-healthcare/_add_edit_cat_antiparasite.html.twig', [
             'controller_name' => 'CatHealthCareController',
             'healthCareForm' => $form->createView()
         ]);
@@ -694,7 +694,7 @@ class CatHealthCareController extends AbstractController
             return $this->redirectToRoute('cat-treatment', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-healthCare/_add_edit_cat_treatment.html.twig', [
+        return $this->render('cat-interface/cat-healthcare/_add_edit_cat_treatment.html.twig', [
             'controller_name' => 'CatHealthCareController',
             'healthCareForm' => $form->createView()
         ]);
@@ -745,7 +745,7 @@ class CatHealthCareController extends AbstractController
             return $this->redirectToRoute('cat-descaling', ['id' => $cat->getId() ]);
         }
 
-        return $this->render('cat-interface/cat-healthCare/_add_edit_cat_descaling.html.twig', [
+        return $this->render('cat-interface/cat-healthcare/_add_edit_cat_descaling.html.twig', [
             'controller_name' => 'CatHealthCareController',
             'healthCareForm' => $form->createView()
         ]);
