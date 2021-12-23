@@ -31,7 +31,9 @@
                         {% elseif is_granted("ROLE_GUEST") %}
                             {{ path('veterinary-cat-measures', {'id': cat.id}) }}
                         {% endif %}
-                        " class="return">Retour aux mesures
+                        " class="return">
+                        <img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                        Retour aux mesures
                     </a>
                 </div>
             </div>

@@ -30,7 +30,8 @@
                         {% elseif is_granted("ROLE_GUEST") %}
                             {{ path('veterinary-cat-healthCare', {'id': cat.id}) }}
                         {% endif %}
-                        " class="return">Retour aux soins
+                        " class="return"><img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                        Retour aux soins
                     </a>
                 </div>
             </div>

@@ -25,7 +25,9 @@
                         {% elseif is_granted("ROLE_GUEST") %}
                             {{ path('veterinary-cat-detail', {'id': cat.id}) }}
                         {% endif %}
-                        " class="return">Retour à la fiche
+                        " class="return">
+                        <img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                        Retour à la fiche
                     </a>
                 </div>
             </div>
