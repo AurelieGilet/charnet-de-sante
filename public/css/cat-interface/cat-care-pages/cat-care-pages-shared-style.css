@@ -244,6 +244,11 @@ section {
     font-size: 1.6rem;
 }
 
+.card-arrow img{
+    width: 25px;
+    height: auto;
+}
+
 .shaker:hover .shake {
     -webkit-animation-name: shake;
     animation-name: shake;
