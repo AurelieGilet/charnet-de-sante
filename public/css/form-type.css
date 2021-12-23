@@ -51,7 +51,7 @@ input, textarea, select {
     border-radius: 5px;
     border: 1px solid var(--list-border-color);
     font-size: 1rem;
-    font-family: Do Hyeon, sans-serif;
+    font-family: Nunito, sans-serif;
 }
 
 input:focus, textarea:focus, select:focus {
@@ -74,7 +74,7 @@ button {
     color: white;
     white-space: nowrap;
     font-size: 1rem;
-    font-family: Do Hyeon, sans-serif;
+    font-family: Nunito, sans-serif;
     margin: 10px 0;
 }
 
