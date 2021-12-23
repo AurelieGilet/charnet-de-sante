@@ -50,6 +50,7 @@ input, textarea, select {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--list-border-color);
+    background-color: white;
     font-size: 1rem;
     font-family: Nunito, sans-serif;
 }
