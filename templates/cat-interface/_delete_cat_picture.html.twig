@@ -1,0 +1,9 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close">X</div>
+        <h2>Etes-vous sûr de vouloir supprimer la photo de votre chat ?</h2>
+        {{ form_start(deleteCatPictureForm) }}
+            {{ form_row(deleteCatPictureForm.submit, {'label': 'Supprimer'}) }}
+        {{ form_end(deleteCatPictureForm) }}
+    </div>
+</div>
