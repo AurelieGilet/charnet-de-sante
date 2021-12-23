@@ -11,6 +11,7 @@ use App\Repository\CatRepository;
 use App\Form\EditCatPictureFormType;
 use App\Repository\HealthRepository;
 use App\Repository\AddressRepository;
+use App\Form\DeleteCatPictureFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -232,61 +233,6 @@ class CatController extends AbstractController
     }
 
     /**
-     * @Route("/espace-utilisateur/chat/{id}/editer-photo", name="edit-cat-picture", methods={"POST"}, options={"expose"=true})
-     */
-    public function editCatPicture(Request $request, CatRepository $catRepository, EntityManagerInterface $manager, SluggerInterface $slugger): Response
-    {
-        $oldCat = $this->container->get('session')->get('cat');
-        $oldPicture = $oldCat->getPicture();
-
-        $catId = $request->attributes->get('_route_params');
-        $cat = $catRepository->findOneBy(['id' => $catId]);
-
-        $form = $this->createForm(EditCatPictureFormType::class, $cat);
-        $form->handleRequest($request);
-
-        // We use fengyuanchen/cropperjs (https://github.com/fengyuanchen/cropperjs) to crop the picture with Ajax (=>cat-cropper.js).
-        if ($request->isXmlHttpRequest()) {
-            $file = $_FILES['file'];
-            $file = new UploadedFile($file['tmp_name'], $file['name'], $file['type']);
-
-            if (filesize($file) <= 2000000) {
-                // If there is already a picture for this cat, don't forget to delete it.
-                if ($oldPicture) {
-                    $filesystem = new Filesystem();
-                    $filesystem->remove($this->getParameter('images_directory') . '/' . $oldPicture);
-                }
-
-                $filename = $slugger->slug($cat->getId()) . '-' . uniqid() . '.' . $file->guessExtension();
-
-                $file->move(
-                    $this->getParameter('images_directory'),
-                    $filename
-                );
-
-                $cat->setPicture($filename);
-
-                $manager->persist($cat);
-                $manager->flush();
-
-                $this->addFlash('success', "La photo de votre chat a été ajoutée");
-                
-                return new JsonResponse();
-                
-            } else {
-                $this->addFlash('danger', "La photo de votre chat n'a pas été modifiée. L'image doit faire moins de 2 Mo.");
-
-                return new JsonResponse(415);
-            }           
-        } 
-
-        return $this->render('cat-interface/_edit_cat_picture_form.html.twig', [
-            'controller_name' => 'CatController',
-            'pictureForm' => $form->createView()
-        ]);
-    }
-
-    /**
      * @Route("espace-utilisateur/chat/{id}/editer-adresse-proprietaire", name="edit-cat-owner-address")
      */
     public function editCatOwnerAddress(Request $request, EntityManagerInterface $manager, AddressRepository $addressRepository, Cat $cat): Response
@@ -370,6 +316,112 @@ class CatController extends AbstractController
             'controller_name' => 'CatController',
             'addressForm' => $form->createView(),
             'cat' => $cat,
+        ]);
+    }
+
+    /**
+     * @Route("/espace-utilisateur/chat/{id}/editer-photo", name="edit-cat-picture", methods={"POST"}, options={"expose"=true})
+     */
+    public function editCatPicture(Request $request, CatRepository $catRepository, EntityManagerInterface $manager, SluggerInterface $slugger): Response
+    {
+        $oldCat = $this->container->get('session')->get('cat');
+        $oldPicture = $oldCat->getPicture();
+
+        $catId = $request->attributes->get('_route_params');
+        $cat = $catRepository->findOneBy(['id' => $catId]);
+
+        $form = $this->createForm(EditCatPictureFormType::class, $cat);
+        $form->handleRequest($request);
+
+        // We use fengyuanchen/cropperjs (https://github.com/fengyuanchen/cropperjs) to crop the picture with Ajax (=>cat-cropper.js).
+        if ($request->isXmlHttpRequest()) {
+            $file = $_FILES['file'];
+            $file = new UploadedFile($file['tmp_name'], $file['name'], $file['type']);
+
+            if (filesize($file) <= 2000000) {
+                // If there is already a picture for this cat, don't forget to delete it.
+                if ($oldPicture) {
+                    $filesystem = new Filesystem();
+                    $filesystem->remove($this->getParameter('images_directory') . '/' . $oldPicture);
+                }
+
+                $filename = $slugger->slug($cat->getId()) . '-' . uniqid() . '.' . $file->guessExtension();
+
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $filename
+                );
+
+                $cat->setPicture($filename);
+
+                $manager->persist($cat);
+                $manager->flush();
+
+                $this->addFlash('success', "La photo de votre chat a été ajoutée");
+                
+                return new JsonResponse();
+                
+            } else {
+                $this->addFlash('danger', "La photo de votre chat n'a pas été modifiée. L'image doit faire moins de 2 Mo.");
+
+                return new JsonResponse(415);
+            }           
+        } 
+
+        return $this->render('cat-interface/_edit_cat_picture_form.html.twig', [
+            'controller_name' => 'CatController',
+            'pictureForm' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/espace-utilisateur/chat/{catId}/supprimer-photo", name="delete-cat-picture")
+     */
+    public function deleteCatPicture(Request $request, EntityManagerInterface $manager, CatRepository $catRepository, Cat $cat = null): Response
+    {
+        $catId = $request->attributes->get('catId');
+        $cat = $catRepository->findOneBy(['id' => $catId]);
+
+        $user = $this->getUser();
+
+        $className = get_class($user);
+
+        $secureRoute = $this->isRouteSecure($className, $user, $cat);
+
+        if ($secureRoute != null) {
+            return $secureRoute;
+        }
+
+        $picture = $cat->getPicture();
+
+        $form = $this->createForm(DeleteCatPictureFormType::class, $cat, [
+            'action' => $this->generateUrl('delete-cat-picture', ['catId' => $cat->getId()
+            ]),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $cat->setPicture(null);
+
+            $manager->persist($cat);
+            $manager->flush();
+
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getParameter('images_directory') . '/' . $picture);
+
+            return $this->redirectToRoute('cat-detail', ['id' => $cat->getId() ]);
+
+        } else if($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', "La photo n'a pas été supprimée, veuillez confirmer votre choix");
+
+            return $this->redirectToRoute('cat-detail', ['id' => $cat->getId() ]);
+        }
+
+        return $this->render('cat-interface/_delete_cat_picture.html.twig', [
+            'controller_name' => 'CatController',
+            'deleteCatPictureForm' => $form->createView(),
         ]);
     }
 }

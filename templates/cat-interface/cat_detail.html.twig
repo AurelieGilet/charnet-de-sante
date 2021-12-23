@@ -34,7 +34,8 @@
                             <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
                         </div>
                         {% if is_granted('ROLE_USER') %}
-                            <span id="edit-picture">Changer la photo</span>
+                            <span id="edit-picture-btn">Changer la photo</span>
+                            <span id="delete-picture-btn" class="update-info delete">Supprimer</span>
                         {% endif %}
                     </div>
                     <div class="cat-info card-template">
@@ -101,6 +102,12 @@
                 'App\\Controller\\CatController::editCatPicture'
             ))}}
         </div>
+        <div id="delete-picture-form">
+        {{ render(controller(
+            'App\\Controller\\CatController::deleteCatPicture',
+            { 'catId': cat.id }
+        ))}}
+    </div>
         <div id="delete-data-form">
             {{ render(controller(
                 'App\\Controller\\CatController::deleteCat',
