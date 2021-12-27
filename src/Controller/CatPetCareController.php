@@ -85,6 +85,7 @@ class CatPetCareController extends AbstractController
                 'sortDirectionParameterName' => 'direction1',
             ]
         );
+        $paginatedPetCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         $currentPetCares = $petCareRepository->findCatCurrentFeedings($cat);
 
@@ -131,6 +132,7 @@ class CatPetCareController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedPetCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-petcare/cat_petcare_grooming.html.twig', [
             'controller_name' => 'CatPetCareController',
@@ -162,6 +164,7 @@ class CatPetCareController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedPetCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-petcare/cat_petcare_claws.html.twig', [
             'controller_name' => 'CatPetCareController',
@@ -193,6 +196,7 @@ class CatPetCareController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedPetCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-petcare/cat_petcare_eyes_ears.html.twig', [
             'controller_name' => 'CatPetCareController',
@@ -224,6 +228,7 @@ class CatPetCareController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedPetCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-petcare/cat_petcare_teeth.html.twig', [
             'controller_name' => 'CatPetCareController',
@@ -255,6 +260,7 @@ class CatPetCareController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedPetCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-petcare/cat_petcare_litterbox.html.twig', [
             'controller_name' => 'CatPetCareController',
@@ -286,6 +292,7 @@ class CatPetCareController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedPetCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-petcare/cat_petcare_notes.html.twig', [
             'controller_name' => 'CatPetCareController',
