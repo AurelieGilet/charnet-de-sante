@@ -80,6 +80,7 @@ class CatHealthCareController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedHealthCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-healthcare/cat_healthcare_vaccine.html.twig', [
             'controller_name' => 'CatHealthCareController',
@@ -111,6 +112,7 @@ class CatHealthCareController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedHealthCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-healthcare/cat_healthcare_dewormer.html.twig', [
             'controller_name' => 'CatHealthCareController',
@@ -142,6 +144,7 @@ class CatHealthCareController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedHealthCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-healthcare/cat_healthcare_antiparasite.html.twig', [
             'controller_name' => 'CatHealthCareController',
@@ -179,6 +182,7 @@ class CatHealthCareController extends AbstractController
                 'sortDirectionParameterName' => 'direction1',
             ]
         );
+        $paginatedHealthCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         $currentDate = new DateTime();
 
@@ -227,6 +231,7 @@ class CatHealthCareController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedHealthCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-healthcare/cat_healthcare_descaling.html.twig', [
             'controller_name' => 'CatHealthCareController',
