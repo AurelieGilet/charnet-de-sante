@@ -81,6 +81,7 @@ class CatHealthController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedHealths->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-health/cat_health_vet_visit.html.twig', [
             'controller_name' => 'CatHealthController',
@@ -112,6 +113,7 @@ class CatHealthController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedHealths->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-health/cat_health_allergy.html.twig', [
             'controller_name' => 'CatHealthController',
@@ -143,6 +145,7 @@ class CatHealthController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedHealths->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-health/cat_health_disease.html.twig', [
             'controller_name' => 'CatHealthController',
@@ -174,6 +177,7 @@ class CatHealthController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedHealths->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-health/cat_health_wound.html.twig', [
             'controller_name' => 'CatHealthController',
@@ -205,6 +209,7 @@ class CatHealthController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedHealths->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-health/cat_health_surgery.html.twig', [
             'controller_name' => 'CatHealthController',
@@ -236,6 +241,7 @@ class CatHealthController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedHealths->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-health/cat_health_analysis.html.twig', [
             'controller_name' => 'CatHealthController',
@@ -267,6 +273,7 @@ class CatHealthController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedHealths->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('cat-interface/cat-health/cat_health_document.html.twig', [
             'controller_name' => 'CatHealthController',
