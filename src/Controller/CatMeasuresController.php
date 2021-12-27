@@ -81,6 +81,7 @@ class CatMeasuresController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedMeasures->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         // We use symfony/ux-chartjs (https://github.com/symfony/ux-chartjs) to represent the data.
         $weights = [];
@@ -158,6 +159,7 @@ class CatMeasuresController extends AbstractController
             $request->query->getInt('page', 1),
             5
         );
+        $paginatedMeasures->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         $temperatures = [];
         
@@ -240,6 +242,7 @@ class CatMeasuresController extends AbstractController
                 'sortDirectionParameterName' => 'direction1',
             ]
         );
+        $paginatedMeasures->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
         $currentMeasures = $measureRepository->findCatCurrentHeat($cat);
 
