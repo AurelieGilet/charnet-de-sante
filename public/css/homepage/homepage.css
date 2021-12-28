@@ -73,7 +73,16 @@ button {
 }
 
 .description p {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    line-height: 1.1rem;
+}
+
+.intro-title {
+    color: var(--purple-navy);
+}
+
+em {
+    font-weight: bold;
 }
 
 /***** FUNCTIONNALITIES *****/
@@ -87,6 +96,7 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 5%;
 }
 
 .functionalities li {
@@ -111,7 +121,7 @@ button {
     border: 2px solid var(--russian-violet);
     border-radius: 50%;
     padding: 5px;
-    margin: 5px;
+    margin: 10px 5px;
 }
 
 .icon img {
@@ -140,7 +150,6 @@ button {
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        width: 40%;
         margin: 0 10px;
     }
     .picture img {
@@ -158,27 +167,14 @@ button {
     }
     .description p {
         margin: 10px;
-        max-width: 300px;
         font-size: 1.2rem;
+        line-height: 1.3rem;
     }
     /***** FUNCTIONNALITIES *****/
-    .functionalities ul {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        padding: 10px;
-        justify-items: center;
-        padding: 5%;
-    }
     .functionalities li {
-        max-width: 550px;
+        max-width: 650px;
         margin: 20px;
         font-size: 1.2rem;
-    }
-    .functionalities li:nth-child(odd) {
-        justify-self: end;   
-    }
-    .functionalities li:nth-child(even) {
-        justify-self: start;   
     }
     .icon {
         width: 60px;
@@ -202,17 +198,20 @@ button {
     }
     /***** FUNCTIONNALITIES *****/
     .functionalities ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 1fr;
+        justify-items: center;
         padding: 5vh 2%;
     }
     .functionalities li {
         margin: 30px;
+        height: 70%;
     }
-}
-@media screen and (min-width: 2560px) {
-    .main-content {
-        padding: 7% 2%;
+    .functionalities li:nth-child(odd) {
+        justify-self: end;   
     }
-    .functionalities ul {
-        padding: 6% 2%;
+    .functionalities li:nth-child(even) {
+        justify-self: start;   
     }
 }

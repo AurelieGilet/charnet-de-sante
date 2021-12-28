@@ -35,6 +35,7 @@ class BaseController extends AbstractController
             $request->query->getInt('page', 1),
             10
         );
+        $paginatedFAQ->setParam('_fragment', 'faq'); // Intelephense indicate the method is undefined, but it works perfectly
 
         return $this->render('homepage/help.html.twig', [
             'controller_name' => 'BaseController',
