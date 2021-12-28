@@ -57,8 +57,9 @@ article {
 }
 
 .icon {
+    min-width: 40px;
     width: 40px;
-    height: 35px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -81,6 +82,14 @@ article {
 
 .article-content.open {
     display: block;
+}
+
+article p {
+    margin: 10px 0;
+}
+
+em {
+    font-weight: bold;
 }
 
 /***** ARROW *****/
