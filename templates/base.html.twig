@@ -16,10 +16,17 @@
     </head>
     <body>
         {% include 'partials/header.html.twig' %}
+
         {% block body %}{% endblock %}
+
+        <button class="go-top-btn" id="top-btn">
+            <img src="{{asset('img/site/top-arrow.png')}}" alt="Icône de flèche allant vers le haut" />
+        </button>
+
         {% include 'partials/footer.html.twig' %}
 
         {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('js/base.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/partials/header.min.js') }}"></script>
         {% endblock %}
     </body>
