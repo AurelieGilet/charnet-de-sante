@@ -324,7 +324,7 @@ class SecurityController extends AbstractController
             $file = new UploadedFile($file['tmp_name'], $file['name'], $file['type']);
 
             if (filesize($file) <= 2000000) {
-                // If there is already a picture for this cat, don't forget to delete it.
+                // If there is already a picture for this user, don't forget to delete it.
                 if ($oldPicture) {
                     $filesystem = new Filesystem();
                     $filesystem->remove($this->getParameter('images_directory') . '/' . $oldPicture);
