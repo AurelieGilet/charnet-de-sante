@@ -146,7 +146,10 @@ class SecurityController extends AbstractController
 
                 $manager->remove($user);
                 $manager->remove($guest);
-                $manager->remove($guestCode);
+                // If the user never generated a guest code, then the object guestCode was never created in DB. If that's the case, trying to delete it will generate an error.
+                if ($guestCode != null) {
+                    $manager->remove($guestCode);
+                }
                 $manager->flush();
 
                 // Don't forget to delete pictures and documents

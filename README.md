@@ -32,6 +32,11 @@ __*Création de la BDD, migration des tables et chargement des fixtures :*__
 * `php bin/console doctrine:migrations:migrate`
 * `php bin/console doctrine:fixtures:load`
 
+__*Création de la BDD de test pour PHPUnit, migration des tables et chargement des fixtures :*__
+* `php bin/console doctrine:database:create --env=test`
+* `php bin/console doctrine:migrations:migrate --env=test`
+* `php bin/console doctrine:fixtures:load --env=test`
+
 __*Installation de Webpack Encore :*__
 * `yarn install --force` (ou npm)
 * `yarn watch`
