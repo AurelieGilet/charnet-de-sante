@@ -4,7 +4,7 @@
         {{ form_start(measureForm) }}
             <span>Les champs suivis d'un * sont obligatoires</span>
             {{ form_row(measureForm.date) }}
-            {{ form_row(measureForm.weight) }}
+            {{ form_row(measureForm.weight, {'attr' : {'required': true}}) }}
             {{ form_row(measureForm._token) }}
             {{ form_row(measureForm.submit) }}
         {{ form_end(measureForm, {render_rest: false}) }}

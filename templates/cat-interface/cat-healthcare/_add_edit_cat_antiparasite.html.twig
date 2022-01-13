@@ -4,7 +4,7 @@
         {{ form_start(healthCareForm) }}
             <span>Les champs suivis d'un * sont obligatoires</span>
             {{ form_row(healthCareForm.date) }}
-            {{ form_row(healthCareForm.parasite) }}
+            {{ form_row(healthCareForm.parasite, {'attr' : {'required': true}}) }}
             {{ form_row(healthCareForm.productName, { 'label': 'Antiparasitaire' }) }}
             {{ form_row(healthCareForm.dosage) }}
             {{ form_row(healthCareForm._token) }}

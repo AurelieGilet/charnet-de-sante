@@ -5,7 +5,7 @@
             <span>Les champs suivis d'un * sont obligatoires</span>
             {{ form_row(healthForm.date, { 'label': 'Date de début *' }) }}
             {{ form_row(healthForm.endDate) }}
-            {{ form_row(healthForm.wound) }}
+            {{ form_row(healthForm.wound, {'attr' : {'required': true}}) }}
             <div>
                 <div class="notes-label">
                     {{ form_label(healthForm.details) }} 

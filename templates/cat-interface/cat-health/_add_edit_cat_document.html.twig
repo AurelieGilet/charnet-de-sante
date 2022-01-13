@@ -4,8 +4,8 @@
         {{ form_start(healthForm) }}
             <span>Les champs suivis d'un * sont obligatoires</span>
             {{ form_row(healthForm.date) }}
-            {{ form_row(healthForm.documentName) }}
-            {{ form_row(healthForm.document) }}
+            {{ form_row(healthForm.documentName, {'attr' : {'required': true}}) }}
+            {{ form_row(healthForm.document, {'attr' : {'required': true}}) }}
             <span><small>1 Mo maximum, formats pdf, png, jpg ou jpeg.</small></span>
             {{ form_row(healthForm._token) }}
             {{ form_row(healthForm.submit) }}

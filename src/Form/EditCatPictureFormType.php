@@ -16,7 +16,8 @@ class EditCatPictureFormType extends AbstractType
         $builder
             ->add('picture', FileType::class, [
                 'data_class' => null,
-                'label' => 'Photo du chat',                
+                'label' => 'Photo du chat',
+                'required' => true,                
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "Valider",

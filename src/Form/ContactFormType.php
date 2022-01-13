@@ -63,6 +63,7 @@ class ContactFormType extends AbstractType
                 'width' => 200,
                 'height' => 50,
                 'length' => 6,
+                'required' => true,
             ])
             ->add('send', SubmitType::class, [
                 'label' => "Envoyer"

@@ -4,7 +4,7 @@
         {{ form_start(petCareForm) }}
             <span>Les champs suivis d'un * sont obligatoires</span>
             {{ form_row(petCareForm.date) }}
-            {{ form_row(petCareForm.grooming) }}
+            {{ form_row(petCareForm.grooming, {'attr' : {'required': true}}) }}
             {{ form_row(petCareForm._token) }}
             {{ form_row(petCareForm.submit) }}
         {{ form_end(petCareForm, {render_rest: false}) }}
