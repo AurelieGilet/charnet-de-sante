@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Gestion de la F.A.Q{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin-interface/admin-interface-shared-style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin-interface/admin-forms.min.css') }}">
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <h2>Gestion de la F.A.Q</h2>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <h3>Chercher une question :</h3>
+                </div>
+                {{ form_start(searchForm, {'attr': {'class': 'search-faq-form'}}) }}
+                    {{ form_row(searchForm.question) }}
+                    {{ form_row(searchForm.submit) }}
+                {{ form_end(searchForm) }}
+            </div>
+            <div class="card-content card-template entries">
+                <div class="card-title">
+                    <h3>Liste des questions :</h3>
+                    <a href="{{ path('admin-faq') }}" class="show-data-mobile mobile-options"><img src="{{ asset('img/site/reset.png') }}" alt="Icône de réinitialisation" title="Afficher toutes les questions"></a>
+                    <span class="edit-data-mobile mobile-options add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une question"></span>
+                    <a href="{{ path('admin-faq') }}" class="show-data desktop-options">Tout afficher</a>
+                    <span class="add-data desktop-options add-edit-data-btn" data-data-id="new">Ajouter une question</span>
+                </div>
+                {% for faq in paginatedFAQ %}                
+                <div class="entry card-template">
+                    <div class="entry-info entry-info--variation">
+                        <div class="card-title card-title--variation">
+                            <div class="faq-question">
+                                <div class="arrow"></div>
+                                <div>
+                                    <h4>{{ faq.question }}</h4>
+                                </div>
+                            </div>
+                            <div class="mobile-options">
+                                <span class="edit-data-mobile add-edit-data-btn" data-data-id="{{ faq.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier la question"></span>
+                                <span class="delete-data-mobile delete-data-btn" data-data-id="{{ faq.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer la question"></span>
+                            </div>
+                            <div class="desktop-options--variation">
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ faq.id }}">Modifier</span>
+                                <span class="delete-data delete delete-data-btn" data-data-id="{{ faq.id }}">Supprimer</span>
+                            </div>
+                        </div>                        
+                        <p class="faq-answer">{{ faq.answer }}</p>                 
+                    </div>
+                </div>
+                <div id="edit-{{ faq.id }}" class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\AdminController::adminEditFAQ',
+                        { 'faqId': faq.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ faq.id }}" class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\AdminController::adminDeleteFAQ',
+                        { 'faqId': faq.id }
+                    ))}}
+                </div>
+                {% endfor %}
+                {{ knp_pagination_render(paginatedFAQ) }}
+            </div>
+        </div>
+    </section>
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\AdminController::adminAddFAQ'
+        ))}}
+    </div>
+</main>
+<script type="text/javascript" src="{{ asset('js/admin-interface/admin-interface.min.js') }}"></script>
+{% endblock %}

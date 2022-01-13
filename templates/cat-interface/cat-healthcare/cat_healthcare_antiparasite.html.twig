@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Antiparasitaire de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.min.css') }}">
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-healthCare', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-healthCare', {'id': cat.id}) }}
+                        {% endif %}
+                        " class="return">
+                        <img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                        Retour aux soins
+                    </a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/anti-parasite.png') }}" alt="Icône de spray anti-parasitaire">
+                    </div>
+                    <h3>Antiparasitaire</h3>
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une entrée"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+                {% endif %}
+            </div>
+            <div class="card-content card-template entries last-entries">
+                <h3 id="last-entries">Dernières entrées :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>Les principaux parasites externes du chat sont des insectes ou des acariens. Quelques infections par des champignons microscopiques existent également, notamment la teigne.</p>
+                        <p>Parmi les insectes, nous avons les puces et les poux. Pour les acariens, ce sont les tiques, les aoûtats et la gale.</p>
+                        <p>La plupart de ces parasites infectent surtout les chats qui sortent mais les chats d’intérieur ne sont pas à l’abri pour autant.</p>
+                        <p>Aussi, une inspection régulière du pelage du chat est nécessaire, surtout si vous remarquez des démangeaisons ou un toilettage excessif. </p>
+                        <p>Sachez également que ces parasites peuvent transmettre des maladies à votre chat. N’attendez donc pas pour les traiter ainsi que leur environnement.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" Title="Astuces" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" Title="Astuces" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for healthCare in paginatedHealthCares %}                
+                <div class="entry entry--notes card-template">
+                    <div class="entry-info data--notes">
+                        <p class="date">
+                            <span>{{ healthCare.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</span>
+                        </p>
+                        {% if is_granted('ROLE_USER') %}
+                        <div>
+                            <div class="mobile-options">
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier l'entrée"></span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'entrée"></span>
+                            </div>
+                            <div class="desktop-options">
+                                <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ healthCare.id }}">Modifier</span>
+                                <span class="update-info desktop delete delete-data-btn" data-data-id="{{ healthCare.id }}">Supprimer</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="entry-info data--details">
+                        <p>Type de parasite : <em  class="data">{{ healthCare.parasite|capitalize }}</em></p>
+                        <p>Antiparasitaire : <em class="data">{{ healthCare.productName }}</em></p>
+                        <p>Dose : <em class="data">{{ healthCare.dosage }}</em></p>
+                    </div>
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <div id="edit-{{ healthCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::editAntiparasite',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ healthCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::deleteHealthCare',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {{ knp_pagination_render(paginatedHealthCares) }}
+            </div>
+        </div>
+    </section>
+    {% if is_granted('ROLE_USER') %}
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatHealthCareController::addAntiparasite',
+            { 'id': cat.id }
+        ))}}
+    </div>
+    {% endif %}
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.min.js') }}"></script>
+{% endblock %}

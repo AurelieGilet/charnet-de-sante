@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Entretien de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.min.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.min.css') }}" >
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-detail', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-detail', {'id': cat.id}) }}
+                        {% endif %}
+                        " class="return">
+                        <img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                        Retour à la fiche
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-feeding', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-feeding', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
+                    <div class="card-content card-template">
+                        <div class="card-title">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/feeding.png') }}" alt="Icône de gamelle de nourriture pour chat">
+                            </div>
+                            <h3>Alimentation</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                        </div>
+                    </div>
+                </a>
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-grooming', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-grooming', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
+                    <div class="card-content card-template">
+                        <div class="card-title">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/grooming.png') }}" alt="Icône de ciseaux, brosse et peigne">
+                            </div>
+                            <h3>Toilettage</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                        </div>
+                    </div>
+                </a>
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-claws', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-claws', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
+                    <div class="card-content card-template">
+                        <div class="card-title">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/claws.png') }}" alt="Icône de patte de chat">
+                            </div>
+                            <h3>Griffes</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                        </div>
+                    </div>
+                </a>
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-eyesEars', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-eyesEars', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
+                    <div class="card-content card-template">
+                        <div class="card-title">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/eyes-ears.png') }}" alt="Icône de flacon de gouttes">
+                            </div>
+                            <h3>Yeux et Oreilles</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                        </div>
+                    </div>
+                </a>
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-teeth', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-teeth', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
+                    <div class="card-content card-template">
+                        <div class="card-title">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/teeth.png') }}" alt="Icône de dent et brosse à dent">
+                            </div>
+                            <h3>Dents</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                        </div>
+                    </div>
+                </a>
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-litterbox', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-litterbox', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
+                    <div class="card-content card-template">
+                        <div class="card-title">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/litterbox.png') }}" alt="Icône de litière pour chat">
+                            </div>
+                            <h3>Litière</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                        </div>
+                    </div>
+                </a>
+                <a href="
+                    {% if is_granted('ROLE_USER') %}
+                        {{ path('cat-notes', {'id': cat.id}) }}
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        {{ path('veterinary-cat-notes', {'id': cat.id}) }}
+                    {% endif %}
+                    " class="shaker">
+                    <div class="card-content card-template">
+                        <div class="card-title">
+                            <div class="icon">
+                                <img src="{{ asset('img/site/notes.png') }}" alt="Icône de carnet de notes">
+                            </div>
+                            <h3>Notes</h3>
+                        </div>
+                        <div class="card-arrow shake">
+                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

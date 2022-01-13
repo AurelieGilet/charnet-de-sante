@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Chaleurs de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.min.css') }}">
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-measures', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-measures', {'id': cat.id}) }}
+                        {% endif %}
+                        " class="return">
+                        <img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                        Retour aux mesures
+                    </a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/heat.png') }}" alt="Icône de deux coeurs percés d'une flèche">
+                    </div>
+                    <h3>Chaleurs</h3>
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une mesure"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une mesure</span>
+                {% endif %}
+            </div>
+            {% if currentMeasures is not empty %}
+            <div class="card-content card-template entries current-entries">
+                <h3>Chaleur en cours :</h3>
+                {% for measure in paginatedCurrentMeasures %}              
+                <div class="entry card-template">
+                    <div class="entry-info data--variation">
+                        <p class="date data--variation">
+                            <span>Du : <em>{{ measure.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
+                            <span>Au : <em>{% if measure.heatEndDate is not null %}{{ measure.heatEndDate|format_datetime(locale='fr', pattern="dd MMM Y")}}{% else %}
+                                En cours{% endif %}</em></span>
+                        </p>
+                        <p class="data data--variation">
+                            <span>Saillie : {% if measure.isMated is null %}...{% elseif measure.isMated == true %}<em>Oui</em>{% else %}<em>Non</em>{% endif %}</span>
+                            <span>Fécondation : {% if measure.isPregnant is null %}...{% elseif measure.isPregnant == true %}<em>Oui</em>{% else %}<em>Non</em>{% endif %}</span>
+                        </p>
+                    </div>
+                    {% if is_granted('ROLE_USER') %}
+                    <div>
+                        <div class="mobile-options data--variation">
+                            <span class="edit-data add-edit-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier la mesure"></span>
+                            <span class="delete-data delete-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer la mesure"></span>
+                        </div>
+                        <div class="desktop-options">
+                            <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ measure.id }}">Modifier</span>
+                            <span class="update-info desktop delete delete-data-btn" data-data-id="{{ measure.id }}">Supprimer</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <div id="edit-{{ measure.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatMeasuresController::editHeat',
+                        { 'catId': cat.id, 'measureId': measure.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ measure.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatMeasuresController::deleteMeasure',
+                        { 'catId': cat.id, 'measureId': measure.id }
+                    ))}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {{ knp_pagination_render(paginatedCurrentMeasures) }}
+            </div>
+            {% endif %}
+            <div class="card-content card-template entries last-entries">
+                <h3 id="last-entries">Dernières mesures :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>L'âge de la puberté chez les mâles se situe entre 7 et 12 mois et chez les femelles entre 6 et 12 mois (selon les races et la date de naissance).</p>
+                        <p>La période des chaleurs s'étend de février à septembre.</p>
+                        <p>Si une chatte n'est pas saillie, les chaleurs durent 8 à 12 jours et reprennent tous les 15 jours.</p>
+                        <p>Si la saillie n'est pas fécondante, la chatte revient en chaleur au bout d'1 mois.</p>
+                        <p>Sinon, la gestation dure 2 mois et la chatte retourne en chaleur 1 mois après la mise bas.</p>
+                        <p>Une chatte en chaleur voit son comportement changer : elle est très affectueuse et câline, se roule ou se frotte au sol, perd l'appétit, néglige ses besoins et produit des miaulements rauques.</p>
+                        <p>Des chaleurs répétées sont extrêmement stressantes physiquement et mentalement pour la chatte, surtout si elle n'est pas saillie et peuvent être détrimentaires pour sa santé.</p>
+                        <p>Si votre animal n'est pas un reproducteur, pensez à la stérilisation pour le bien-être et la santé de votre chat.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" Title="Astuces" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" Title="Astuces" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for measure in paginatedMeasures %}                
+                <div class="entry card-template">
+                    <div class="entry-info data--variation">
+                        <p class="date data--variation">
+                            <span>Du : <em>{{ measure.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
+                            <span>Au : <em>{{ measure.heatEndDate|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
+                        </p>
+                        <p class="data data--variation">
+                            <span>Saillie : {% if measure.isMated is null %} {% elseif measure.isMated == true %} <em>Oui</em> {% else %} <em>Non</em> {% endif %}</span>
+                            <span>Fécondation : {% if measure.isPregnant is null %} {% elseif measure.isPregnant == true %} <em>Oui</em> {% else %} <em>Non</em> {% endif %}</span>
+                        </p>
+                    </div>
+                    {% if is_granted('ROLE_USER') %}
+                    <div>
+                        <div class="mobile-options data--variation">
+                            <span class="edit-data add-edit-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier la mesure"></span>
+                            <span class="delete-data delete-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer la mesure"></span>
+                        </div>
+                        <div class="desktop-options">
+                            <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ measure.id }}">Modifier</span>
+                            <span class="update-info desktop delete delete-data-btn" data-data-id="{{ measure.id }}">Supprimer</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <div id="edit-{{ measure.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatMeasuresController::editHeat',
+                        { 'catId': cat.id, 'measureId': measure.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ measure.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatMeasuresController::deleteMeasure',
+                        { 'catId': cat.id, 'measureId': measure.id }
+                    ))}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {{ knp_pagination_render(paginatedMeasures) }}
+            </div>
+        </div>
+    </section>
+    {% if is_granted('ROLE_USER') %}
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatMeasuresController::addHeat',
+            { 'id': cat.id }
+        ))}}
+    </div>
+    {% endif %}
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.min.js') }}"></script>
+{% endblock %}

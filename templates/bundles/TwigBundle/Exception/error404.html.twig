@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Erreur 404{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/exception/error-pages.min.css') }}">
+{% endblock %}
+
+{% block body %}
+    <main>
+        <section>
+            <h2>Page non trouvée !</h2>
+        
+            <p>La page demandée n'a pu être trouvée.</p>
+            <p>Vérifiez l'adresse URL ou <a href="{{ path('homepage') }}">retournez sur la page d'accueil</a>.</p>
+            <img src="{{ asset('img/site/404-cat.png') }}" alt="Illustration de chat regardant à travers une loupe">
+        </section>
+    </main>
+{% endblock %}

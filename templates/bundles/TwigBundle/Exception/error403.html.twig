@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Erreur 403{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/exception/error-pages.min.css') }}">
+{% endblock %}
+
+{% block body %}
+    <main>
+        <section>
+            <h2>Accès refusé !</h2>
+        
+            <p>Vous n'êtes pas autorisé à acceder à cette page.</p>
+            <p>Votre <a href="{{ path('login') }}">connexion</a> peut être requise.</p> 
+            <p>Sinon, <a href="{{ path('homepage') }}">retournez sur la page d'accueil</a>.</p>
+            <img src="{{ asset('img/site/403-cat.png') }}" alt="Illustration de chat portant un costume-cravatte">
+        </section>
+    </main>
+{% endblock %}

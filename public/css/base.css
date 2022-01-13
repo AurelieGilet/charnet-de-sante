@@ -1,0 +1,191 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fonts/MontserratAlternates-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('/fonts/Nunito-Regular.ttf') format('truetype');
+}
+
+:root {
+    --main-background-color: #C3CFD9;
+    --secondary-background-color: #DFE6ED;
+    --purple-navy: #4F518C;
+    --medium-purple: #907AD6;
+    --russian-violet: #240046;
+    --success-color: #56ffe8;
+    --danger-color: #f84a7e;
+    --list-background-color: #F7F9FA;
+    --list-border-color: #c6ccf5;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Nunito, sans-serif;
+    min-width: 360px;
+    transition: all 1s;
+}
+
+h1, h2, h3 {
+    font-family: Montserrat, cursive;
+}
+
+main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/***** SCROLLBAR  ******/
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--medium-purple);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--purple-navy);
+}
+
+/***** GO TO TOP BUTTON *****/
+
+.go-top-btn {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    position: fixed;
+    bottom: 45px;
+    right: 15px;
+    z-index: 1000;
+    background-color: var(--medium-purple);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: none;
+    border-radius: 100%;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.go-top-btn img {
+    width: 100%;
+    height: auto;
+}
+
+
+/***** FOOTER *****/
+
+footer {
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+    background-color: var(--purple-navy);
+    color: white;
+    font-size: 0.8rem;
+    margin-top: auto;
+}
+
+footer ul {
+    display: flex;
+    margin: 10px;
+}
+
+footer li:nth-child(2n)::before, footer li:nth-child(2n)::after {
+    content: "|";
+    margin: 0 10px;
+}
+
+/***** MESSAGE-MODAL *****/
+
+.modal-open {
+    overflow: hidden;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background-color: #24004656;
+}
+
+.modal {
+    position: relative;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 5px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: var(--purple-navy);
+}
+
+.content {
+    text-align: center;
+    margin: 40px 20px 30px 20px;
+}
+
+.success-content {
+    color: var(--success-color);
+}
+
+.danger-content {
+    color: var(--danger-color);
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin: 5px;
+    padding: 5px;
+    background-color: var(--medium-purple);
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.modal-button {
+    background-color: var(--medium-purple);
+    padding: 10px;
+    width: 95%;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
+    margin: 5px 15px;
+    cursor: pointer;
+    color: white;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+/***** RESPONSIVE *****/
+
+@media screen and (min-width: 768px) {
+    /***** MESSAGE-MODAL *****/
+    .modal {
+        font-size: 1.2rem;
+    }
+}
+
+
+

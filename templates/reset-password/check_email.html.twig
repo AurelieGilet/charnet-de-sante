@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le charnet de santé - Email de réinitialisation de mot de passe envoyé{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/reset-password/reset-password.min.css') }}" >
+{% endblock %}
+
+{% block body %}
+    <main class="container">       
+        <section>
+            <h2>RÉINITIALISATION DE MOT DE PASSE</h2>
+            <p>Si un compte avec votre adresse email existe, alors un email contenant un lien pour réinitialiser votre mot de passe vient de vous être envoyé.</p>
+            <p>Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+            <p>Si vous ne recevez pas d'email, merci de vérifier votre dossier de spam ou bien <a href="{{ path('forgot-password-request') }}" class="reset-link">essayez à nouveau</a>.</p>
+        </section>
+    </main>
+{% endblock %}

@@ -1,0 +1,42 @@
+section p {
+    text-align: center;
+    margin: 15px 0;
+}
+
+section a {
+    text-align: center;
+    font-weight: bold;
+    color: var(--medium-purple);
+    text-decoration: underline;
+}
+
+/* FORM */
+
+.form-group div{
+    margin: 0;
+}
+
+.captcha_image {
+    margin: 0 auto;
+}
+
+#contact_form_captcha {
+    margin-top: 10px;
+}
+
+/***** RESPONSIVE *****/
+
+@media screen and (min-width: 768px) {
+    .captcha {
+        flex-direction: row;
+        align-items: center;
+    }
+    .captcha_image {
+        margin: auto;
+    }
+    #contact_form_captcha {
+        margin-left: 10px;
+        margin-top: 0;
+        width: 100%;
+    }
+}

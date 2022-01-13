@@ -1,0 +1,15 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close add-edit-modal-close-btn">X</div>
+        {{ form_start(measureForm) }}
+            <span>Les champs suivis d'un * sont obligatoires</span>
+            {{ form_row(measureForm.date, { 'label': 'Date de début *' }) }}
+            {{ form_row(measureForm.heatEndDate) }}
+            {{ form_row(measureForm.isMated) }}
+            {{ form_row(measureForm.isPregnant) }}
+            {{ form_row(measureForm._token) }}
+            {{ form_row(measureForm.submit) }}
+        {{ form_end(measureForm, {render_rest: false}) }}
+    </div>
+</div>
+    

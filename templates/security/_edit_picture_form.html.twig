@@ -1,0 +1,14 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <h2>Modifier votre photo de profil</h2>
+        <div class="close">X</div>
+            <div id="preview">
+                <img src="" alt"" id="preview-picture" >
+            </div>
+        {{ form_start(pictureForm, {'attr': {'id': 'picture-form'}}) }}
+            {{ form_row(pictureForm.picture) }}
+            <small>2 Mo maximum, formats png, jpg ou jpeg.</small>
+            {{ form_row(pictureForm.submit) }}
+        {{ form_end(pictureForm) }}
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close delete-modal-close-btn">X</div>
+        <h3>Etes-vous sûr de vouloir supprimer cette question ?</h3>
+        <p>Cette action est irréversible. En cas d'erreur, il ne vous sera pas possible de la récupérer.</p>
+        {{ form_start(adminFAQForm) }}
+            {{ form_row(adminFAQForm._token) }}
+            {{ form_row(adminFAQForm.submit, {'label': 'Supprimer'}) }}
+        {{ form_end(adminFAQForm, {render_rest: false}) }}
+    </div>
+</div>

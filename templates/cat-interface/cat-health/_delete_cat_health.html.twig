@@ -1,0 +1,11 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <div class="close delete-modal-close-btn">X</div>
+        <h3>Etes-vous sûr de vouloir supprimer cette entrée ?</h3>
+        {{ form_start(healthForm) }}
+            {{ form_row(healthForm.date, {'label': false, 'attr' : { 'style':'display:none'}}, ) }}
+            {{ form_row(healthForm._token) }}
+            {{ form_row(healthForm.submit, {'label': 'Supprimer'}) }}
+        {{ form_end(healthForm, {render_rest: false}) }}
+    </div>
+</div>

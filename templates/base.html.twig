@@ -2,18 +2,32 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Aurélie Gilet">
+        <meta name="description" content="Pouvoir facilement noter et partager avec votre vétérinaire tous les éléments importants de la vie quotidienne et de la santé de votre chat est désormais possible grace au Charnet de Santé, totalement gratuit et sécurisé !">
+        <meta name="keywords" content="carnet de santé pour chat, carnet de santé en ligne, carnet de santé pour chat gratuit, santé du chat, suivi et soins du chat">
+        <title>{% block title %}Bienvenue sur le Charnet de Santé{% endblock %}</title>
+        <link rel="icon" type="image/png" href="{{asset('img/site/icon.png')}}"/>
+        <link rel="stylesheet" href="{{ asset('css/reset.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/base.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/partials/header.min.css') }}">
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
-
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}
     </head>
     <body>
+        {% include 'partials/header.html.twig' %}
+
         {% block body %}{% endblock %}
+
+        <button class="go-top-btn" id="top-btn">
+            <img src="{{asset('img/site/top-arrow.png')}}" alt="Icône de flèche allant vers le haut" />
+        </button>
+
+        {% include 'partials/footer.html.twig' %}
+
+        {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('js/base.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/partials/header.min.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

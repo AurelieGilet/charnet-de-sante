@@ -1,17 +1,62 @@
 security:
     # https://symfony.com/doc/current/security/experimental_authenticators.html
     enable_authenticator_manager: true
+    password_hashers:
+        App\Entity\User:
+            algorithm: auto
+        App\Entity\Guest:
+            algorithm: auto
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        users_in_memory: { memory: null }
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+        app_guest_provider:
+            entity:
+                class: App\Entity\Guest
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
+        guest_secured_area:
             lazy: true
-            provider: users_in_memory
-
+            pattern: ^/(connexion-veterinaire$|espace-veterinaire)
+            provider: app_guest_provider
+            custom_authenticator: App\Security\GuestAuthenticator
+            form_login:
+                    login_path:             /connexion-veterinaire
+                    check_path:             /connexion-veterinaire
+                    username_parameter:     username
+                    password_parameter:     password
+                    csrf_parameter:         _token
+            entry_point: form_login
+            logout:
+                path: logout
+                target: homepage
+        user_secured_area:
+            lazy: true
+            pattern : ^/
+            provider: app_user_provider
+            custom_authenticator: App\Security\LoginFormAuthenticator
+            form_login:
+                    login_path:             /connexion
+                    check_path:             /connexion
+                    username_parameter:     email
+                    password_parameter:     password
+                    csrf_parameter:         _token
+            entry_point: form_login
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+            logout:
+                path: logout
+                target: homepage
+        
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
@@ -21,5 +66,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: '^/espace-administrateur', roles: ROLE_ADMIN }
+        - { path: '^/espace-utilisateur', roles: ROLE_USER }
+        - { path: '^/espace-veterinaire', roles: ROLE_GUEST }

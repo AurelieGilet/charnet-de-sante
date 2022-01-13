@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Griffes de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.min.css') }}">
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-petCare', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-petCare', {'id': cat.id}) }}
+                        {% endif %}
+                        " class="return">
+                        <img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                        Retour à l'entretien
+                    </a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/claws.png') }}" alt="Icône de patte de chat">
+                    </div>
+                    <h3>Griffes</h3>
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une entrée"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+                {% endif %}
+            </div>
+            <div class="card-content card-template entries last-entries">
+                <h3 id="last-entries">Dernières entrées :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>En général, il n'est pas nécessaire de couper les griffes de votre chat, mais cela dépend de son mode de vie.</p>
+                        <p>Si c'est un chat d'extérieur, ses griffes lui sont indispensables pour se défendre, chasser et grimper. Vous ne devez donc pas les couper, elles s'usent naturellement.</p>
+                        <p>En revanche, si c'est un chat d'intérieur, il faut surveiller leur longueur régulièrement et les couper si elles dépassent une certaine taille.</p>
+                        <p>En effet, une griffe peut pousser au point de se recourber complètement et de pénétrer dans le coussinet, pouvant ainsi entraîner une infection.</p>
+                        <p>Le chat possède 5 griffes sur les pattes avant et 4 sur les pattes arrière.</p>
+                        <p>Vous pouvez utiliser un coupe-griffe ou un solide coupe-ongle.</p>
+                        <p>Appuyez légèrement sur le doigt pour faire sortir la griffe et coupez quelques millimètres sans dépasser la partie transparente. Attention à ne pas couper dans la pulpe !</p>
+                        <p>Si votre chat n'est pas du genre à se laisser faire, demandez de l'aide à quelqu'un ou enroulez-le dans une serviette pour l'immobiliser.</p>
+                        <p>Enfin, pour lui permettre d'entretenir lui-même ses griffes, fournissez-lui un arbre à chat ou tout autre objet adapté.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" Title="Astuces" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" Title="Astuces" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for petCare in paginatedPetCares %}                
+                <div class="entry card-template">
+                    <div class="entry-info">
+                        <p class="date">
+                            <span>{{ petCare.date|date('d') }}</span>
+                            <span>{{ petCare.date|format_datetime(locale='fr', pattern="MMM") }}</span>
+                            <span>{{ petCare.date|date('Y') }}</span>
+                        </p>
+                        <p class="data">{% if petCare.claws == true %}Griffes{% endif %}</p>
+                    </div>
+                    {% if is_granted('ROLE_USER') %}
+                    <div>
+                        <div class="mobile-options">
+                            <span class="edit-data add-edit-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier l'entrée"></span>
+                            <span class="delete-data delete-data-btn" data-data-id="{{ petCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'entrée"></span>
+                        </div>
+                        <div class="desktop-options">
+                            <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ petCare.id }}">Modifier</span>
+                            <span class="update-info desktop delete delete-data-btn" data-data-id="{{ petCare.id }}">Supprimer</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <div id="edit-{{ petCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatPetCareController::editClaws',
+                        { 'catId': cat.id, 'petCareId': petCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ petCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatPetCareController::deletePetCare',
+                        { 'catId': cat.id, 'petCareId': petCare.id }
+                    ))}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {{ knp_pagination_render(paginatedPetCares) }}
+            </div>
+        </div>
+    </section>
+    {% if is_granted('ROLE_USER') %}
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatPetCareController::addClaws',
+            { 'id': cat.id }
+        ))}}
+    </div>
+    {% endif %}
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.min.js') }}"></script>
+{% endblock %}

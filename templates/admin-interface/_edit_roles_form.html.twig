@@ -1,0 +1,21 @@
+<div class="form-overlay">
+    <div class="form-wrapper">
+        <h3>Modifier le rôle d'un utilisateur</h3>
+        <p>Attention, changer le rôle d'un utilisateur vers un administrateur lui fera perdre accès aux données concernant ses chats. Assurez-vous qu'il n'en possède pas avant de faire le changement.</p>
+        <div class="close add-edit-modal-close-btn">X</div>
+        {{ form_start(adminUsersForm) }}
+            <span>Les champs suivis d'un * sont obligatoires</span>
+            <div>
+                <div class="form-label">
+                    {{ form_label(adminUsersForm.roles) }} 
+                </div>
+            </div>
+            {% for child in adminUsersForm.roles %}
+            <div class="form-checkbox">
+                {{ form_widget(child) }} {{ form_label(child) }}  
+            </div>
+            {% endfor %}
+            {{ form_row(adminUsersForm.submit) }}
+        {{ form_end(adminUsersForm) }}
+    </div>
+</div>

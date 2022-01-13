@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Vos Chats{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-list.min.css') }}" >
+{% endblock %}
+
+{% block body %}
+<main>
+
+    {% include 'partials/message-modal.html.twig' %}
+    
+    <section>
+        <h2>Mes Chats</h2>
+        <div class="cat-list-wrapper">
+        {% if cats|length > 0 %}
+            {%  for cat in cats %}
+            <a href="{{ path('cat-detail', {'id': cat.id}) }}">
+                <div class="cat">
+                    <div class="avatar">
+                        <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" {% endif %} class="default-cat-picture">
+                    </div>
+                    <h3>{{ cat.name }}</h3>
+                    <img class="look" src="{{ asset('img/site/look.png') }}" alt="Icône de loupe">
+                </div>
+            </a>
+            {% endfor %}
+        {% else %}
+        <p>Vous n'avez pas encore ajouté de chat</p></p>
+        {% endif %}
+        </div>
+        <a href="{{ path('add-cat') }}" class="add-cat-btn">Ajouter un chat</a>
+        <a href="{{ path('user-interface') }}" class="return">Retour</a>
+    </section>
+</main>
+
+{% endblock %}

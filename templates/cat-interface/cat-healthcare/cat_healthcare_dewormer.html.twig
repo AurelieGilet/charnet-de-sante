@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Vermifuge de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.min.css') }}">
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-healthCare', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-healthCare', {'id': cat.id}) }}
+                        {% endif %}
+                        " class="return"><img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                        Retour aux soins
+                    </a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/dewormer.png') }}" alt="Icône d'excrément de chat dans un flacon">
+                    </div>
+                    <h3>Vermifuge</h3>
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une entrée"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+                {% endif %}
+            </div>
+            <div class="card-content card-template entries last-entries">
+                <h3 id="last-entries">Dernières entrées :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>Les vers peuvent provoquer des lésions importantes au niveau des organes de votre chat ainsi que des maladies si l’infestation persiste.</p>
+                        <p>Les vers se transmettent de la mère au chaton par le lait ou les excréments, par contact avec d’autres chats, chiens ou rongeurs. Si votre chat a accès au jardin le risque est accru en cas de contact avec d’autres animaux (y compris les rats, souris et oiseaux qu’il pourrait chasser).</p>
+                        <p>Certains de ces parasites sont transmissibles à l’homme, d’où l’importance de vermifuger régulièrement votre chat.</p>
+                        <p>Si votre chat est amené à sortir, un traitement trimestrielle est recommandé en prévention. Sinon, 2 fois par ans est suffisant. Ils se présentent sous forme de cachets ou pipette et sont faciles à administrer. Le dosage doit être fait en fonction du poids, l’âge et pour les chattes, si elles sont gestantes.</p>
+                        <p>Si vous ne savez pas quoi prendre, parlez-en à votre vétérinaire.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" Title="Astuces" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" Title="Astuces" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for healthCare in paginatedHealthCares %}                
+                <div class="entry entry--notes card-template">
+                    <div class="entry-info data--notes">
+                        <p class="date">
+                            <span>{{ healthCare.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</span>
+                        </p>
+                        {% if is_granted('ROLE_USER') %}
+                        <div>
+                            <div class="mobile-options">
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier l'entrée"></span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'entrée"></span>
+                            </div>
+                            <div class="desktop-options">
+                                <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ healthCare.id }}">Modifier</span>
+                                <span class="update-info desktop delete delete-data-btn" data-data-id="{{ healthCare.id }}">Supprimer</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="entry-info data--details">
+                        <p>Nom du vermifuge : <em  class="data">{{ healthCare.productName }}</em></p>
+                        <p>Dose : <em class="data">{{ healthCare.dosage }}</em></p>
+                    </div>
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <div id="edit-{{ healthCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::editDewormer',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ healthCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::deleteHealthCare',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {{ knp_pagination_render(paginatedHealthCares) }}
+            </div>
+        </div>
+    </section>
+    {% if is_granted('ROLE_USER') %}
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatHealthCareController::addDewormer',
+            { 'id': cat.id }
+        ))}}
+    </div>
+    {% endif %}
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.min.js') }}"></script>
+{% endblock %}

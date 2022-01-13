@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Contact{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.min.css') }}" >
+    <link rel="stylesheet" href="{{ asset('css/homepage/contact.min.css') }}" >
+{% endblock %}
+
+{% block body %}
+    <main class="container">
+
+        {% include 'partials/message-modal.html.twig' %}
+        
+        <section>
+            <h2>CONTACT</h2>
+            <p>Si vous avez des questions sur le fonctionnement du site, une suggestion pour son amélioration ou un bug à me signaler, vous pouvez me contacter directement par mail :</p>
+            <a href="mailto:charnetdesante@gmail.com">charnetdesante@gmail.com</a>
+            <p>Ou bien utiliser le formulaire de contact ci-dessous :</p>
+            {{ form_start(contactForm) }}
+                <span>Les champs suivis d'un * sont obligatoires</span>
+                <div class="form-group">
+                    {{ form_row(contactForm.name) }}
+                    {{ form_row(contactForm.firstname) }}
+                </div>
+                {{ form_row(contactForm.email) }}
+                {{ form_row(contactForm.message) }}
+                <div>
+                    {{ form_label(contactForm.captcha)}}
+                    <div class="captcha">
+                        {{ form_widget(contactForm.captcha) }}
+                    </div>
+                </div>
+                {{ form_row(contactForm.send) }}
+            {{ form_end(contactForm) }}
+        </section>    
+    </main>
+{% endblock %}

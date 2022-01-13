@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Température de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.min.css') }}">
+    {{ encore_entry_link_tags('chart-css') }}
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-measures', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-measures', {'id': cat.id}) }}
+                        {% endif %}
+                        " class="return">
+                        <img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                        Retour aux mesures
+                    </a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/thermometer.png') }}" alt="Icône d'un thermomètre">
+                    </div>
+                    <h3>Température</h3>
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une mesure"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une mesure</span>
+                {% endif %}
+            </div>
+            <div class="card-content card-template chart-container">
+                {{ render_chart(chart, {'class': 'chart'}) }}
+            </div>
+            <div class="card-content card-template entries last-entries">
+                <h3 id="last-entries">Dernières mesures :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>Selon son activité et son état émotionnel, la température du chat peut varier en restant comprise entre 38°C et 39,2°C.</p>
+                        <p>Par exemple, sa température augmente en cas de stress et diminue lors du sommeil.</p>
+                        <p>Pour prendre la température de façon fiable, utilisez un thermomètre électronique rectal à embout souple, sur lequel vous aurez pris soin de mettre du lubrifiant. Si votre chat se débat, enroulez-le dans une serviette.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" Title="Astuces" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" Title="Astuces" id="help-white" class="hide">
+                    </div>
+                </div>
+                {% for measure in paginatedMeasures %}                
+                <div class="entry card-template">
+                    <div class="entry-info">
+                        <p class="date">
+                            <span>{{ measure.date|date('d') }}</span>
+                            <span>{{ measure.date|format_datetime(locale='fr', pattern="MMM") }}</span>
+                            <span>{{ measure.date|date('Y') }}</span>
+                        </p>
+                        <p class="data">{{ measure.temperature }} °C</p>
+                    </div>
+                    {% if is_granted('ROLE_USER') %}
+                    <div>
+                        <div class="mobile-options">
+                            <span class="edit-data add-edit-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier la mesure"></span>
+                            <span class="delete-data delete-data-btn" data-data-id="{{ measure.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer la mesure"></span>
+                        </div>
+                        <div class="desktop-options">
+                            <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ measure.id }}">Modifier</span>
+                            <span class="update-info desktop delete delete-data-btn" data-data-id="{{ measure.id }}">Supprimer</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <div id="edit-{{ measure.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatMeasuresController::editTemperature',
+                        { 'catId': cat.id, 'measureId': measure.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ measure.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatMeasuresController::deleteMeasure',
+                        { 'catId': cat.id, 'measureId': measure.id }
+                    ))}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {{ knp_pagination_render(paginatedMeasures) }}
+            </div>
+        </div>
+    </section>
+    {% if is_granted('ROLE_USER') %}
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatMeasuresController::addTemperature',
+            { 'id': cat.id }
+        ))}}
+    </div>
+    {% endif %}
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.min.js') }}"></script>
+{{ encore_entry_script_tags('chart-js') }}
+{% endblock %}

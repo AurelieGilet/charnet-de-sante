@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Charnet de Santé - Traitements de {{ cat.name }} {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form-type.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/cat-menu.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-pages-shared-style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-data-pages.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cat-interface/cat-care-pages/cat-care-forms.min.css') }}">
+{% endblock %}
+
+{% block body %}
+<main>
+    {% include 'partials/message-modal.html.twig' %}
+
+    {% include 'partials/cat-menu.html.twig' %} 
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <div class="picture">
+                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                </div>
+                <div class="cat-name">
+                    <h2>{{ cat.name }}</h2>
+                    <a href="
+                        {% if is_granted('ROLE_USER') %}
+                            {{ path('cat-healthCare', {'id': cat.id}) }}
+                        {% elseif is_granted("ROLE_GUEST") %}
+                            {{ path('veterinary-cat-healthCare', {'id': cat.id}) }}
+                        {% endif %}
+                        " class="return">
+                        <img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                        Retour aux soins
+                    </a>
+                </div>
+            </div>
+            <div class="card-content card-template">
+                <div class="card-title">
+                    <div class="icon">
+                        <img src="{{ asset('img/site/treatments.png') }}" alt="Icône de médicaments">
+                    </div>
+                    <h3>Traitements</h3>
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une entrée"></span>
+                <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
+                {% endif %}
+            </div>
+            {% if currentHealthCares is not empty %}
+            <div class="card-content card-template entries current-entries">
+                <h3>Traitements en cours :</h3>
+                {% for healthCare in paginatedCurrentHealthCares %}                
+                <div class="entry entry--notes card-template">
+                    <div class="entry-info data--notes">
+                        <p class="entry-info date data--variation">
+                            <span>Du : <em>{{ healthCare.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
+                            <span>Au : <em>{% if healthCare.endDate is not null %}{{ healthCare.endDate|format_datetime(locale='fr', pattern="dd MMM Y")}}{% else %}
+                                ...{% endif %}</em></span>
+                        </p>
+                        {% if is_granted('ROLE_USER') %}
+                        <div>
+                            <div class="mobile-options">
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier l'entrée"></span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'entrée"></span>
+                            </div>
+                            <div class="desktop-options">
+                                <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ healthCare.id }}">Modifier</span>
+                                <span class="update-info desktop delete delete-data-btn" data-data-id="{{ healthCare.id }}">Supprimer</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="entry-info data--details">
+                        <p>Motif du traitement : <em  class="data">{{ healthCare.treatment }}</em></p>
+                        <p>Médicament : <em class="data">{{ healthCare.productName }}</em></p>
+                        <p>Posologie : <em class="data">{{ healthCare.dosage }}</em></p>
+                    </div>
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <div id="edit-{{ healthCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::editTreatment',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ healthCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::deleteHealthCare',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {{ knp_pagination_render(paginatedCurrentHealthCares) }}
+            </div>
+            {% endif %}
+            <div class="card-content card-template entries last-entries">
+                <h3 id="last-entries">Dernières entrées :</h3>
+                <div class="tooltip">
+                    <div id="help-content" class="hide">
+                        <p>Donner un traitement à son chat, n’est pas toujours une mince affaire. Il est pourtant primordial de respecter les indications de votre vétérinaire et de s’assurer que votre félin prend bien son médicament. D’autant que certains ont l’art de bluffer pour recracher la pilule dès que vous avez le dos tourné.</p>
+                        <p>Plusieurs stratégies sont possibles :</p>
+                        <p>&bull; Donner le médicament directement à la main : qui ne tente rien, n’a rien ! et certains médicaments sont appétant. Il peut donc arriver que votre chat le voit comme une friandise et le mange tout simplement.</p>
+                        <p>&bull; Mélanger le médicament dans de la nourriture : la plus simple, mais la plus garantie, et votre chat n’est pas dupe, il sent lorsqu’un produit inconnu est mélangé à sa nourriture et peut refuser de la manger. Vous pouvez essayer d’enfoncer le cachet dans un petit morceau de viande ou une friandise préférée dont les gourmands ne feront qu’une bouchée.</p>
+                        <p>&bull; Utiliser une pipette : mélangez le cachet préalablement écrasé à un peu d’eau pour le dissoudre et administrez-le à votre chat à l’aide d’une pipette ou d’une seringue sans aiguille. Pour cela, tenez votre chat et renversez lui un peu la tête en arrière. Insérez doucement la pipette dans sa gueule par le côté et injectez un peu de liquide. N’envoyez pas tout d’un coup ! Vous risquez de le faire paniquer. Allez-y petit à petit, en laissant boire à chaque fois.</p>
+                        <p>&bull; Directement dans le gosier ! : ce n’est pas la méthode la plus douce, mais certainement la plus efficace, sauf si votre chat est une furie. Ouvrez doucement la gueule de votre chat et envoyez le cachet le plus au fond de sa gueule. Pas sur les côtés car il pourrait le bloquer et arriver à le recracher. Fermez tout de suite sa gueule et maintenez-la fermée quelques secondes pour vous assurer qu’il l’a bien avalé. Vous pouvez le caresser sous la gorge pour le faire déglutir. Assurez-vous ensuite que le médicament a bel et bien été avalé.</p>
+                        <p>Pour les techniques qui nécessitent l’immobilisation de votre chat, s’il est du genre à se débattre et que vous n’avez personne sous la main pour vous aider, n’hésitez pas à l’enrouler dans une serviette.</p>
+                    </div>
+                    <div id="help-icon">
+                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" Title="Astuces" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" Title="Astuces" id="help-white" class="hide">
+                    </div>
+                </div> 
+                {% for healthCare in paginatedHealthCares %}                
+                <div class="entry entry--notes card-template">
+                    <div class="entry-info data--notes">
+                        <p class="entry-info date data--variation">
+                            <span>Du : <em>{{ healthCare.date|format_datetime(locale='fr', pattern="dd MMM Y")}}</em></span>
+                            <span>Au : <em>{% if healthCare.endDate is not null %}{{ healthCare.endDate|format_datetime(locale='fr', pattern="dd MMM Y")}}{% else %}
+                                ...{% endif %}</em></span>
+                        </p>
+                        {% if is_granted('ROLE_USER') %}
+                        <div>
+                            <div class="mobile-options">
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier l'entrée"></span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'entrée"></span>
+                            </div>
+                            <div class="desktop-options">
+                                <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ healthCare.id }}">Modifier</span>
+                                <span class="update-info desktop delete delete-data-btn" data-data-id="{{ healthCare.id }}">Supprimer</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="entry-info data--details">
+                        <p>Motif du traitement : <em  class="data">{{ healthCare.treatment }}</em></p>
+                        <p>Médicament : <em class="data">{{ healthCare.productName }}</em></p>
+                        <p>Posologie : <em class="data">{{ healthCare.dosage }}</em></p>
+                    </div>
+                </div>
+                {% if is_granted('ROLE_USER') %}
+                <div id="edit-{{ healthCare.id }}"class="add-edit-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::editTreatment',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                <div id="delete-{{ healthCare.id }}"class="delete-data-form">
+                    {{ render(controller(
+                        'App\\Controller\\CatHealthCareController::deleteHealthCare',
+                        { 'catId': cat.id, 'healthCareId': healthCare.id }
+                    ))}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {{ knp_pagination_render(paginatedHealthCares) }}
+            </div>
+        </div>
+    </section>
+    {% if is_granted('ROLE_USER') %}
+    <div id="edit-new" class="add-edit-data-form">
+        {{ render(controller(
+            'App\\Controller\\CatHealthCareController::addTreatment',
+            { 'id': cat.id }
+        ))}}
+    </div>
+    {% endif %}
+</main>
+<script type="text/javascript" src="{{ asset('js/cat-interface/cat-care-pages.min.js') }}"></script>
+{% endblock %}

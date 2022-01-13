@@ -1,0 +1,217 @@
+/***** AUTHENTICATOR *****/
+
+.authenticator {
+    background-color: var(--secondary-background-color);
+    padding: 15px;
+}
+
+.authenticator form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-group {
+    display: flex;
+}
+
+label {
+    font-weight: bold;
+    padding: 5px;
+    line-height: 27px;
+    vertical-align: middle;
+}
+
+input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--list-border-color);
+    margin-right: 5px;
+}
+
+input:focus {
+    outline-color: var(--medium-purple);
+}
+
+button {
+    background-color: var(--medium-purple);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px rgb(63 54 88 / 45%);
+    cursor: pointer;
+    color: white;
+    white-space: nowrap;
+}
+
+/***** MAIN *****/
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+    background-color: var(--main-background-color);
+}
+
+.picture {
+    display: none;
+}
+
+.cat-picture {
+    width: 50%;
+    max-width: 150px;
+    height: auto;
+    float: left;
+    margin-right: 10px;
+    border: 4px solid var(--purple-navy);
+}
+
+.description {
+    width: 90%;
+}
+
+.description p {
+    margin-bottom: 8px;
+    line-height: 1.1rem;
+}
+
+.intro-title {
+    color: var(--purple-navy);
+}
+
+em {
+    font-weight: bold;
+}
+
+/***** FUNCTIONNALITIES *****/
+
+.functionalities {
+    background-color: var(--secondary-background-color);
+}
+
+.functionalities ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+}
+
+.functionalities li {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--list-background-color);
+    border: 1px solid var(--list-border-color);
+    border-radius: 5px;
+    box-shadow: 0px 0px 24px rgba(177, 177, 177, 0.30);
+    margin: 10px;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--purple-navy);
+    border: 2px solid var(--russian-violet);
+    border-radius: 50%;
+    padding: 5px;
+    margin: 10px 5px;
+}
+
+.icon img {
+    width: 90%;
+    height: auto;
+}
+
+.desc {
+    width: 60%;
+    padding: 5px;
+    margin: 5px;
+}
+
+/***** RESPONSIVE *****/
+
+@media screen and (min-width: 768px) {
+    /***** AUTHENTICATOR *****/
+    .authenticator form {
+        flex-direction: row;
+    }
+    /***** MAIN-CONTENT *****/
+    .cat-picture {
+        display: none;
+    }
+    .picture {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 0 10px;
+    }
+    .picture img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        border: 4px solid var(--purple-navy);
+    }
+    .description {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 40%;
+        margin: 0 10px;
+    }
+    .description p {
+        margin: 10px;
+        font-size: 1.2rem;
+        line-height: 1.3rem;
+    }
+    /***** FUNCTIONNALITIES *****/
+    .functionalities li {
+        max-width: 650px;
+        margin: 20px;
+        font-size: 1.2rem;
+    }
+    .icon {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    /***** MAIN-CONTENT *****/
+    .main-content {
+        padding: 6vh 2%;
+    }
+    .picture {
+        margin: 0 60px;
+    }
+    .description {
+        margin: 0 60px;
+    }
+    .description p {
+        margin: 20px;
+    }
+    /***** FUNCTIONNALITIES *****/
+    .functionalities ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 1fr;
+        justify-items: center;
+        padding: 5vh 2%;
+    }
+    .functionalities li {
+        margin: 30px;
+        height: 70%;
+    }
+    .functionalities li:nth-child(odd) {
+        justify-self: end;   
+    }
+    .functionalities li:nth-child(even) {
+        justify-self: start;   
+    }
+}

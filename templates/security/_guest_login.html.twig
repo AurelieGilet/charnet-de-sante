@@ -1,0 +1,17 @@
+<div class="authenticator">
+    <form method="post" action="{{ path('guest-login') }}">
+        <label for="code">Accès vétérinaire :</label>
+        <div class="form-group">
+            <input type="text" name="password" id="code">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button type="submit">Voir la fiche</button>
+        </div>
+    </form>
+    {% for label, messages in app.flashes(["danger", "success"]) %}
+        {% for message in messages %}
+            <div class="content {{label}}-content">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
