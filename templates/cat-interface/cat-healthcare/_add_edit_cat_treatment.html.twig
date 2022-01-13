@@ -5,7 +5,7 @@
             <span>Les champs suivis d'un * sont obligatoires</span>
             {{ form_row(healthCareForm.date, { 'label': 'Date de début *' }) }}
             {{ form_row(healthCareForm.endDate, { 'label': 'Date de fin' }) }}
-            {{ form_row(healthCareForm.treatment) }}
+            {{ form_row(healthCareForm.treatment, {'attr' : {'required': true}}) }}
             {{ form_row(healthCareForm.productName, { 'label': 'Médicament' }) }}
             {{ form_row(healthCareForm.dosage, { 'label': 'Posologie' }) }}
             {{ form_row(healthCareForm._token) }}

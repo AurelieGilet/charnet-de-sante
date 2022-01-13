@@ -4,7 +4,7 @@
         {{ form_start(healthForm) }}
             <span>Les champs suivis d'un * sont obligatoires</span>
             {{ form_row(healthForm.date) }}
-            {{ form_row(healthForm.surgery) }}
+            {{ form_row(healthForm.surgery, {'attr' : {'required': true}}) }}
             <div>
                 <div class="notes-label">
                     {{ form_label(healthForm.details) }} 

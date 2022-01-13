@@ -4,7 +4,7 @@
         {{ form_start(healthForm) }}
             <span>Les champs suivis d'un * sont obligatoires</span>
             {{ form_row(healthForm.date) }}
-            {{ form_row(healthForm.vetVisitMotif) }}
+            {{ form_row(healthForm.vetVisitMotif, {'attr' : {'required': true}}) }}
             {{ form_row(healthForm._token) }}
             {{ form_row(healthForm.submit) }}
         {{ form_end(healthForm, {render_rest: false}) }}

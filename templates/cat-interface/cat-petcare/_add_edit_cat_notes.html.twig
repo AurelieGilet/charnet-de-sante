@@ -9,7 +9,7 @@
                     {{ form_label(petCareForm.notes) }} 
                     <span class="notes-counter"></span>
                 </div>
-                {{ form_widget(petCareForm.notes, { 'attr': {'class': 'notes-input', 'maxlength': "2000"} }) }}
+                {{ form_widget(petCareForm.notes, { 'attr': {'required': true, 'class': 'notes-input', 'maxlength': "2000"} }) }}
             </div>  
             {{ form_row(petCareForm._token) }}
             {{ form_row(petCareForm.submit) }}
