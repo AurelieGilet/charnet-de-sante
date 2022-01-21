@@ -67,7 +67,7 @@ class HealthCareRepository extends ServiceEntityRepository
     public function findCatTreatments($cat)
     {
         return $this->createQueryBuilder('healthcare')
-            ->andWhere('healthcare.cat = :cat and healthcare.treatment IS NOT NULL')
+            ->andWhere('healthcare.cat = :cat and healthcare.treatment IS NOT NULL and healthcare.endDate IS NOT NULL')
             ->setParameter('cat', $cat)
             ->addOrderBy('healthcare.date', 'DESC')
             ->getQuery()
