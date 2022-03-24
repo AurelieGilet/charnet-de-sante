@@ -208,11 +208,6 @@ section {
     justify-content: center;
 }
 
-.mobile-options img {
-    width: 15px;
-    height: auto;
-}
-
 .show-data-mobile, .edit-data-mobile, .delete-data-mobile, .add-data {
     display: flex;
     justify-content: center;
