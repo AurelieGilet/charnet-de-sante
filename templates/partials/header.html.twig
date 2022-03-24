@@ -4,7 +4,7 @@
     <header>
         <div class="logo">
             <a href="{{ path('homepage') }}" >
-                <img src="{{ asset('img/site/cat-logo.png') }}" alt="Illustration d'un chat contenant un coeur lumineux">
+                <img src="{{ asset('img/site/cat-logo.png') }}" width="68" height="68" alt="Illustration d'un chat contenant un coeur lumineux">
                 <h1>Le Charnet de Santé</h1>
             </a>
         </div>
@@ -19,10 +19,10 @@
                 <div class="user-avatar">
                     <img 
                         {% if app.user.picture != null %} 
-                            src="{{ asset('img/upload/' ~ app.user.picture) }}" 
+                            src="{{ asset('img/upload/' ~ app.user.picture) }}" width="40" height="40" 
                             alt="Photo de profil de {{ app.user.username }}" class="user-picture" 
                         {% else %} 
-                            src="{{ asset('img/site/cat-portrait.png') }}" 
+                            src="{{ asset('img/site/cat-portrait.png') }}" width="40" height="40"
                             alt="Illustration portrait de chat" 
                         {% endif %}
                     >
@@ -51,11 +51,10 @@
                             <div class="user-avatar">
                                 <img 
                                     {% if app.user.picture != null %} 
-                                        src="{{ asset('img/upload/' ~ app.user.picture) }}" 
-                                        alt="Photo de profil de {{ app.user.username }}" 
-                                        class="user-picture" 
+                                        src="{{ asset('img/upload/' ~ app.user.picture) }}" width="40" height="40"
+                                        alt="Photo de profil de {{ app.user.username }}" class="user-picture" 
                                     {% else %} 
-                                        src="{{ asset('img/site/cat-portrait.png') }}" 
+                                        src="{{ asset('img/site/cat-portrait.png') }}" width="40" height="40"
                                         alt="Illustration portrait de chat" 
                                     {% endif %}
                                 >
