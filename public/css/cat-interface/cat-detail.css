@@ -129,8 +129,6 @@ section {
 }
 
 .avatar {
-    width: 80%;
-    max-width: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -138,17 +136,13 @@ section {
 }
 
 .default-cat-picture{
-    width: 90%;
-    height: auto;
     border: 2px outset var(--medium-purple);
     background-color: var(--medium-purple);
     border-radius: 5px;
-    padding: 5%;
+    padding: 5px;
 }
 
 .cat-picture {
-    width: 100% !important;
-    height: auto;
     border: 2px outset var(--medium-purple);
     border-radius: 5px;
 }
