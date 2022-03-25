@@ -31,13 +31,13 @@
                 </div>
                 <div class="cat-name">
                     <h2>{{ cat.name }}</h2>
-                    <a href="
-                        {% if is_granted('ROLE_USER') %}
-                            {{ path('cat-petCare', {'id': cat.id}) }}
-                        {% elseif is_granted("ROLE_GUEST") %}
-                            {{ path('veterinary-cat-petCare', {'id': cat.id}) }}
-                        {% endif %}
-                        " class="return">
+                    <a 
+                    {% if is_granted('ROLE_USER') %}
+                        href="{{ path('cat-petCare', {'id': cat.id}) }}"
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        href="{{ path('veterinary-cat-petCare', {'id': cat.id}) }}"
+                    {% endif %}
+                    class="return">
                         <img src="{{ asset('img/site/arrow2.png') }}" width="25" height="25"
                         alt="Icône de flèche de retour">
                         Retour à l'entretien

@@ -56,13 +56,14 @@
             </div>
         </div>
         <span id="delete-user" class="update-info delete">Supprimer le compte</span>
-        <a href="
-            {% if is_granted("ROLE_ADMIN") %}
-                {{ path('admin-interface') }}
-            {% else %}
-                {{ path('user-interface') }}
-            {% endif %}"
-            class="return-btn">Retour
+        <a 
+        {% if is_granted("ROLE_ADMIN") %}
+            href="{{ path('admin-interface') }}"
+        {% else %}
+            href="{{ path('user-interface') }}"
+        {% endif %}
+        class="return-btn">
+            Retour
         </a>
     </section>
 
