@@ -25,11 +25,6 @@ header {
     align-items: center;
 }
 
-.logo img {
-    width: 100%;
-    max-width: 68px;
-    height: auto;
-}
 
 .logo h1 {
     text-align: center;
@@ -98,11 +93,6 @@ nav ul {
     width: 40px;
     padding: 5px;
     margin: 5px 10px;
-}
-
-.user-avatar img {
-    width: 40px;
-    height: auto;
 }
 
 .user-picture {

@@ -29,8 +29,14 @@
             <div class="card-content card-template entries">
                 <div class="card-title">
                     <h3>Liste des questions :</h3>
-                    <a href="{{ path('admin-faq') }}" class="show-data-mobile mobile-options"><img src="{{ asset('img/site/reset.png') }}" alt="Icône de réinitialisation" title="Afficher toutes les questions"></a>
-                    <span class="edit-data-mobile mobile-options add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une question"></span>
+                    <a href="{{ path('admin-faq') }}" class="show-data-mobile mobile-options">
+                        <img src="{{ asset('img/site/reset.png') }}" width="15" height="15"
+                        alt="Icône de réinitialisation" title="Afficher toutes les questions">
+                    </a>
+                    <span class="edit-data-mobile mobile-options add-edit-data-btn" data-data-id="new">
+                        <img src="{{ asset('img/site/add.png') }}" width="15" height="15"
+                        alt="Icône du signe plus" title="Ajouter une question">
+                    </span>
                     <a href="{{ path('admin-faq') }}" class="show-data desktop-options">Tout afficher</a>
                     <span class="add-data desktop-options add-edit-data-btn" data-data-id="new">Ajouter une question</span>
                 </div>
@@ -45,8 +51,14 @@
                                 </div>
                             </div>
                             <div class="mobile-options">
-                                <span class="edit-data-mobile add-edit-data-btn" data-data-id="{{ faq.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier la question"></span>
-                                <span class="delete-data-mobile delete-data-btn" data-data-id="{{ faq.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer la question"></span>
+                                <span class="edit-data-mobile add-edit-data-btn" data-data-id="{{ faq.id }}">
+                                    <img src="{{ asset('img/site/edit.png') }}" width="15" height="15"
+                                    alt="Icône d'un crayon" title="Modifier la question">
+                                </span>
+                                <span class="delete-data-mobile delete-data-btn" data-data-id="{{ faq.id }}">
+                                    <img src="{{ asset('img/site/delete.png') }}" width="15" height="15"
+                                    alt="Icône d'une poubelle" title="Supprimer la question">
+                                </span>
                             </div>
                             <div class="desktop-options--variation">
                                 <span class="edit-data add-edit-data-btn" data-data-id="{{ faq.id }}">Modifier</span>

@@ -11,6 +11,36 @@ button {
     text-align: center;
 }
 
+.checkbox label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.checkbox input[type=checkbox] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -border-radius: 5px;
+    height: 15px;
+    width: 15px;
+    background: #fff;
+    margin-right: 10px;
+}
+
+.checkbox input[type=checkbox]:checked {
+    background: var(--medium-purple);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox input[type=checkbox]:checked::before {
+    content: '\002713';
+    display: block;
+    color: white;
+}
+
 .reset-password {
     color: var(--medium-purple);
     text-decoration: underline;

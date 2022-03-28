@@ -20,11 +20,6 @@
     background-color: var(--list-background-color);
 }
 
-#help-icon img {
-    width: 100%;
-    height: auto;
-}
-
 #help-purple {
     display: none;
 }
@@ -146,7 +141,7 @@ section {
 }
 
 .cat-picture {
-    width: 100% !important;
+    width: 100%;
     height: auto;
     clip-path: circle(50% at 50% 50%);
 }
@@ -184,8 +179,6 @@ section {
 }
 
 .return img {
-    width: 25px;
-    height: auto;
     margin-right: 10px;
 }
 
@@ -242,19 +235,9 @@ section {
     margin: 5px;
 }
 
-.icon img {
-    width: 90%;
-    height: auto;
-}
-
 .card-arrow {
     color: var(--medium-purple);
     font-size: 1.6rem;
-}
-
-.card-arrow img{
-    width: 25px;
-    height: auto;
 }
 
 .shaker:hover .shake {
@@ -317,11 +300,6 @@ section {
 .delete-data {
     background-color: var(--purple-navy);
     margin: 2px;
-}
-
-.add-data img, .edit-data img, .delete-data img {
-    width: 15px;
-    height: auto;
 }
 
 .add-data.desktop, .desktop-options {

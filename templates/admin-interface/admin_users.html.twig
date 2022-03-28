@@ -30,7 +30,10 @@
             <div class="card-content card-template entries">
                 <div class="card-title">
                     <h3>Liste des utilisateurs :</h3>
-                    <a href="{{ path('admin-users') }}" class="show-data-mobile mobile-options"><img src="{{ asset('img/site/reset.png') }}" alt="Icône de réinitialisation" title="Afficher tous les utilisateurs"></a>
+                    <a href="{{ path('admin-users') }}" class="show-data-mobile mobile-options">
+                        <img src="{{ asset('img/site/reset.png') }}" width="15" height="15"
+                        alt="Icône de réinitialisation" title="Afficher tous les utilisateurs">
+                    </a>
                     <a href="{{ path('admin-users') }}" class="show-data desktop-options">Tout afficher</a>
                 </div>
                 {% for user in paginatedUsers %}                
@@ -51,8 +54,14 @@
                     </div>
                     <div>
                         <div class="mobile-options">
-                            <span class="edit-data-mobile add-edit-data-btn" data-data-id="{{ user.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Changer le Rôle de l'utilisateur"></span>
-                            <span class="delete-data-mobile delete-data-btn" data-data-id="{{ user.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'utilisateur"></span>
+                            <span class="edit-data-mobile add-edit-data-btn" data-data-id="{{ user.id }}">
+                                <img src="{{ asset('img/site/edit.png') }}" width="15" height="15"
+                                alt="Icône d'un crayon" title="Changer le Rôle de l'utilisateur">
+                            </span>
+                            <span class="delete-data-mobile delete-data-btn" data-data-id="{{ user.id }}">
+                                <img src="{{ asset('img/site/delete.png') }}" width="15" height="15"
+                                alt="Icône d'une poubelle" title="Supprimer l'utilisateur">
+                            </span>
                         </div>
                         <div class="desktop-options">
                             <span class="edit-data add-edit-data-btn" data-data-id="{{ user.id }}">Changer le Rôle</span>
