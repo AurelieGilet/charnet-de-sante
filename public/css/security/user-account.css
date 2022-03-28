@@ -67,17 +67,6 @@ section p {
     margin: 5px 10px;
 }
 
-.avatar.centered {
-    margin: 0 auto;
-    width: 150px;
-    height: 150px;
-}
-
-.avatar img {
-    width: 120px;
-    height: auto;
-}
-
 .user-picture {
     clip-path: circle(50% at 50% 50%);
 }

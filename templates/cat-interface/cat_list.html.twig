@@ -19,10 +19,19 @@
             <a href="{{ path('cat-detail', {'id': cat.id}) }}">
                 <div class="cat">
                     <div class="avatar">
-                        <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" {% endif %} class="default-cat-picture">
+                        <img 
+                        {% if cat.picture != null %} 
+                            src="{{ asset('img/upload/' ~ cat.picture) }}" width="96" height="96"
+                            alt="Photo du chat {{ cat.name }}" class ="cat-picture" 
+                        {% else %} 
+                            src="{{ asset('img/site/cat-portrait2.png') }}" width="86" height="86"
+                            alt="Illustration portrait de chat" class="default-cat-picture"
+                        {% endif %} 
+                        >
                     </div>
                     <h3>{{ cat.name }}</h3>
-                    <img class="look" src="{{ asset('img/site/look.png') }}" alt="Icône de loupe">
+                    <img class="look" src="{{ asset('img/site/look.png') }}" width="30" height="30"
+                    alt="Icône de loupe">
                 </div>
             </a>
             {% endfor %}

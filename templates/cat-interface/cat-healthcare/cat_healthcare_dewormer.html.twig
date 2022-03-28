@@ -20,17 +20,26 @@
         <div class="card">
             <div class="card-header">
                 <div class="picture">
-                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                    <img 
+                    {% if cat.picture != null %} 
+                        src="{{ asset('img/upload/' ~ cat.picture) }}" width="150" height="150"
+                        alt="Photo du chat {{ cat.name }}" class ="cat-picture" 
+                    {% else %} 
+                        src="{{ asset('img/site/cat-portrait2.png') }}" width="105" height="105"
+                        alt="Illustration portrait de chat" class="default-cat-picture" 
+                    {% endif %}>
                 </div>
                 <div class="cat-name">
                     <h2>{{ cat.name }}</h2>
-                    <a href="
-                        {% if is_granted('ROLE_USER') %}
-                            {{ path('cat-healthCare', {'id': cat.id}) }}
-                        {% elseif is_granted("ROLE_GUEST") %}
-                            {{ path('veterinary-cat-healthCare', {'id': cat.id}) }}
-                        {% endif %}
-                        " class="return"><img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                    <a 
+                    {% if is_granted('ROLE_USER') %}
+                        href="{{ path('cat-healthCare', {'id': cat.id}) }}"
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        href="{{ path('veterinary-cat-healthCare', {'id': cat.id}) }}"
+                    {% endif %}
+                    class="return">
+                        <img src="{{ asset('img/site/arrow2.png') }}" width="25" height="25" 
+                        alt="Icône de flèche de retour">
                         Retour aux soins
                     </a>
                 </div>
@@ -38,12 +47,16 @@
             <div class="card-content card-template">
                 <div class="card-title">
                     <div class="icon">
-                        <img src="{{ asset('img/site/dewormer.png') }}" alt="Icône d'excrément de chat dans un flacon">
+                        <img src="{{ asset('img/site/dewormer.png') }}" width="45" height="45"
+                        alt="Icône d'excrément de chat dans un flacon">
                     </div>
                     <h3>Vermifuge</h3>
                 </div>
                 {% if is_granted('ROLE_USER') %}
-                <span class="add-data mobile add-edit-data-btn" data-data-id="new"><img src="{{ asset('img/site/add.png') }}" alt="Icône du signe plus" title="Ajouter une entrée"></span>
+                <span class="add-data mobile add-edit-data-btn" data-data-id="new">
+                    <img src="{{ asset('img/site/add.png') }}" width="15" height="15"
+                    alt="Icône du signe plus" title="Ajouter une entrée">
+                </span>
                 <span class="add-data desktop add-edit-data-btn" data-data-id="new">Ajouter une entrée</span>
                 {% endif %}
             </div>
@@ -58,8 +71,10 @@
                         <p>Si vous ne savez pas quoi prendre, parlez-en à votre vétérinaire.</p>
                     </div>
                     <div id="help-icon">
-                        <img src="{{ asset('img/site/help-purple.png') }}" alt="Icône d'aide" Title="Astuces" id="help-purple" class="show">
-                        <img src="{{ asset('img/site/help-white.png') }}" alt="Icône d'aide" Title="Astuces" id="help-white" class="hide">
+                        <img src="{{ asset('img/site/help-purple.png') }}" width="30" height="30"
+                        alt="Icône d'aide" Title="Astuces" id="help-purple" class="show">
+                        <img src="{{ asset('img/site/help-white.png') }}" width="30" height="30"
+                        alt="Icône d'aide" Title="Astuces" id="help-white" class="hide">
                     </div>
                 </div> 
                 {% for healthCare in paginatedHealthCares %}                
@@ -71,8 +86,14 @@
                         {% if is_granted('ROLE_USER') %}
                         <div>
                             <div class="mobile-options">
-                                <span class="edit-data add-edit-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/edit.png') }}" alt="Icône d'un crayon" title="Modifier l'entrée"></span>
-                                <span class="delete-data delete-data-btn" data-data-id="{{ healthCare.id }}"><img src="{{ asset('img/site/delete.png') }}" alt="Icône d'une poubelle" title="Supprimer l'entrée"></span>
+                                <span class="edit-data add-edit-data-btn" data-data-id="{{ healthCare.id }}">
+                                    <img src="{{ asset('img/site/edit.png') }}" width="15" height="15"
+                                    alt="Icône d'un crayon" title="Modifier l'entrée">
+                                </span>
+                                <span class="delete-data delete-data-btn" data-data-id="{{ healthCare.id }}">
+                                    <img src="{{ asset('img/site/delete.png') }}" width="15" height="15"
+                                    alt="Icône d'une poubelle" title="Supprimer l'entrée">
+                                </span>
                             </div>
                             <div class="desktop-options">
                                 <span class="update-info desktop modify add-edit-data-btn" data-data-id="{{ healthCare.id }}">Modifier</span>

@@ -52,7 +52,7 @@ input, textarea, select {
     border: 1px solid var(--list-border-color);
     background-color: white;
     font-size: 1rem;
-    font-family: Nunito, sans-serif;
+    font-family: Nunito, Trebuchet MS;
 }
 
 input:focus, textarea:focus, select:focus {

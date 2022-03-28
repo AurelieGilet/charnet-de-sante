@@ -15,115 +15,133 @@
         <div class="card">
             <div class="card-header">
                 <div class="picture">
-                    <img {% if cat.picture != null %} src="{{ asset('img/upload/' ~ cat.picture) }}" alt="Photo du chat {{ cat.name }}" class ="cat-picture" {% else %} src="{{ asset('img/site/cat-portrait2.png') }}" alt="Illustration portrait de chat" class="default-cat-picture" {% endif %}>
+                    <img 
+                    {% if cat.picture != null %} 
+                        src="{{ asset('img/upload/' ~ cat.picture) }}" width="150" height="150"
+                        alt="Photo du chat {{ cat.name }}" class ="cat-picture" 
+                    {% else %} 
+                        src="{{ asset('img/site/cat-portrait2.png') }}" width="105" height="105"
+                        alt="Illustration portrait de chat" class="default-cat-picture" 
+                    {% endif %}>
                 </div>
                 <div class="cat-name">
                     <h2>{{ cat.name }}</h2>
-                    <a href="
-                        {% if is_granted('ROLE_USER') %}
-                            {{ path('cat-detail', {'id': cat.id}) }}
-                        {% elseif is_granted("ROLE_GUEST") %}
-                            {{ path('veterinary-cat-detail', {'id': cat.id}) }}
-                        {% endif %}
-                        " class="return">
-                        <img src="{{ asset('img/site/arrow2.png') }}" alt="Icône de flèche de retour">
+                    <a 
+                    {% if is_granted('ROLE_USER') %}
+                        href="{{ path('cat-detail', {'id': cat.id}) }}"
+                    {% elseif is_granted("ROLE_GUEST") %}
+                        href="{{ path('veterinary-cat-detail', {'id': cat.id}) }}"
+                    {% endif %}
+                    class="return">
+                        <img src="{{ asset('img/site/arrow2.png') }}" width="25" height="25" 
+                        alt="Icône de flèche de retour">
                         Retour à la fiche
                     </a>
                 </div>
             </div>
             <div class="card-body">
-                <a href="
-                    {% if is_granted('ROLE_USER') %}
-                        {{ path('cat-vaccine', {'id': cat.id}) }}
-                    {% elseif is_granted("ROLE_GUEST") %}
-                        {{ path('veterinary-cat-vaccine', {'id': cat.id}) }}
-                    {% endif %}
-                    " class="shaker">
+                <a 
+                {% if is_granted('ROLE_USER') %}
+                    href="{{ path('cat-vaccine', {'id': cat.id}) }}"
+                {% elseif is_granted("ROLE_GUEST") %}
+                    href="{{ path('veterinary-cat-vaccine', {'id': cat.id}) }}"
+                {% endif %}
+                class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
-                                <img src="{{ asset('img/site/vaccine.png') }}" alt="Icône de seringue de vaccin">
+                                <img src="{{ asset('img/site/vaccine.png') }}" width="45" height="45"
+                                alt="Icône de seringue de vaccin">
                             </div>
                             <h3>Vaccin</h3>
                         </div>
                         <div class="card-arrow shake">
-                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                            <img src="{{ asset('img/site/arrow.png') }}" width="25" height="25"
+                            alt="Icône de flèche allant vers la droite">
                         </div>
                     </div>
                 </a>
-                <a href="
-                    {% if is_granted('ROLE_USER') %}
-                        {{ path('cat-dewormer', {'id': cat.id}) }}
-                    {% elseif is_granted("ROLE_GUEST") %}
-                        {{ path('veterinary-cat-dewormer', {'id': cat.id}) }}
-                    {% endif %}
-                    " class="shaker">
+                <a 
+                {% if is_granted('ROLE_USER') %}
+                    href="{{ path('cat-dewormer', {'id': cat.id}) }}"
+                {% elseif is_granted("ROLE_GUEST") %}
+                    href="{{ path('veterinary-cat-dewormer', {'id': cat.id}) }}"
+                {% endif %}
+                class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
-                                <img src="{{ asset('img/site/dewormer.png') }}" alt="Icône d'excrément de chat dans un flacon">
+                                <img src="{{ asset('img/site/dewormer.png') }}" width="45" height="45"
+                                alt="Icône d'excrément de chat dans un flacon">
                             </div>
                             <h3>Vermifuge</h3>
                         </div>
                         <div class="card-arrow shake">
-                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                            <img src="{{ asset('img/site/arrow.png') }}" width="25" height="25"
+                            alt="Icône de flèche allant vers la droite">
                         </div>
                     </div>
                 </a>
-                <a href="
-                    {% if is_granted('ROLE_USER') %}
-                        {{ path('cat-antiparasite', {'id': cat.id}) }}
-                    {% elseif is_granted("ROLE_GUEST") %}
-                        {{ path('veterinary-cat-antiparasite', {'id': cat.id}) }}
-                    {% endif %}
-                    " class="shaker">
+                <a 
+                {% if is_granted('ROLE_USER') %}
+                    href="{{ path('cat-antiparasite', {'id': cat.id}) }}"
+                {% elseif is_granted("ROLE_GUEST") %}
+                    href="{{ path('veterinary-cat-antiparasite', {'id': cat.id}) }}"
+                {% endif %}
+                class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
-                                <img src="{{ asset('img/site/anti-parasite.png') }}" alt="Icône de spray anti-parasitaire">
+                                <img src="{{ asset('img/site/anti-parasite.png') }}" width="45" height="45"
+                                alt="Icône de spray anti-parasitaire">
                             </div>
                             <h3>Antiparasitaire</h3>
                         </div>
                         <div class="card-arrow shake">
-                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                            <img src="{{ asset('img/site/arrow.png') }}" width="25" height="25"
+                            alt="Icône de flèche allant vers la droite">
                         </div>
                     </div>
                 </a>
-                <a href="
-                    {% if is_granted('ROLE_USER') %}
-                        {{ path('cat-treatment', {'id': cat.id}) }}
-                    {% elseif is_granted("ROLE_GUEST") %}
-                        {{ path('veterinary-cat-treatment', {'id': cat.id}) }}
-                    {% endif %}
-                    " class="shaker">
+                <a 
+                {% if is_granted('ROLE_USER') %}
+                    href="{{ path('cat-treatment', {'id': cat.id}) }}"
+                {% elseif is_granted("ROLE_GUEST") %}
+                    href="{{ path('veterinary-cat-treatment', {'id': cat.id}) }}"
+                {% endif %}
+                class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
-                                <img src="{{ asset('img/site/treatments.png') }}" alt="Icône de médicaments">
+                                <img src="{{ asset('img/site/treatments.png') }}" width="45" height="45"
+                                alt="Icône de médicaments">
                             </div>
                             <h3>Traitements</h3>
                         </div>
                         <div class="card-arrow shake">
-                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                            <img src="{{ asset('img/site/arrow.png') }}" width="25" height="25"
+                            alt="Icône de flèche allant vers la droite">
                         </div>
                     </div>
                 </a>
-                <a href="
-                    {% if is_granted('ROLE_USER') %}
-                        {{ path('cat-descaling', {'id': cat.id}) }}
-                    {% elseif is_granted("ROLE_GUEST") %}
-                        {{ path('veterinary-cat-descaling', {'id': cat.id}) }}
-                    {% endif %}
-                    " class="shaker">
+                <a 
+                {% if is_granted('ROLE_USER') %}
+                    href="{{ path('cat-descaling', {'id': cat.id}) }}"
+                {% elseif is_granted("ROLE_GUEST") %}
+                    href="{{ path('veterinary-cat-descaling', {'id': cat.id}) }}"
+                {% endif %}
+                class="shaker">
                     <div class="card-content card-template">
                         <div class="card-title">
                             <div class="icon">
-                                <img src="{{ asset('img/site/descaling.png') }}" alt="Icône de dentition de chat">
+                                <img src="{{ asset('img/site/descaling.png') }}" width="45" height="45"
+                                alt="Icône de dentition de chat">
                             </div>
                             <h3>Détartrage</h3>
                         </div>
                         <div class="card-arrow shake">
-                            <img src="{{ asset('img/site/arrow.png') }}" alt="Icône de flèche allant vers la droite">
+                            <img src="{{ asset('img/site/arrow.png') }}" width="25" height="25"
+                            alt="Icône de flèche allant vers la droite">
                         </div>
                     </div>
                 </a>
