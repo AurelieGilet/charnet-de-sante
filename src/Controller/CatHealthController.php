@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Cat;
 use App\Entity\Health;
 use App\Form\CatHealthFormType;
@@ -105,8 +106,11 @@ class CatHealthController extends AbstractController
         if ($secureRoute != null) {
             return $secureRoute;
         }
+
+        // We create 2 sets of data : those that are finished (with end date < current date) and those that are ongoing.
+        $currentDate = new DateTime();
         
-        $healths = $healthRepository->findCatAllergies($cat);
+        $healths = $healthRepository->findCatAllergies($cat, $currentDate);
 
         $paginatedHealths = $paginator->paginate(
             $healths,
@@ -115,10 +119,25 @@ class CatHealthController extends AbstractController
         );
         $paginatedHealths->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
+        $currentHealths = $healthRepository->findCatCurrentAllergies($cat, $currentDate);
+
+        $paginatedCurrentHealths = $paginator->paginate(
+            $currentHealths,
+            $request->query->getInt('page2', 1),
+            5,
+            [
+                'pageParameterName' => 'page2',
+                'sortFieldParameterName' => 'sort2',
+                'sortDirectionParameterName' => 'direction2',
+            ]
+        );
+
         return $this->render('cat-interface/cat-health/cat_health_allergy.html.twig', [
             'controller_name' => 'CatHealthController',
             'cat' => $cat,
             'paginatedHealths' => $paginatedHealths,
+            'paginatedCurrentHealths' => $paginatedCurrentHealths,
+            'currentHealths' => $currentHealths,
         ]);
     }
 
@@ -137,8 +156,11 @@ class CatHealthController extends AbstractController
         if ($secureRoute != null) {
             return $secureRoute;
         }
+
+        // We create 2 sets of data : those that are finished (with end date < current date) and those that are ongoing.
+        $currentDate = new DateTime();
         
-        $healths = $healthRepository->findCatDiseases($cat);
+        $healths = $healthRepository->findCatDiseases($cat, $currentDate);
 
         $paginatedHealths = $paginator->paginate(
             $healths,
@@ -147,10 +169,25 @@ class CatHealthController extends AbstractController
         );
         $paginatedHealths->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
+        $currentHealths = $healthRepository->findCatCurrentDiseases($cat, $currentDate);
+
+        $paginatedCurrentHealths = $paginator->paginate(
+            $currentHealths,
+            $request->query->getInt('page2', 1),
+            5,
+            [
+                'pageParameterName' => 'page2',
+                'sortFieldParameterName' => 'sort2',
+                'sortDirectionParameterName' => 'direction2',
+            ]
+        );
+
         return $this->render('cat-interface/cat-health/cat_health_disease.html.twig', [
             'controller_name' => 'CatHealthController',
             'cat' => $cat,
             'paginatedHealths' => $paginatedHealths,
+            'paginatedCurrentHealths' => $paginatedCurrentHealths,
+            'currentHealths' => $currentHealths,
         ]);
     }
 
