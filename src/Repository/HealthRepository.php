@@ -36,11 +36,11 @@ class HealthRepository extends ServiceEntityRepository
     /**
      * @return Health[]
      */
-    public function findCatAllergies($cat)
+    public function findCatAllergies($cat, $currentDate)
     {
         return $this->createQueryBuilder('health')
-            ->andWhere('health.cat = :cat and health.allergy IS NOT NULL')
-            ->setParameter('cat', $cat)
+            ->andWhere('health.cat = :cat and health.allergy IS NOT NULL and health.endDate IS NOT NULL and health.endDate < :currentDate')
+            ->setParameters(array('cat' => $cat, 'currentDate' => $currentDate))
             ->addOrderBy('health.date', 'DESC')
             ->getQuery()
             ->getResult()
@@ -50,11 +50,39 @@ class HealthRepository extends ServiceEntityRepository
     /**
      * @return Health[]
      */
-    public function findCatDiseases($cat)
+    public function findCatCurrentAllergies($cat, $currentDate)
     {
         return $this->createQueryBuilder('health')
-            ->andWhere('health.cat = :cat and health.disease IS NOT NULL')
-            ->setParameter('cat', $cat)
+            ->andWhere('health.cat = :cat and health.allergy IS NOT NULL and (health.endDate IS NULL or health.endDate > :currentDate)')
+            ->setParameters(array('cat' => $cat, 'currentDate' => $currentDate))
+            ->addOrderBy('health.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Health[]
+     */
+    public function findCatDiseases($cat, $currentDate)
+    {
+        return $this->createQueryBuilder('health')
+            ->andWhere('health.cat = :cat and health.disease IS NOT NULL and health.endDate IS NOT NULL and health.endDate < :currentDate')
+            ->setParameters(array('cat' => $cat, 'currentDate' => $currentDate))
+            ->addOrderBy('health.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Health[]
+     */
+    public function findCatCurrentDiseases($cat, $currentDate)
+    {
+        return $this->createQueryBuilder('health')
+            ->andWhere('health.cat = :cat and health.disease IS NOT NULL and (health.endDate IS NULL or health.endDate > :currentDate)')
+            ->setParameters(array('cat' => $cat, 'currentDate' => $currentDate))
             ->addOrderBy('health.date', 'DESC')
             ->getQuery()
             ->getResult()
