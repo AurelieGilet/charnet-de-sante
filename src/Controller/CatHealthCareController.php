@@ -169,8 +169,10 @@ class CatHealthCareController extends AbstractController
             return $secureRoute;
         }
 
-        // We create 2 sets of data : those that are finished (with end date) and those that are ongoing.
-        $healthCares = $healthCareRepository->findCatTreatments($cat);
+        // We create 2 sets of data : those that are finished (with end date < current date) and those that are ongoing.
+        $currentDate = new DateTime();
+
+        $healthCares = $healthCareRepository->findCatTreatments($cat, $currentDate);
 
         $paginatedHealthCares = $paginator->paginate(
             $healthCares,
@@ -184,7 +186,6 @@ class CatHealthCareController extends AbstractController
         );
         $paginatedHealthCares->setParam('_fragment', 'last-entries'); // Intelephense indicate the method is undefined, but it works perfectly
 
-        $currentDate = new DateTime();
 
         $currentHealthCares = $healthCareRepository->findCatCurrentTreatments($cat, $currentDate);
 
