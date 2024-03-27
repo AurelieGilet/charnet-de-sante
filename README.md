@@ -12,8 +12,6 @@ Vous pourrez également y stocker les documents importants (analyses, ordonnance
 
 __*Pour installer le projet en local :*__
 * `git clone https://github.com/AurelieGilet/charnet-de-sante.git`
-* `cd charnet-de-sante`
-* `git checkout develop`
 * `composer install`
 
 __*Configuration connexion BDD dans le fichier .env :*__
