@@ -44,6 +44,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    
 }
 
 .entry-info.data--variation {
@@ -80,7 +81,6 @@
 
 .data {
     font-weight: bold;
-    text-align: center;
     width: 70%;
     word-break: break-word;
 }
@@ -111,7 +111,6 @@ em {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    white-space: nowrap;
 }
 
 /***** RESPONSIVE *****/
@@ -122,6 +121,12 @@ em {
     }
     .entry {
         width: 90%;
+    }
+    .entry-info {
+        gap: 20px;
+    }
+    .entry-info.data--variation {
+        gap: 0px;
     }
     .last-entries {
         margin-bottom: 40px;
@@ -136,11 +141,13 @@ em {
         justify-content: space-between;
         align-items: stretch;
     }
-
 }
 
 @media screen and (min-width: 1024px) {
     .entry-info.data--variation {
         width: 60%;
+    }
+    .data--variation {
+        white-space: nowrap;
     }
 }
